@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  backend:
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-23-feb-2023/final-projects/timetracker:master
+    env_file:
+      - ./envs/prod.env
+    command: "sh /scripts/prod.sh"
+    volumes:
+      - static_files:/static-files
+      - media_files:/media-files
+      # - build:/frontend/build
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - ./envs/prod.env
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - static_files:/static-files
+      - media_files:/media-files
+      # - build:/build
+      - /etc/letsencrypt:/etc/letsencrypt
+
+volumes:
+  postgres_db:
+  static_files:
+  media_files:
+  # build:
