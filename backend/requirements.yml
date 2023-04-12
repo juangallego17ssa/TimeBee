@@ -1,0 +1,14 @@
+name: timetracker-backend
+dependencies:
+  - python=3.10.9
+  - pip=23.0.1
+  - psycopg2=2.9.3
+  - pip:
+      - django==4.1.7
+      - djangorestframework==3.14.0
+      - djangorestframework_simplejwt==5.2.2
+      - drf-yasg==1.21.5
+      - pillow==9.4.0
+      - flake8==6.0.0
+      - gunicorn==20.1.0
+      - django-cors-headers==3.14.0

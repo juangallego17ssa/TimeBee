@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  backend:
+    image: registry.gitlab.propulsion-home.ch/full-stack/batch-23-feb-2023/final-projects/timetracker:latest
+    ports:
+      - '8001:8000'
+    volumes:
+      - ./backend:/backend
+    env_file:
+      - ./envs/dev.env
+    command: "sh /scripts/dev.sh"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    env_file:
+      - ./envs/dev.env
+    ports:
+      - '5555:5432'
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+
+volumes:
+  postgres_db:
+

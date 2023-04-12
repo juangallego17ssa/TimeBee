@@ -1,0 +1,5 @@
+version: '3'
+
+services:
+  backend:
+    image: "${CI_PIPELINE_ID}:${CI_BUILD_REF_NAME}"
