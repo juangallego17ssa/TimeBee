@@ -54,5 +54,5 @@ deploy:
   script:
     - docker compose -f docker-compose.deploy.yml pull
     - docker compose -f docker-compose.deploy.yml down --remove-orphans
-    # - docker volume rm lunateam3_build
+    - docker volume rm timetracker_build
     - docker compose -f docker-compose.deploy.yml up -d
