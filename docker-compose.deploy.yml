@@ -9,7 +9,7 @@ services:
     volumes:
       - static_files:/static-files
       - media_files:/media-files
-      # - build:/frontend/build
+      - build:/frontend/build
     depends_on:
       - postgres
 
@@ -29,11 +29,11 @@ services:
       - ./nginx:/etc/nginx/conf.d/
       - static_files:/static-files
       - media_files:/media-files
-      # - build:/build
+      - build:/build
       - /etc/letsencrypt:/etc/letsencrypt
 
 volumes:
   postgres_db:
   static_files:
   media_files:
-  # build:
+  build:
