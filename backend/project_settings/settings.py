@@ -28,7 +28,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://207.154.220.244', 'https://timebee.propulsion-learn.ch']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://207.154.220.244', ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     # own apps
     "user",
+    "project",
+    "tracked_time",
     "registration",
 
     # 3rd party apps
