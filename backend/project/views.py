@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 
@@ -20,6 +19,7 @@ class ListCreateProjectView(ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+
 class RetrieveUpdateDeleteProjectView(RetrieveUpdateDestroyAPIView):
     """
     """
@@ -27,4 +27,3 @@ class RetrieveUpdateDeleteProjectView(RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsSameUserOrReadOnly, IsStaffOrReadOnly]
     serializer_class = ProjectSerializer
     lookup_url_kwarg = 'project_id'
-

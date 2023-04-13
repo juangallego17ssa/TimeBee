@@ -14,9 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
 from django.conf.urls.static import static
 from django.urls import path, include
 from drf_yasg import openapi
@@ -27,16 +24,16 @@ from project_settings import settings
 from user.views import RetrieveUpdateDeleteMyUserView
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="TimeTracker API",
-      default_version='v1',
-      description="TimeTracker Backend API",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="learn@propulsionacademy.com"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,  # Set to False restrict access to protected endpoints
-   permission_classes=(permissions.AllowAny,),  # Permissions for docs access
+    openapi.Info(
+        title="TimeTracker API",
+        default_version='v1',
+        description="TimeTracker Backend API",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="learn@propulsionacademy.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,  # Set to False restrict access to protected endpoints
+    permission_classes=(permissions.AllowAny,),  # Permissions for docs access
 )
 
 urlpatterns = [

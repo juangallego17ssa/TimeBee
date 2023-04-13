@@ -17,7 +17,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             'created_by': {'read_only': True}
         }
 
-
     # def get_reviews_quantity(self, obj):
     #     return obj.reviews.count()
     #

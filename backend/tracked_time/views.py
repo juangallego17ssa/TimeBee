@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 
@@ -21,6 +20,7 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
     def perform_create(self, serializer):
         project = Project.objects.get(created_by=self.request.user, name="unassigned")
         serializer.save(project=project)
+
 
 class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
     """
