@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
+from django.conf.urls.static import static
+from django.urls import path, include
 from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
 from project_settings import settings
-from django.conf.urls.static import static
-
+from user.views import RetrieveUpdateDeleteMyUserView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -43,6 +46,10 @@ urlpatterns = [
     path('backend/api/auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('backend/api/auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
 
+    path('backend/api/registration/', include('registration.urls')),
+
+    path('backend/api/users/', include('user.urls')),
+    path('backend/api/me/', RetrieveUpdateDeleteMyUserView.as_view()),
 
     path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 

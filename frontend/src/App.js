@@ -12,7 +12,7 @@ function App() {
   return (
     <>
     <Provider store={store}>
-      <div class="flex box-border flex-col w-screen h-screen bg-stone-100 top-0" >
+      <div className="flex box-border flex-col w-screen h-screen bg-stone-100 top-0" >
         <Header>
           <Routes>
             <Route path="/" element={<Home/>} />
