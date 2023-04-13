@@ -28,7 +28,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://207.154.220.244', ]
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://207.154.220.244', 'https://timebee.propulsion-learn.ch']
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # own apps
     "user",
+    "registration",
 
     # 3rd party apps
     'rest_framework',
@@ -184,3 +185,18 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+# This is the config for Prod or Docker Local
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+
+# This is the config for local over conda env.
+# DEFAULT_FROM_EMAIL= 'timebee.propulsion.learn@gmail.com'
+# EMAIL_USE_TLS=True
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_HOST_USER= 'timebee.propulsion.learn@gmail.com'
+# EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
+# EMAIL_PORT=587
