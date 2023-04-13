@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GiBee } from "react-icons/gi";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
 import Timer from '../Components/TimetrackerComp/Timer';
-import Calendar from '../Components/TimetrackerComp/Calendar';
+import Calendar from '../Components/TimetrackerComp/Outlook';
 
 
 function Timetracker() {
