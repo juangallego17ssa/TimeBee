@@ -24,7 +24,7 @@ class OurUserAdmin(UserAdmin):
         ('Groups', {'fields': ('groups',)}),
     )
     # fields which are shown when looking at a list of instances
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser', 'workload', 'holidays' )
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser', 'workload', 'holidays')
     ordering = ('email',)
 
 

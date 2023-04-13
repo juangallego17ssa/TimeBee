@@ -1,11 +1,11 @@
 from rest_framework import filters
-from rest_framework.response import Response
-from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from user.serializers import UserSerializer, UserUpdateSerializer
 from django.contrib.auth import get_user_model
-from django.db.models import Q
+# from django.db.models import Q
 from user.permissions import IsSameUser, IsStaffOrReadOnly
 
 
