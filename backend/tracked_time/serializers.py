@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from backend.task.serializers import TaskSerializer
+from task.serializers import TaskSerializer
 
-from backend.project.models import Project
+from project.models import Project
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class TrackedTimeSerializer(serializers.ModelSerializer):
     type_of_input = serializers.CharField(required=True)
     start = serializers.DateTimeField(required=True)
     stop = serializers.DateTimeField(required=False)

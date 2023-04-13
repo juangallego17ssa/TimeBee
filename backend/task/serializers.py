@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from backend.project.serializers import ProjectSerializer
+from project.serializers import ProjectSerializer
 
-from backend.task.models import Task
+from task.models import Task
 
 
 class TaskSerializer(serializers.ModelSerializer):

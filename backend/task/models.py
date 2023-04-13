@@ -1,5 +1,6 @@
 from django.db import models
-from backend.project.models import Project
+
+from project.models import Project
 
 
 class Task(models.Model):

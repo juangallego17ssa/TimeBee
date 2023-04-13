@@ -1,14 +1,14 @@
 from rest_framework import serializers
 
-# from backend.user.serializers import ProjectUserSerializer
+from user.serializers import UserProjectSerializer
 
-from backend.project.models import Project
+from project.models import Project
 
 
 class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
-    description = serializers.TextField(required=True)
-    # created_by = ProjectUserSerializer(read_only=True)
+    description = serializers.CharField(required=True)
+    created_by = UserProjectSerializer(read_only=True)
 
     class Meta:
         model = Project

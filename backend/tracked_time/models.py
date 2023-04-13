@@ -1,6 +1,6 @@
 from django.db import models
 
-from backend.task.models import Task
+from task.models import Task
 
 
 

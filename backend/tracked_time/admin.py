@@ -1,3 +1,4 @@
 from django.contrib import admin
+from tracked_time.models import Tracked_time
 
-# Register your models here.
+admin.site.register(Tracked_time)
