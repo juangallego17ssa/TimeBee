@@ -47,7 +47,7 @@ urlpatterns = [
     path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('backend/api/projects/', include('project.urls')),
-
+    path('backend/api/trackedtime/', include('tracked_time.urls')),
 ]
 
 if settings.DEBUG:

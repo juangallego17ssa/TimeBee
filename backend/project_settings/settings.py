@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     # own apps
     "user",
     "project",
-    "task",
     "tracked_time",
 
     # 3rd party apps

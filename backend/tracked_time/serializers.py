@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from task.serializers import TaskSerializer
+from project.serializers import ProjectSerializer
 
-from project.models import Project
+from tracked_time.models import TrackedTime
 
 
 class TrackedTimeSerializer(serializers.ModelSerializer):
@@ -10,9 +10,13 @@ class TrackedTimeSerializer(serializers.ModelSerializer):
     start = serializers.DateTimeField(required=True)
     stop = serializers.DateTimeField(required=False)
     time_limit = serializers.IntegerField(required=False)
+    task_name = serializers.CharField(required=False)
     # category = CategorySerializer(required=True)
-    task = TaskSerializer(required=True)
+    project = ProjectSerializer(read_only=True)
 
     class Meta:
-        model = Project
+        model = TrackedTime
         fields = '__all__'
+        extra_fields = {
+            'project': {'read_only': True}
+        }
