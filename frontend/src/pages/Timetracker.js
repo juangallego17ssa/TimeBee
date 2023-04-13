@@ -27,7 +27,10 @@ function Timetracker() {
             <button className="Addbutton flex flex-row flex-wrap justify-center items-center shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% w-16 h-16 rounded-full text-white text-4xl">
               <GiBee className="hover:animate-bounce flex h-8 w-8" />+</button>
           </div>
-          <div className="grid grid-cols-1 justify-start items-center gap-1 bg-stone-100 w-full h-5/6">
+          <div className="grid grid-cols-1 justify-start items-center gap-1 bg-stone-100 w-full h-5/6 overflow-y-scroll">
+            <TimerBar addProject={addProject} />
+            <TimerBar addProject={addProject} />
+            <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />

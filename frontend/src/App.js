@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Timetracker from "./pages/Timetracker";
 import Dashboard from "./pages/Dashboard";
 import Report from "./pages/Report";
+import RouteProtection from "./Components/HOC/RouteProtection";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/timetracker" element={<Timetracker/>} />
-            <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
             <Route path="/reports" element={<Report/>} />
           </Routes>
         </Header>

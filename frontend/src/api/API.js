@@ -113,5 +113,5 @@ export const {
     useGetUsersQuery,
     useSearchUsersQuery,
     useGetUserByIdQuery,
-  } = lunaAPI;
+  } = timeBeeAPI;
 
