@@ -24,16 +24,16 @@ from project_settings import settings
 from user.views import RetrieveUpdateDeleteMyUserView
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="TimeTracker API",
-      default_version='v1',
-      description="TimeTracker Backend API",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="learn@propulsionacademy.com"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,  # Set to False restrict access to protected endpoints
-   permission_classes=(permissions.AllowAny,),  # Permissions for docs access
+    openapi.Info(
+        title="TimeTracker API",
+        default_version='v1',
+        description="TimeTracker Backend API",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="learn@propulsionacademy.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,  # Set to False restrict access to protected endpoints
+    permission_classes=(permissions.AllowAny,),  # Permissions for docs access
 )
 
 urlpatterns = [
@@ -49,6 +49,9 @@ urlpatterns = [
     path('backend/api/me/', RetrieveUpdateDeleteMyUserView.as_view()),
 
     path('backend/api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
+    path('backend/api/projects/', include('project.urls')),
+    path('backend/api/trackedtime/', include('tracked_time.urls')),
 ]
 
 if settings.DEBUG:
