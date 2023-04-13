@@ -3,6 +3,7 @@ import TimeBee from "../../assets/TimeBeeNav.png";
 import { FaClock, FaChartArea, FaFileAlt } from "react-icons/fa";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import React, { useState } from 'react';
+import TimerCountdown from "../TimetrackerComp/TimerCountdown";
 
 function Header({ children }) {
     
@@ -11,7 +12,7 @@ function Header({ children }) {
     let loggedIn = localStorage.getItem("access");
 
     const [clock, setClock] = useState(false);
- 
+
     const goToReports = () => {
         navigate("/reports");
     };
@@ -42,7 +43,6 @@ function Header({ children }) {
         setClock(!clock);
         console.log(clock);
     }
-    
 
   return (
     <>
@@ -66,7 +66,7 @@ function Header({ children }) {
                       :
                       <button onClick={handleClick} className="flex justify-center items-center mx-10 border-solid w-40 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% text-center text-lg p-0.5 rounded-xl text-white">CLOCK IN</button>
                   }
-                <div className="flex flex-wrap font-bold text-xl">08:54:12</div>
+                  <TimerCountdown start={clock} />
             </div>  
 
         </div>

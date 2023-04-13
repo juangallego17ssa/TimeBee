@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { GiBee } from "react-icons/gi";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
+import Timer from '../Components/TimetrackerComp/Timer';
+
+
 function Timetracker() {
 
   const [addProject, setAddProject] = useState('');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaPlayCircle, FaRegPauseCircle, FaRegStopCircle, FaTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
+import Timer from './Timer';
 
 
 function TimerBar(props) {
@@ -41,7 +42,6 @@ function TimerBar(props) {
 
   return (
     <>
-      {/* <div className="flex flex-row flex-wrap justify-center items-center bg-stone-100 w-full h-24"> */}
         <div className="flex flex-row flex-wrap justify-between items-center bg-white w-5/6 h-16 border-2 border-teal-500 rounded-full shadow-lg p-2 ml-9 ">
           <div className="flex flex-wrap flex-row justify-center items-center w-72">
             {edit ?
@@ -54,7 +54,7 @@ function TimerBar(props) {
             }
           </div>
           <div className="leftwraper flex flex-row w-2/5 flex-wrap justify-between items-center mr-3">
-            <div>00:01:00</div>
+            <Timer start={play}/>
             <FiEdit onClick={handleEdit} className="flex flexwrap w-7 h-7 text-black hover:text-yellow-500" />
             {play ?
               <FaRegPauseCircle onClick={handlePlayStop} className="flex flexwrap w-7 h-7 text-black hover:text-pink-500" />
@@ -64,7 +64,6 @@ function TimerBar(props) {
             <FaRegStopCircle className="flex flexwrap w-7 h-7 text-black hover:text-pink-500" />
           </div>
         </div>
-      {/* </div> */}
     </>    
     );
   }
