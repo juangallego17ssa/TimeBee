@@ -67,8 +67,7 @@ function Header({ children }) {
                       <button onClick={handleClick} className="flex justify-center items-center mx-10 border-solid w-40 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% text-center text-lg p-0.5 rounded-xl text-white">CLOCK IN</button>
                   }
                   <TimerCountdown start={clock} />
-            </div>  
-
+            </div> 
         </div>
         {children}
     </>
