@@ -1,3 +1,5 @@
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 
@@ -17,8 +19,28 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = TrackedTimeSerializer
 
-    def perform_create(self, serializer):
-        project = Project.objects.get(created_by=self.request.user, name="unassigned")
+
+    def create(self, request, *args, **kwargs):
+
+        if request.data.get('project_id'):
+            project_id = request.data.get('project_id')
+            try:
+                project = Project.objects.get(id=project_id)
+            except Project.DoesNotExist:
+                return Response({'detail': 'Project does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            project = Project.objects.get(created_by=self.request.user, default="default")
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['project'] = project
+        self.perform_create(serializer, project)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+    def perform_create(self, serializer, project):
         serializer.save(project=project)
 
 

@@ -20,3 +20,17 @@ class TrackedTimeSerializer(serializers.ModelSerializer):
         extra_fields = {
             'project': {'read_only': True}
         }
+
+
+class TrackedTimeSerializer(serializers.ModelSerializer):
+    type_of_input = serializers.CharField(required=True)
+    start = serializers.DateTimeField(required=True)
+    stop = serializers.DateTimeField(required=False)
+    time_limit = serializers.IntegerField(required=False)
+    task_name = serializers.CharField(required=False)
+    # category = CategorySerializer(required=True)
+    project = ProjectSerializer(read_only=True)
+
+    class Meta:
+        model = TrackedTime
+        fields = '__all__'
