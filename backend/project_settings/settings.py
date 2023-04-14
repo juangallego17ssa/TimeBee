@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "project",
     "tracked_time",
     "registration",
+    "public_holiday",
+    "category",
 
     # 3rd party apps
     'rest_framework',
