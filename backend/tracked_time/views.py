@@ -19,7 +19,6 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = TrackedTimeSerializer
 
-
     def create(self, request, *args, **kwargs):
 
         if request.data.get('project_id'):
@@ -38,7 +37,6 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
         self.perform_create(serializer, project)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
 
     def perform_create(self, serializer, project):
         serializer.save(project=project)

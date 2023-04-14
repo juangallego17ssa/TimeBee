@@ -52,6 +52,12 @@ urlpatterns = [
 
     path('backend/api/projects/', include('project.urls')),
     path('backend/api/trackedtime/', include('tracked_time.urls')),
+
+    path('backend/api/publicholiday/', include('public_holiday.urls')),
+
+    path('backend/api/category/', include('category.urls')),
+
+
 ]
 
 if settings.DEBUG:

@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "project",
     "tracked_time",
     "registration",
+    "public_holiday",
+    "category",
 
     # 3rd party apps
     'rest_framework',
@@ -90,23 +92,23 @@ WSGI_APPLICATION = "project_settings.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.environ.get('POSTGRES_DB'),
-#         "PORT": os.environ.get('POSTGRES_PORT'),
-#         "HOST": os.environ.get('POSTGRES_HOST'),
-#         "USER": os.environ.get('POSTGRES_USER'),
-#         "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
-#     }
-# }
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        "PORT": os.environ.get('POSTGRES_PORT'),
+        "HOST": os.environ.get('POSTGRES_HOST'),
+        "USER": os.environ.get('POSTGRES_USER'),
+        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 
 # Password validation
@@ -188,17 +190,17 @@ SWAGGER_SETTINGS = {
     }
 }
 # This is the config for Prod or Docker Local
-# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-# EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
-# EMAIL_HOST = os.environ.get('EMAIL_HOST')
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# EMAIL_PORT = os.environ.get('EMAIL_PORT')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
 
 # This is the config for local over conda env.
-DEFAULT_FROM_EMAIL= 'timebee.propulsion.learn@gmail.com'
-EMAIL_USE_TLS=True
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_HOST_USER= 'timebee.propulsion.learn@gmail.com'
-EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
-EMAIL_PORT=587
+# DEFAULT_FROM_EMAIL= 'timebee.propulsion.learn@gmail.com'
+# EMAIL_USE_TLS=True
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_HOST_USER= 'timebee.propulsion.learn@gmail.com'
+# EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
+# EMAIL_PORT=587
