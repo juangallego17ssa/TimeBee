@@ -17,6 +17,3 @@ class TrackedTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrackedTime
         fields = '__all__'
-        extra_fields = {
-            'project': {'read_only': True}
-        }
