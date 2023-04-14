@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 
@@ -40,6 +40,17 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
 
     def perform_create(self, serializer, project):
         serializer.save(project=project)
+
+
+class ListOwnTrackedTimeView(generics.ListAPIView):
+    """
+    """
+    permission_classes = [AllowAny]
+    serializer_class = TrackedTimeSerializer
+
+    def get_queryset(self):
+        queryset = TrackedTime.objects.filter(project__created_by_id=self.request.user.id)
+        return queryset
 
 
 class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
