@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import "../ReportComp/Calendar_styles.css";
 
 function ReportCalendar() {
+
   const [value, onChange] = useState(new Date());
+
+  console.log(value)
 
   return (
     <div>
-      <Calendar onChange={onChange} value={value} />
+      <Calendar onChange={onChange} value={value} showWeekNumbers={true} 
+          selectRange={true} 
+          defaultValue={value} />
     </div>
   );
 }
