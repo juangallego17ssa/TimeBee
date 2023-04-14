@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Report from "./pages/Report";
 import RouteProtection from "./Components/HOC/RouteProtection";
 import SignUp from "./pages/SignUp";
+import Verification from "./pages/Verification";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signUp" element={<SignUp/>} />
+            <Route path="/signUp" element={<Verification />} />
+            <Route path="/verification" element={<SignUp/>} />
             <Route path="/timetracker" element={<Timetracker/>} />
             <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
             <Route path="/reports" element={<Report/>} />
