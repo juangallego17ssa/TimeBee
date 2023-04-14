@@ -3,6 +3,7 @@ import { GiBee } from "react-icons/gi";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
 import Timer from '../Components/TimetrackerComp/Timer';
 import Calendar from '../Components/TimetrackerComp/Outlook';
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 
 function Timetracker() {
@@ -27,7 +28,11 @@ function Timetracker() {
             <button className="Addbutton flex flex-row flex-wrap justify-center items-center shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% w-16 h-16 rounded-full text-white text-4xl">
               <GiBee className="hover:animate-bounce flex h-8 w-8" />+</button>
           </div>
-          <div className="grid grid-cols-1 justify-start items-center gap-1 bg-stone-100 w-full h-5/6 overflow-y-scroll">
+          <div className="Page flex flex-row bg-stone-100 w-full h-1/6">
+            <div>Monday</div>
+            <FaRegCalendarAlt className="flex flexwrap w-5 h-5 text-black hover:text-pink-500"/>
+          </div>
+          <div className="grid grid-cols-1 justify-start items-center gap-1 bg-stone-100 w-full h-4/6 overflow-y-scroll">
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />

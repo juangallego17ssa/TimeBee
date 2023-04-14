@@ -23,9 +23,9 @@ function Login() {
 
     return (
       <div className="page flex flex-wrap flex-row justify-evenly items-start w-full h-5/6">
-        <GiHoneycomb className="flex flex-col flex-wrap h-full w-1/6 text-amber-500" />
+        <GiHoneycomb className="flex flex-col flex-wrap h-full w-1/6 text-amber-500 opacity-90" />
         <div className="flex flex-wrap flex-col justify-center items-start my-20">
-          <div className="flex text-2xl">LOGIN</div>
+          <div className="flex text-2xl font-semibold">LOGIN</div>
           <div className="flex flex-row justify-center items-start my-10">
             <form onSubmit={handleSubmit}>
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="Email flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
@@ -36,7 +36,7 @@ function Login() {
             <button onClick={(e) => handleSubmit(e)} className="flex flex-wrap justify-center items-center text-white w-32 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80%">LET'S FLY</button>
           </div>
           </div>
-        <GiHoneycomb className="flex flex-wrap flex-col h-full w-1/2 text-amber-500 -rotate-180"/>
+        <GiHoneycomb className="flex flex-wrap flex-col h-full w-1/2 text-amber-500 -rotate-180 opacity-90"/>
       </div>
     );
 }
