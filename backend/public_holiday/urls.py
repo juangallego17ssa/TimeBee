@@ -1,10 +1,9 @@
 from django.urls import path
 
-from public_holiday.views import ListCreatePublicHolidayView, RetrieveUpdateDeletePublicHolidayView, PublicHolidayView
+from public_holiday.views import ListCreatePublicHolidayView
 
 urlpatterns = [
     # /backend/api/publicholiday/
-    path('', ListCreatePublicHolidayView.as_view(), name='public-holiday-list'),
-    path('set/<int:year>/', PublicHolidayView.as_view(), name='public-holiday-generate'),
-    path('<int:id>/', RetrieveUpdateDeletePublicHolidayView.as_view(), name='public-holiday-detail'),
+    path('<int:year>/', ListCreatePublicHolidayView.as_view(), name='public-holiday-list'),
+
 ]

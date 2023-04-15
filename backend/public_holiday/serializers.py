@@ -4,6 +4,8 @@ from public_holiday.models import PublicHoliday
 
 
 class PublicHolidaySerializer(serializers.ModelSerializer):
+    holiday_name = serializers.ReadOnlyField(source='holiday.name')
+
     class Meta:
         model = PublicHoliday
-        fields = '__all__'
+        fields = ('holiday_name', 'date', 'year')
