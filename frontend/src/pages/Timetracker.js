@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { GiBee } from "react-icons/gi";
 import { AiFillTag } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
@@ -9,8 +9,16 @@ import ProjectOptions from '../Components/ProjectTagComp/ProjectOptions';
 
 
 function Timetracker() {
+  const name = useRef();
 
-  const [addProject, setAddProject] = useState('');
+  const [addProject, setAddProject] = useState([
+    {
+     'name':'task 1',
+     'tag_color':'red',
+     'description':'',
+    }
+  ]);
+  const [showProjectTags, setShowProjectTags] = useState(false);
 
   const [ tag , setTag ] = useState(''); 
   console.log(tag)
@@ -24,32 +32,41 @@ function Timetracker() {
     // refetch();
     // perform the search operation here
   };
+  const handelDateChanged =(e) =>{
+    e.preventDefault();
+    console.log('handelDateChanged')
+  }
 
     return (
-      <div className="Page flex flex-row bg-stone-100 w-full h-full">
-        <div className="Leftcontainer flex flex-col flex-wrap bg-teal-500 w-1/2 h-full">
-          <div className="Inputwraper flex flex-row flex-wrap justify-center items-center bg-stone-100 w-full h-1/6">
-            <input placeholder="Add new Busy Bee.." value={addProject} onChange={handleAddChange} class="flex flex-row flex-wrap justify-center items-center bg-white w-5/6 h-16 border-2 border-teal-500 rounded-full caret-teal-500 p-2 m-2 shadow-lg"></input>
-            <button className="Addbutton flex flex-row flex-wrap justify-center items-center shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% w-16 h-16 rounded-full text-white text-4xl">
-              <GiBee className="hover:animate-bounce flex h-8 w-8" />+</button>
-          </div>
-          <div className="Page flex flex-row bg-stone-100 w-full h-1/6">
-            <div>Monday</div>
-            <FaRegCalendarAlt className="flex flexwrap w-5 h-5 text-black hover:text-pink-500"/>
-            <div className="relative flex flex-row flex-wrap justify-start items-center bg-white w-5/6 h-16 border-2 border-teal-500 rounded-full caret-teal-500 p-2 m-2 shadow-lg">
-              <input
-              className="flex flex-row flex-wrap justify-start"
-              placeholder="Add new Busy Bee.." 
-              value={addProject} 
-              onChange={handleAddChange} 
-              />
-              <AiFillTag className='absolute right-1/4 text-2xl'/>
-              <ProjectOptions className="absolute right-0" setTag={setTag}/>
+      <div className=" Page flex flex-col  bg-stone-100 w-full md:flex-row px-10 gap-4">
+
+        <div className=" Leftcontainer w-2/3 flex flex-col">
+        {/* -----  Inputwraper ----- */}
+          <div className="flex flex-row justify-center items-center w-full gap-2 ">
+          <div className='flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md'>
+            <input class="caret-teal-500 py-2 px-4 bg-transparent focus:outline-none flex-grow"
+            placeholder="Add new Busy Bee.."
+            ref={name}
+            onChange={handleAddChange}/>
+            <div className='relative'>
+            <AiFillTag className=' text-zinc-500 text-xl' onClick={()=>{setShowProjectTags(!showProjectTags)}}/>
+            {showProjectTags && <ProjectOptions/>}
             </div>
-            <button class="Addbutton flex flex-row flex-wrap justify-center items-center shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% w-16 h-16 rounded-full text-white text-4xl">
-              <GiBee class="hover:animate-bounce flex h-8 w-8" />+</button>
           </div>
+            <button className="flex justify-center items-center shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% w-16 h-16 rounded-full text-white text-4xl">
+
+            <GiBee className="hover:animate-bounce flex h-8 w-8" />+</button>
+          </div>
+          <div>
+          </div>
+            <div className='flex'>Monday
+            <FaRegCalendarAlt 
+              className="flex flexwrap w-5 h-5 text-black hover:text-pink-500"
+              onClick={handelDateChanged}
+              />
+            </div>
           <div className="grid grid-cols-1 justify-start items-center gap-1 bg-stone-100 w-full h-4/6 overflow-y-scroll">
+            {}
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
@@ -57,11 +74,10 @@ function Timetracker() {
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
             <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
+            {/* <TimerBar addProject={addProject} /> */}
           </div>
         </div>
-        <div className="flex flex-col flex-wrap bg-emerald-400 w-1/2 h-full">
+        <div className="md:w-1/3 flex flex-col  bg-emerald-400">
           <Calendar/>
         </div>
       </div>

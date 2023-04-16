@@ -22,15 +22,18 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
         
     }
   return (
-    <div className=''>
+    <div className='z-20'>
         <RxCross2 className='absolute right-0 m-1 opacity-30 hover:opacity-100' onClick={()=>setShowCreateTag(false)}/>
     <form onSubmit={handleSubmit}
-          className='flex flex-col rounded justify-center items-center shadow bg-white p-6'>
+          className='flex flex-col rounded justify-center items-center shadow bg-white p-6 gap-2'>
         <h2 className='uppercase'>Create new project</h2>
         <label htmlFor='project-name'>
-            <input ref={projectNameRef} id='project-name' placeholder='Enter project name...'/>
+            <input className='border-2 border-zinc-100 focus:outline-teal-400 rounded-full py-0.5 px-3'
+            ref={projectNameRef} 
+            id='project-name' 
+            placeholder='Enter project name...'/>
         </label>
-            <div>Choose a color </div>
+            <div className='text-zinc-300 '>Choose a color </div>
         <fieldset className='flex flex-row gap-1' >
             <div className='relative'>
                 <label htmlFor='red'/>
@@ -38,7 +41,7 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
                        className='appearance-none w-6 h-6 bg-red-400 hover:bg-red-500 checked:bg-red-500 rounded' 
                        checked={tagColor==="red"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="red" && <BsCheck className='absolute top-1 right-1'/>}
+                {tagColor==="red" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='yellow'/>
@@ -46,7 +49,7 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
                        className='appearance-none w-6 h-6 bg-yellow-400 hover:bg-yellow-500 checked:bg-yellow-500 rounded' 
                        checked={tagColor==="yellow"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="yellow" && <BsCheck className='absolute top-1 right-1'/>}
+                {tagColor==="yellow" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='green'/>
@@ -54,7 +57,7 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
                        className='appearance-none w-6 h-6 bg-green-400 hover:bg-green-500 checked:bg-green-500 rounded' 
                        checked={tagColor==="green"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="green" && <BsCheck className='absolute top-1 right-1'/>}
+                {tagColor==="green" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='blue'/>
@@ -62,7 +65,7 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
                        className='appearance-none w-6 h-6 bg-blue-400 hover:bg-blue-500 checked:bg-blue-500 rounded' 
                        checked={tagColor==="blue"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="blue" && <BsCheck className='absolute top-1 right-1'/>}
+                {tagColor==="blue" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='purple'/>
@@ -70,7 +73,7 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
                        className='appearance-none w-6 h-6 bg-purple-400 hover:bg-purple-500 checked:bg-purple-500 rounded' 
                        checked={tagColor==="purple"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="purple" && <BsCheck className='absolute top-1 right-1'/>}
+                {tagColor==="purple" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
            
         
