@@ -50,7 +50,7 @@ function Timetracker() {
     return (
       <div className=" Page flex flex-col  bg-stone-100 w-full md:flex-row px-10 gap-4">
 
-        <div className=" Leftcontainer w-2/3 flex flex-col">
+        <div className=" Leftcontainer md:w-2/3 flex flex-col">
         {/* -----  Inputwraper ----- */}
           <div className="flex flex-row justify-center items-center w-full gap-2 ">
           <div className='flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md'>
