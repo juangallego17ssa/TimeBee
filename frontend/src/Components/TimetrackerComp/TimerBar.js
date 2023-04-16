@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { FaPlayCircle, FaRegPauseCircle, FaRegStopCircle, FaTrashAlt } from "react-icons/fa";
+import {AiFillTag} from 'react-icons/ai'
 import { FiEdit } from "react-icons/fi";
 import Timer from './Timer';
 
 
-function TimerBar(props) {
-  console.log(props)
+function TimerBar({task}) {
+  console.log(task)
 
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -42,12 +43,11 @@ function TimerBar(props) {
   };
 
   return (
-    <div className=" bg-white flex justify-between items-center py-2 px-4 rounded-full shadow-md">
+    <div className=" bg-white flex justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
         <div className="relative flex items-center">
-            {/* {edit ? */}
                 <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
                   // placeholder="BusyBee1"
-                  value={props.name}
+                  value={task.name}
                   disabled={!edit}
                   onChange={handleChangeBusyBee} 
                   onKeyDown={handleKeyDown} 
@@ -56,8 +56,7 @@ function TimerBar(props) {
             {edit &&
               <FaTrashAlt className="absolute right-0 text-md text-zinc-300 hover:text-red-500"/>
             }
-              {/* <div className="">{updated}</div> */}
-            {/* } */}
+            <AiFillTag className={`text-${task.tag_color?task.tag_color:'zinc'}-500`}/>
             </div>
             <Timer className="border-2 border-red w-24" start={play}/>
             <FiEdit onClick={()=>{setEdit(true)}}

@@ -13,10 +13,20 @@ function Timetracker() {
 
   const [addProject, setAddProject] = useState([
     {
-     'name':'task 1',
-     'tag_color':'red',
+     'name':'task 5',
+     'tag_color':'green',
      'description':'',
-    }
+    },
+    {
+     'name':'task 2',
+     'tag_color':'blue',
+     'description':'',
+    },
+    {
+     'name':'task 3',
+     'tag_color':'',
+     'description':'',
+    },
   ]);
   const [showProjectTags, setShowProjectTags] = useState(false);
 
@@ -65,15 +75,9 @@ function Timetracker() {
               onClick={handelDateChanged}
               />
             </div>
-          <div className="grid grid-cols-1 justify-start items-center gap-1 bg-stone-100 w-full h-4/6 overflow-y-scroll">
-            {}
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
-            <TimerBar addProject={addProject} />
+          <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full h-4/6 md:h-screen overflow-y-scroll">
+            {addProject.map(task=><TimerBar key={task.name} task={task} />)}
+         
             {/* <TimerBar addProject={addProject} /> */}
           </div>
         </div>
