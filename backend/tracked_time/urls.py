@@ -6,5 +6,4 @@ urlpatterns = [
     path('', ListCreateTrackedTimeView.as_view()),
     path('own/', ListOwnTrackedTimeView.as_view()),
     path('<int:tracked_time_id>/', RetrieveUpdateDeleteTrackedTimeView.as_view()),
-
 ]
