@@ -22,14 +22,14 @@ export const timeBeeAPI = createApi({
 
     registerUser: builder.mutation({
       query: (email) => ({
-        url: 'auth/registration/',
+        url: 'registration/',
         method: 'POST',
         body: { email },
       }),
     }),
     validateRegistration: builder.mutation({
       query: (data) => ({
-        url: 'auth/registration/validation/',
+        url: 'registration/validate/',
         method: 'POST',
         body: data,
       }),
