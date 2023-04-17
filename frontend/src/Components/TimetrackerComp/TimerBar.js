@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { FaPlayCircle, FaRegPauseCircle, FaRegStopCircle, FaTrashAlt } from "react-icons/fa";
+import {AiFillTag} from 'react-icons/ai'
 import { FiEdit } from "react-icons/fi";
 import Timer from './Timer';
 
 
-function TimerBar(props) {
+function TimerBar({task}) {
+  console.log(task)
 
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -41,30 +43,37 @@ function TimerBar(props) {
   };
 
   return (
-    <>
-        <div className="flex flex-row flex-wrap justify-between items-center bg-white w-5/6 h-16 border-2 border-teal-500 rounded-full shadow-lg p-2 ml-9 ">
-          <div className="flex flex-wrap flex-row justify-center items-center w-72">
-            {edit ?
-              <div className="flex flex-wrap flex-row justify-center items-center ml-9 w-72">
-                <input placeholder="BusyBee1" value={BusyBee} onChange={handleChangeBusyBee} onKeyDown={handleKeyDown} className="InputEdit flex flex-wrap w-40 h-7 pl-2 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg " />
-                <FaTrashAlt className="flex flexwrap w-7 h-7 ml-10 text-black hover:text-yellow-500"/>
-              </div>
-              :
-              <div className="InputEdit flex flex-wrap w-40 h-7">{updated}</div>
+    <div className=" bg-white flex justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
+        <div className="relative flex items-center">
+                <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
+                  // placeholder="BusyBee1"
+                  value={task.name}
+                  disabled={!edit}
+                  onChange={handleChangeBusyBee} 
+                  onKeyDown={handleKeyDown} 
+                 />
+              
+            {edit &&
+              <FaTrashAlt className="absolute right-0 text-md text-zinc-300 hover:text-red-500"/>
             }
-          </div>
-          <div className="leftwraper flex flex-row w-2/5 flex-wrap justify-between items-center mr-3">
-            <Timer start={play}/>
-            <FiEdit onClick={handleEdit} className="flex flexwrap w-7 h-7 text-black hover:text-yellow-500" />
+            <AiFillTag className={`text-${task.tag_color?task.tag_color:'zinc'}-500`}/>
+            </div>
+            <Timer className="border-2 border-red w-24" start={play}/>
+            <FiEdit onClick={()=>{setEdit(true)}}
+              className="text-md text-zinc-400 hover:text-yellow-500" />
+          
+          <div className="flex gap-2 ">
             {play ?
-              <FaRegPauseCircle onClick={handlePlayStop} className="flex flexwrap w-7 h-7 text-black hover:text-pink-500" />
+              <FaRegPauseCircle onClick={handlePlayStop} 
+              className="text-2xl text-zinc-400 hover:text-rose-500" />
             :
-              <FaPlayCircle onClick={handlePlayStop} className="flex flexwrap w-7 h-7 text-black hover:text-emerald-500" />
+              <FaPlayCircle onClick={handlePlayStop} 
+              className="text-2xl text-zinc-400 hover:text-emerald-500" />
             }   
-            <FaRegStopCircle className="flex flexwrap w-7 h-7 text-black hover:text-pink-500" />
+            <FaRegStopCircle 
+              className="text-2xl text-zinc-400 hover:text-rose-500" />
           </div>
-        </div>
-    </>    
+    </div>    
     );
   }
   

@@ -30,7 +30,7 @@ function TimerCountdown(props) {
     };
 
     return (
-        <div className="flex flex-wrap font-bold text-xl">{TimeFormat(timer)}</div>
+        <div className="font-bold text-m w-16">{TimeFormat(timer)}</div>
     )
 }
 export default TimerCountdown; 

@@ -12,6 +12,15 @@ function Header({ children }) {
     let loggedIn = localStorage.getItem("access");
 
     const [clock, setClock] = useState(false);
+    
+    let today = new Date();
+    let options = {
+        weekday:'short',
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+    } 
+
 
     const goToReports = () => {
         navigate("/reports");
@@ -44,31 +53,49 @@ function Header({ children }) {
         console.log(clock);
     }
 
+
   return (
     <>
-        <div className="flex flex-row bg-stone-100 w-screen h-56 md:h-16 justify-between m-2 items-center flex-wrap">
-            <div className="flex content-center w-48 h-12 ml-5 bg-stone-100 flex-wrap">
-                <img onClick={goToHome} src={TimeBee}></img>  
-            </div>
-            <div className="flex flex-row justify-end items-center w-auto md:w-2/5 h-8 bg-stone-100 flex-wrap">                     
-                <FaClock onClick={goToTimetracker} className="flex mx-10 bg-stone-100 w-10 h-6 text-zinc-500   hover:text-pink-500" />
-                <FaChartArea onClick={goToDashboard} className="flex mx-10 bg-stone-100 w-10 h-6 text-zinc-500 hover:text-orange-500"/>
-                <FaFileAlt onClick={goToReports} className="flex mx-10 bg-stone-100 w-10 h-6 text-zinc-500 hover:text-yellow-500"/>
-            </div>
-            <div className="flex flex-row justify-end items-center w-auto h-8 mr-7 bg-stone-100 flex-wrap">
-                <button className="flex flex-row border-solid justify-center items-center mx-2 w-15 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% text-center rounded-3xl">
-                    <MdKeyboardArrowLeft className="flex w-10 h-8 text-white" />
-                    <p className="flex flex-wrap justify-center content-center p-0.5 text-white font-semibold text-xl text-center">the Date</p>
-                    <MdKeyboardArrowRight className="flex w-10 h-8 text-white" />  
-                </button>
-                  {clock ?
-                      <button onClick={handleClick} className="flex justify-center items-center mx-10 border-2 border-teal-500 w-40 h-6 bg-white text-center text-lg p-0.5 rounded-2xl text-teal-500">CLOCK OUT</button>
-                      :
-                      <button onClick={handleClick} className="flex justify-center items-center mx-10 border-solid w-40 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% text-center text-lg p-0.5 rounded-xl text-white">CLOCK IN</button>
-                  }
-                  <TimerCountdown start={clock} />
+    {/* ------- HEADER ------ */}
+    <div className="relative m-0 flex flex-row justify-between bg-stone-100 w-screen p-2 shadow-sm">
+        {/* ------- logo ------ */}
+        <img onClick={goToHome} src={TimeBee}className="h-10"></img>  
+
+        <div className="flex flex-col-reverse items-end md:flex-row md:items-center gap-4">
+        {/* ------- navigation icons ------ */}
+        <div className=" flex flex-row gap-8">                     
+            <FaClock onClick={goToTimetracker} 
+                className="text-zinc-500 hover:text-pink-500" />
+            <FaChartArea onClick={goToDashboard} 
+                className=" text-zinc-500 hover:text-orange-500"/>
+            <FaFileAlt onClick={goToReports} 
+                className=" text-zinc-500 hover:text-yellow-500"/>
+        </div>
+            <div className="flex flex-row items-center gap-2">
+                <p className="p-0.5 text-black font-semibold ">
+                    {today.toLocaleDateString('en-GB',options)}</p>
+            
+                <TimerCountdown start={clock} />
+
+                {clock ?
+                    <button onClick={handleClick}
+                    className="w-28 h-10 rounded-full  text-teal-500 border-2 text-sm font-semibold
+                     border-teal-500 bg-transparent"
+                    >CLOCK OUT</button>
+                    :
+                    <button onClick={handleClick}
+                    className="w-28 h-10 rounded-full  text-white text-sm font-semibold
+                    bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
+                    >CLOCK IN</button>
+                }
+                <div className="w-10 h-10 bg-slate-400 rounded-full">
+
+                </div>
             </div> 
         </div>
+
+    </div>
+    {/* ------- PAGES ------ */}
         {children}
     </>
   );
