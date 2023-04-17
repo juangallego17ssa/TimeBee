@@ -13,6 +13,8 @@ function TimerBar({task}) {
   const [BusyBee, setBusyBee] = useState('');
   const [updated, setUpdated] = useState('');
 
+  const [showProject, setShowProject] = useState(false)
+
   const handleChangeBusyBee = (event) => {
     setBusyBee(event.target.value);
   }
@@ -47,16 +49,23 @@ function TimerBar({task}) {
         <div className="relative flex items-center">
                 <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
                   // placeholder="BusyBee1"
-                  value={task.name}
+                  value={task.task_name}
                   disabled={!edit}
                   onChange={handleChangeBusyBee} 
                   onKeyDown={handleKeyDown} 
                  />
               
             {edit &&
-              <FaTrashAlt className="absolute right-0 text-md text-zinc-300 hover:text-red-500"/>
+              <FaTrashAlt className="absolute left-36 text-md text-zinc-300 hover:text-red-500"/>
             }
-            <AiFillTag className={`text-${task.tag_color?task.tag_color:'zinc'}-500`}/>
+            <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-500`}
+                      onClick={()=>setShowProject(!showProject)}/>
+            <p>{task.project.name?task.project.name:''}</p>
+                      {/* {showProject && 
+                        <div>
+                          
+                        </div>
+                      } */}
             </div>
             <Timer className="border-2 border-red w-24" start={play}/>
             <FiEdit onClick={()=>{setEdit(true)}}

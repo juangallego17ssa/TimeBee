@@ -7,31 +7,36 @@ import Calendar from '../Components/TimetrackerComp/Outlook';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import ProjectOptions from '../Components/ProjectTagComp/ProjectOptions';
 
+import { useGetProjectsQuery } from '../api/API';
+
 
 function Timetracker() {
   const name = useRef();
+  // const { data : projects, isLoading, error, refetch } = useGetProjectsQuery()
+  // console.log(projects);
 
   const [addProject, setAddProject] = useState([
     {
-     'name':'task 5',
-     'tag_color':'green',
-     'description':'',
-    },
-    {
-     'name':'task 2',
-     'tag_color':'blue',
-     'description':'',
-    },
-    {
-     'name':'task 3',
-     'tag_color':'',
-     'description':'',
+     "id":"1",
+     "type_of_input":"00",
+     "start":"2023-04-13T23:22:22Z",
+     "task_name":'task 5',
+     "project":{
+        "id":"1",
+        "name":"frontend",
+        "description":"react app",
+        "created_by":{
+          "id":"1",
+          "username":"John Doe",
+        },
+        "tag_color":"green",
+     },
     },
   ]);
   const [showProjectTags, setShowProjectTags] = useState(false);
 
   const [ tag , setTag ] = useState(''); 
-  console.log(tag)
+  // console.log(tag)
 
   const handleAddChange = (event) => {
     setAddProject(event.target.value);
@@ -48,9 +53,8 @@ function Timetracker() {
   }
 
     return (
-      <div className=" Page flex flex-col  bg-stone-100 w-full md:flex-row px-10 gap-4">
-
-        <div className=" Leftcontainer md:w-2/3 flex flex-col">
+      <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:flex-row gap-4">
+        <div className=" Leftcontainer md:w-3/5 flex flex-col px-6">
         {/* -----  Inputwraper ----- */}
           <div className="flex flex-row justify-center items-center w-full gap-2 ">
           <div className='flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md'>
@@ -81,7 +85,7 @@ function Timetracker() {
             {/* <TimerBar addProject={addProject} /> */}
           </div>
         </div>
-        <div className="md:w-1/3 flex flex-col  bg-emerald-400">
+        <div className="md:w-2/5 flex-grow flex flex-col bg-emerald-400 px-6">
           <Calendar/>
         </div>
       </div>

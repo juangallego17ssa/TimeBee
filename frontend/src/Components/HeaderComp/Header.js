@@ -59,6 +59,7 @@ function Header({ children }) {
     {/* ------- HEADER ------ */}
     <div className="relative m-0 flex flex-row justify-between bg-stone-100 w-screen p-2 shadow-sm">
         {/* ------- logo ------ */}
+      
         <img onClick={goToHome} src={TimeBee}className="h-10"></img>  
 
         <div className="flex flex-col-reverse items-end md:flex-row md:items-center gap-4">

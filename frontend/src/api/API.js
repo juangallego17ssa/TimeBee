@@ -96,6 +96,20 @@ export const timeBeeAPI = createApi({
     getUserById: builder.query({
       query: (userId) => `users/${userId}/`,
     }),
+
+    //   Prolects  //
+    getProjects: builder.query({
+      query: () => 'projects/',
+    }),
+    searchProject: builder.query({
+      query: (searchString) => ({
+        url: `projects/?search=${searchString}/`,
+      }),
+    }),
+    getProjectById: builder.query({
+      query: (projectId) => `projects/${projectId}/`,
+    }),
+
   }),
 });
 
@@ -107,11 +121,18 @@ export const {
     useVerifyTokenMutation,
     useResetPasswordMutation,
     useValidatePasswordResetMutation,
+
     //users
     useGetUserProfileQuery,
     useUpdateUserProfileMutation,
     useGetUsersQuery,
     useSearchUsersQuery,
     useGetUserByIdQuery,
+    
+    //project
+    useGetProjectsQuery,
+    useSearchProjectQuery,
+    useGetProjectsByIdQuery,
+
   } = timeBeeAPI;
 
