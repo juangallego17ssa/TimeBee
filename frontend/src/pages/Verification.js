@@ -50,7 +50,7 @@ function Verification() {
 
     const handleClick = async (event) => {
         console.log(email)
-        registerUser({ email, validation_code: validationCode, username: userName, workload, password, first_name: firstName, last_name: lastName })
+        registerUser({ email, validation_code: validationCode, username: userName, workload, password, first_name: firstName, last_name: lastName, password_repeat: passwordRepeat })
     }
 
     const goToHome =  () => {
