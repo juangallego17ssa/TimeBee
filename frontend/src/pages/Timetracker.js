@@ -81,7 +81,7 @@ function Timetracker() {
             {/* <TimerBar addProject={addProject} /> */}
           </div>
         </div>
-        <div className="md:w-1/3 flex flex-col  bg-emerald-400">
+        <div className=" md:w-1/3 flex flex-col  bg-emerald-400">
           <Calendar/>
         </div>
       </div>

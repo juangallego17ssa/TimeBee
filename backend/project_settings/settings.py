@@ -27,7 +27,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://207.154.220.244', ]
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'https://207.154.220.244', 'https://timebee.propulsion-learn.ch' ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -199,12 +199,12 @@ SWAGGER_SETTINGS = {
 # EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
 # EMAIL_PORT=587
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 # DEFAULT_FROM_EMAIL= 'timebee.propulsion.learn@gmail.com'
 # EMAIL_USE_TLS=True
@@ -213,16 +213,16 @@ SWAGGER_SETTINGS = {
 # EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
 # EMAIL_PORT=587
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        "PORT": os.environ.get('POSTGRES_PORT'),
-        "HOST": os.environ.get('POSTGRES_HOST'),
-        "USER": os.environ.get('POSTGRES_USER'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('POSTGRES_DB'),
+#         "PORT": os.environ.get('POSTGRES_PORT'),
+#         "HOST": os.environ.get('POSTGRES_HOST'),
+#         "USER": os.environ.get('POSTGRES_USER'),
+#         "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
+#     }
+# }
 
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
