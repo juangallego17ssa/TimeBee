@@ -23,9 +23,9 @@ function Verification() {
         setUserName(event.target.value);
     }
 
-    const [location, setLocation] = useState("")
-    const handleLocationChange = (event) => {
-        setLocation(event.target.value);
+    const [workload, setWorkload] = useState("")
+    const handleWorkloadChange = (event) => {
+        setWorkload(event.target.value);
     }
 
     const [password, setPassword] = useState("")
@@ -33,42 +33,44 @@ function Verification() {
         setPassword(event.target.value);
     }
 
-    const [passwordRepeat, setPasswordRepeat] = useState("")
-    const handlePasswordRepeatChange = (event) => {
-        setPasswordRepeat(event.target.value);
-    }
+    // const [passwordRepeat, setPasswordRepeat] = useState("")
+    // const handlePasswordRepeatChange = (event) => {
+    //     setPasswordRepeat(event.target.value);
+    // }
 
     const handleClick = async (event) => {
         console.log(email)
-        registerUser({email, validation_code: validationCode, username: userName, location, password, password_repeat: passwordRepeat})
+        registerUser({ email, validation_code: validationCode, username: userName, workload, password })
     }
 
     const goToHome =  () => {
-        navigate('/')
+        navigate('/home')
     }
     const goToLogin =  () => {
-        navigate('/login')
+        navigate('/')
     }
 
     return (
         <div>
-            <div>
-                <div className="flex justify-start items-center font-semibold text-2xl w-full h-1/6">VERIFICATION</div>
+            <div className="page flex flex-col justify-center items-center w-full md:flex-col p-10 gap-4">
+                <div className="flex justify-center items-center font-semibold text-2xl w-full">VERIFICATION</div>
                 {isSuccess ? (<>
-                    <div>Registration successful!</div>
+                    <div className="flex justify-center items-center font-semibold text-2xl w-full">Registration successful!</div>
                     <button onClick={goToLogin} className="flex justify-center items-center border-solid rounded-full text-white w-40 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80%">Go to Login</button>
                     <button onClick={goToHome}className="flex justify-center items-center border-solid rounded-full text-white w-40 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80%">Go to Home</button>
                     </>
                 ) : (
-                    <form>
-                        <input type="text" placeholder="Email address" value={email} onChange={handleEmailChange} className="Email flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-                        <input type="text" placeholder="Validation Code" value={validationCode} onChange={handleValidationCodeChange} className="validationcode flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-                        <input type="text" placeholder="Username" value={userName} onChange={handleUserNameChange} className="username flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-                        <input type="text" placeholder="Workload in % (e.g. 80%)" value={location} onChange={handleLocationChange} className="workload flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-                        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} className="password1 flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-                        <input type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange} className="password2 flex flex-wrap px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-                        {isError && <div>There was an error: {error.message}</div>}
-                        <button onClick={() => handleClick()} className="flex justify-center items-center border-solid rounded-full text-white w-52 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80%">Finish registration</button>
+                    <form className="form flex flex-col gap-4">
+                        <input type="text" placeholder="Email address" value={email} onChange={handleEmailChange} required className="Email flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+                        <input type="text" placeholder="Validation Code" value={validationCode} onChange={handleValidationCodeChange} required className="validationcode flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+                        <input type="text" placeholder="Username" value={userName} onChange={handleUserNameChange} required className="username flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+                        <input type="text" placeholder="Workload in % (e.g. 80%)" value={workload} onChange={handleWorkloadChange} className="workload flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+                        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required className="password1 flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+                        {/* <input type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange} required className="password2 flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/> */}
+                        {isError && <div className="flex justify-center items-center font-semibold text-2xl w-full">There was an error: {error.message}</div>}
+                        <div className="buttonwrap flex flex-wrap flex-col justify-center items-center w-60 h-10">
+                            <button onClick={() => handleClick()} className="flex justify-center items-center border-solid rounded-full text-white w-52 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80%">Finish registration</button>
+                        </div>
                     </form>
                 )}
             </div>

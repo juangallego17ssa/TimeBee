@@ -18,10 +18,10 @@ function App() {
       <div className="flex box-border flex-col w-screen h-screen bg-stone-100" >
         <Header>
           <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signUp" element={<Verification />} />
-            <Route path="/verification" element={<SignUp/>} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/verification" element={<Verification/>} />
             <Route path="/timetracker" element={<Timetracker/>} />
             <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
             <Route path="/reports" element={<Report/>} />
