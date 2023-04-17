@@ -29,7 +29,7 @@ function Timer(props) {
     };
 
     return (
-        <div>{TimeFormat(timer)}</div>
+        <div className='w-20'>{TimeFormat(timer)}</div>
     )
 }
 export default Timer;
