@@ -1,3 +1,4 @@
+from rest_framework import generics
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 
@@ -18,6 +19,17 @@ class ListCreateProjectView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
+class ListOwnProjectView(generics.ListAPIView):
+    """
+    """
+    permission_classes = [AllowAny]
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        queryset = Project.objects.filter(created_by_id=self.request.user.id)
+        return queryset
 
 
 class RetrieveUpdateDeleteProjectView(RetrieveUpdateDestroyAPIView):

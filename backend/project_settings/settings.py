@@ -16,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -88,28 +87,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project_settings.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        "PORT": os.environ.get('POSTGRES_PORT'),
-        "HOST": os.environ.get('POSTGRES_HOST'),
-        "USER": os.environ.get('POSTGRES_USER'),
-        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
-    }
-}
-
 # DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('POSTGRES_DB'),
+#         "PORT": os.environ.get('POSTGRES_PORT'),
+#         "HOST": os.environ.get('POSTGRES_HOST'),
+#         "USER": os.environ.get('POSTGRES_USER'),
+#         "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
 #     }
 # }
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -129,7 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -140,7 +136,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -153,7 +148,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 MEDIA_URL = 'media-files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media-files') if DEBUG else '/media-files/'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -190,12 +184,12 @@ SWAGGER_SETTINGS = {
     }
 }
 # This is the config for Prod or Docker Local
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
-EMAIL_HOST = os.environ.get('EMAIL_HOST')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = os.environ.get('EMAIL_PORT')
+# DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+# EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT')
 
 # This is the config for local over conda env.
 # DEFAULT_FROM_EMAIL= 'timebee.propulsion.learn@gmail.com'
@@ -204,3 +198,35 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 # EMAIL_HOST_USER= 'timebee.propulsion.learn@gmail.com'
 # EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
 # EMAIL_PORT=587
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# DEFAULT_FROM_EMAIL= 'timebee.propulsion.learn@gmail.com'
+# EMAIL_USE_TLS=True
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_HOST_USER= 'timebee.propulsion.learn@gmail.com'
+# EMAIL_HOST_PASSWORD= 'rixzgonpclfygght'
+# EMAIL_PORT=587
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        "PORT": os.environ.get('POSTGRES_PORT'),
+        "HOST": os.environ.get('POSTGRES_HOST'),
+        "USER": os.environ.get('POSTGRES_USER'),
+        "PASSWORD": os.environ.get('POSTGRES_PASSWORD'),
+    }
+}
+
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
