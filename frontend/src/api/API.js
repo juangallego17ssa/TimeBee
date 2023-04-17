@@ -76,28 +76,109 @@ export const timeBeeAPI = createApi({
 
     // User endpoints
     getUserProfile: builder.query({
-      query: () => 'users/me/',
+      query: () => 'me/',
     }),
     updateUserProfile: builder.mutation({
       query: (body) => ({
-        url: 'users/me/',
+        url: 'me/',
         method: 'PATCH',
         body,
       }),
     }),
-    getUsers: builder.query({
-      query: () => 'users/list/',
+    
+    // searchUsers: builder.query({
+    //   query: (searchString) => ({
+    //     url: `users/?search=${searchString}/`,
+    //   }),
+    // }),
+
+    //Public Holidays
+    getpublicHolidayYear: builder.query({
+      query: (year) => `publicholiday/${year}/`,
     }),
-    searchUsers: builder.query({
-      query: (searchString) => ({
-        url: `users/?search=${searchString}/`,
+
+    //Category
+    getCategory: builder.query({
+      query: () => 'category/',
+    }),
+
+    //Projects/Task
+    getProjects: builder.query({
+      query: () => 'projects/'
+    }),
+
+    getOwnProjects: builder.query({
+      query: () => 'projects/own/'
+    }),
+
+    createProjects: builder.mutation({
+      query: (body) => ({
+        url: 'projects/',
+        method: 'POST',
+        body,
       }),
     }),
-    getUserById: builder.query({
-      query: (userId) => `users/${userId}/`,
+
+    getProjectByID: builder.query({
+      query: (projectId) => `projects/${projectId}/`
     }),
+
+    updateProjectByID: builder.mutation({
+      query: (projectId, body) => ({
+        url: `projects/${projectId}/`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
+
+    deleteProjectByID: builder.mutation({
+      query: (projectId) => ({
+        url: `projects/${projectId}/`,
+        method: 'DELETE',
+      })
+    }),
+
+    //Tracked Time
+    getTrackedTime: builder.query({
+      query: () => 'trackedtime/'
+    }),
+
+    getOwnTrackedTime: builder.query({
+      query: () => 'trackedtime/own/'
+    }),
+
+    createTrackedTime: builder.mutation({
+      query: (body) => ({
+        url: 'trackedtime/',
+        method: 'POST',
+        body,
+      }),
+    }),
+
+    getTrackedTimeByID: builder.query({
+      query: (trackedtimeId) => `trackedtime/${trackedtimeId}/`
+    }),
+
+    updateTrackedTimeByID: builder.mutation({
+      query: (trackedtimeId, body) => ({
+        url: `trackedtime/${trackedtimeId}/`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
+
+    deleteTrackedTimeByID: builder.mutation({
+      query: (trackedtimeId) => ({
+        url: `trackedtime/${trackedtimeId}/`,
+        method: 'DELETE',
+      })
+    }),
+
   }),
 });
+
+
+
 
 export const {
     useRegisterUserMutation,
@@ -110,8 +191,23 @@ export const {
     //users
     useGetUserProfileQuery,
     useUpdateUserProfileMutation,
-    useGetUsersQuery,
-    useSearchUsersQuery,
-    useGetUserByIdQuery,
+    //Public Holidays
+    useGetpublicHolidayYearQuery,
+    //Category
+    useGetCategoryQuery,
+    //Projects
+    useGetProjectsQuery,
+    useGetOwnProjectsQuery,
+    useCreateProjectsMutation,
+    useGetProjectByIDQuery,
+    useUpdateProjectByIDMutation,
+    useDeleteProjectByIDMutation,
+    //TrackedTime
+    useGetTrackedTimeQuery,
+    useGetOwnTrackedTimeQuery,
+    useCreateTrackedTimeMutation,
+    useGetTrackedTimeByIDQuery,
+    useUpdateTrackedTimeByIDMutation,
+    useDeleteTrackedTimeByIDMutation,
   } = timeBeeAPI;
 
