@@ -54,10 +54,10 @@ function Header({ children }) {
     const handleClick=()=> {
         setClock(!clock);
         console.log(clock);
-        console.log(Date.now())
+        let currentTime = new Date();
         const data={
             "type_of_input": 0,
-            "start": "2023-04-18T09:00:00Z"
+            "start": currentTime
         }
         createTrackedTime(data)
     }
