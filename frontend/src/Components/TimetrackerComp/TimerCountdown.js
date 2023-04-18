@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
+import Timer from './Timer';
+
 
 
 
@@ -26,9 +28,12 @@ function TimerCountdown(props) {
         const mins_ = mins % 60
         const seconds_ = seconds % 60;
         const hours = Math.floor(mins / 60)
-        return (hours == 0 ? "00" : hours.toString()) + ":"+ (mins_ == 0 ? "00" : mins_.toString()) + ":" + (seconds_ == 0 ? "00" : seconds_.toString());
+        // return (hours == 0 ? "00" : hours.toString()) + ":"+ (mins_ == 0 ? "00" : mins_.toString()) + ":" + (seconds_ == 0 ? "00" : seconds_.toString());
+        return (
+            (hours < 10? '0'+hours.toString():hours.toString()) +':'+( mins_ < 10? '0'+mins_.toString():mins_.toString())+':'+( seconds_ < 10? '0'+seconds_.toString():seconds_.toString())
+            );
     };
-
+    
     return (
         <div className="font-bold text-m w-16">{TimeFormat(timer)}</div>
     )

@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const baseUrl = process.env.NODE_ENV === 'production'
-  ? process.env.REACT_APP_API_BASE_URL_PROD
-  : process.env.REACT_APP_API_BASE_URL_DEV;
+const baseUrl = 'https://timebee.propulsion-learn.ch/backend/api/'
+// const baseUrl = process.env.NODE_ENV === 'production'
+//   ? process.env.REACT_APP_API_BASE_URL_PROD
+//   : process.env.REACT_APP_API_BASE_URL_DEV;
 
 
 export const timeBeeAPI = createApi({
@@ -16,9 +17,8 @@ export const timeBeeAPI = createApi({
         }
         return headers;
       },
-    }),
+    }),tagTypes: ['Tasks','Project'],
   endpoints: (builder) => ({
-
 
     registerUser: builder.mutation({
       query: (email) => ({
@@ -27,6 +27,7 @@ export const timeBeeAPI = createApi({
         body: { email },
       }),
     }),
+
     validateRegistration: builder.mutation({
       query: (data) => ({
         url: 'registration/validate/',
@@ -34,24 +35,28 @@ export const timeBeeAPI = createApi({
         body: data,
       }),
     }),
+
     getToken: builder.mutation({
       query: ({ email, password }) => ({
         url: 'auth/token/',
         method: 'POST',
         body: { email, password },
       }),
+
       transformResponse: (response) => {
         const { access: token } = response;
         localStorage.setItem('access', token); // Store the token in local storage
         return { data: token };
       },
     }),
+
     refreshToken: builder.mutation({
       query: () => ({
         url: 'auth/token/refresh/',
         method: 'POST',
       }),
     }),
+
     verifyToken: builder.mutation({
       query: (token) => ({
         url: 'auth/token/verify/',
@@ -59,6 +64,7 @@ export const timeBeeAPI = createApi({
         body: { token },
       }),
     }),
+
     resetPassword: builder.mutation({
       query: (email) => ({
         url: 'auth/password-reset/',
@@ -66,6 +72,7 @@ export const timeBeeAPI = createApi({
         body: { email },
       }),
     }),
+
     validatePasswordReset: builder.mutation({
       query: (data) => ({
         url: 'auth/password-reset/validate/',
@@ -78,6 +85,7 @@ export const timeBeeAPI = createApi({
     getUserProfile: builder.query({
       query: () => 'me/',
     }),
+
     updateUserProfile: builder.mutation({
       query: (body) => ({
         url: 'me/',
@@ -108,7 +116,8 @@ export const timeBeeAPI = createApi({
     }),
 
     getOwnProjects: builder.query({
-      query: () => 'projects/own/'
+      query: () => 'projects/own/',
+      providesTags:['Project']
     }),
 
     createProjects: builder.mutation({
@@ -117,6 +126,7 @@ export const timeBeeAPI = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags:['Project']
     }),
 
     getProjectByID: builder.query({
@@ -129,13 +139,15 @@ export const timeBeeAPI = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags:['Project']
     }),
 
     deleteProjectByID: builder.mutation({
       query: (projectId) => ({
         url: `projects/${projectId}/`,
         method: 'DELETE',
-      })
+      }),
+      invalidatesTags:['Project']
     }),
 
     createProjectByUsername: builder.mutation({
@@ -148,11 +160,13 @@ export const timeBeeAPI = createApi({
 
     //Tracked Time
     getTrackedTime: builder.query({
-      query: () => 'trackedtime/'
+      query: () => 'trackedtime',
+      providesTags:['Tasks']
     }),
 
     getOwnTrackedTime: builder.query({
-      query: () => 'trackedtime/own/'
+      query: () => 'trackedtime/own/',
+      providesTags:['Tasks']
     }),
 
     createTrackedTime: builder.mutation({
@@ -161,10 +175,12 @@ export const timeBeeAPI = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags:['Tasks']
     }),
 
     getTrackedTimeByID: builder.query({
-      query: (trackedtimeId) => `trackedtime/${trackedtimeId}/`
+      query: (trackedtimeId) => `trackedtime/${trackedtimeId}/`,
+      providesTags:['Tasks']
     }),
 
     updateTrackedTimeByID: builder.mutation({
@@ -173,13 +189,15 @@ export const timeBeeAPI = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags:['Tasks']
     }),
 
     deleteTrackedTimeByID: builder.mutation({
       query: (trackedtimeId) => ({
         url: `trackedtime/${trackedtimeId}/`,
         method: 'DELETE',
-      })
+      }),
+      invalidatesTags:['Tasks']
     }),
 
   }),
@@ -196,6 +214,7 @@ export const {
     useVerifyTokenMutation,
     useResetPasswordMutation,
     useValidatePasswordResetMutation,
+
     //users
     useGetUserProfileQuery,
     useUpdateUserProfileMutation,

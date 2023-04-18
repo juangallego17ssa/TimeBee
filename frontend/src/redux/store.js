@@ -16,4 +16,4 @@ export const store = configureStore({
     getDefaultMiddleware().concat(timeBeeAPI.middleware),
 });
 
-  setupListeners(store.dispatch);
+setupListeners(store.dispatch);
