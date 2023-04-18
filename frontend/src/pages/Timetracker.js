@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { GiBee } from "react-icons/gi";
 import { AiFillTag } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
@@ -154,14 +154,14 @@ function Timetracker() {
         </div>
       </div>
       <div className=" md:w-1/3 flex justify-center h-full">
-        <CalendarComponent
+        {/* <CalendarComponent
           events={events}
           BackgroundEvent={BackgroundEvent}
           views={{
             day: true,
           }}
           defaultView={Views.DAY}
-        />
+        /> */}
       </div>
     </div>
   );

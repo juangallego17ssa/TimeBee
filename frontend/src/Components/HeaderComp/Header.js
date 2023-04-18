@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import TimeBee from "../../assets/TimeBeeNav.png";
 import { FaClock, FaChartArea, FaFileAlt } from "react-icons/fa";
-import { HiMenu }from 'react-icons/hi'
-import { RxCross2 }from 'react-icons/rx'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { HiMenu }from 'react-icons/hi';
+import { RxCross2 }from 'react-icons/rx';
+import { FiLogOut,FiUser } from "react-icons/fi";
 import React, { useState } from 'react';
 import UserAvator from "../UserAvator";
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
@@ -143,7 +143,23 @@ function Header({ children }) {
                     bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
                     >CLOCK IN</button>
                 }
-                <UserAvator onClick={()=>setShowSettings(!showSettings)}/>
+                <div className="relative" onClick={()=>setShowSettings(!showSettings)}>
+                 <UserAvator />
+                    {showSettings &&
+                    <div className="absolute flex flex-col right-4 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
+                        <div
+                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
+                         <FiUser/>
+                         <p>Profile</p>
+                        </div>
+                        <div
+                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
+                         <FiLogOut/>
+                         <p>LogOut</p>
+                        </div>
+                    </div>
+                    }
+                </div>
 
     {/* ------- menu icons ------ */}
                 {showMenu?
