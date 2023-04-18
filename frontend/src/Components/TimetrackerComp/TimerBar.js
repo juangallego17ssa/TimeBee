@@ -3,6 +3,7 @@ import { FaPlayCircle, FaRegPauseCircle, FaRegStopCircle, FaTrashAlt } from "rea
 import {AiFillTag} from 'react-icons/ai'
 import { FiEdit } from "react-icons/fi";
 import Timer from './Timer';
+import axios from 'axios';
 
 import {
   useUpdateTrackedTimeByIDMutation,
@@ -53,29 +54,30 @@ function TimerBar({task}) {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       const trackedtimeId= task.id
-      const body = {task_name: taskName}
-      // console.log(trackedtimeId,body)
-      updateTrackedTimeByID(trackedtimeId,body)
-      .then((data)=>console.log(data))
+      let data ={
+        "task_name": taskName
+      };
+      console.log(trackedtimeId,data)
+      updateTrackedTimeByID({trackedtimeId,...data})
+      .then((result)=>console.log(result))
 
-      // setUpdated(BusyBee);
       setEdit(!edit)
     }
   };
   const handleStop = ()=>{
-    const rackedtimeId = task.id
+    const trackedtimeId = task.id
+    console.log(trackedtimeId)
     const stopTime = new Date().toISOString()
-    var body = JSON.stringify({
-      "task_name": "new task name"
-    });
-    updateTrackedTimeByID(rackedtimeId,body)
-    .then((data)=>{
-      console.log('success',data)
+    var data = {
+      "stop": stopTime
+    };
+    updateTrackedTimeByID({trackedtimeId,...data})
+    .then((result)=>{
+      console.log(result)
     })
     .catch((error)=>{
       console.log('error',error)
     })
-
   }
   const handelDeleteTask = ()=>{
     const trackedtimeId =task.id

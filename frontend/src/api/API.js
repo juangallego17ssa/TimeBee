@@ -184,10 +184,10 @@ export const timeBeeAPI = createApi({
     }),
 
     updateTrackedTimeByID: builder.mutation({
-      query: (trackedtimeId, body) => ({
+      query: ({trackedtimeId, ...data}) => ({
         url: `trackedtime/${trackedtimeId}/`,
         method: 'PATCH',
-        body,
+        body: data,
       }),
       invalidatesTags:['Tasks']
     }),
