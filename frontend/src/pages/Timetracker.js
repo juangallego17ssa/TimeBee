@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { GiBee } from "react-icons/gi";
 import { AiFillTag } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
@@ -12,9 +12,18 @@ import {
   useCreateTrackedTimeMutation,
   useGetOwnProjectsQuery,
 } from '../api/API';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
 
 
 function Timetracker() {
+  
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchTrackedTimeOwn());
+  }, []);
+  const reduxTrackedTime = useSelector((store) => store.trackedtime);
+  console.log(reduxTrackedTime);
 
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
