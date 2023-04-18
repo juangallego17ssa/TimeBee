@@ -47,7 +47,7 @@ function TimerBar({task}) {
   const handleEdit = (event) => {
     event.preventDefault();
     setEdit(!edit)
-    console.log(edit)
+    // console.log(edit)
     // refetch();
     // perform the search operation here
   };
@@ -66,7 +66,7 @@ function TimerBar({task}) {
   };
   const handleStop = ()=>{
     const trackedtimeId = task.id
-    console.log(trackedtimeId)
+    // console.log(trackedtimeId)
     const stopTime = new Date().toISOString()
     var data = {
       "stop": stopTime
@@ -81,13 +81,13 @@ function TimerBar({task}) {
   }
   const handelDeleteTask = ()=>{
     const trackedtimeId =task.id
-    // console.log(trackedtimeId)
+    console.log(task.stop)
     deleteTrackedTimeByID(trackedtimeId)
-
   }
 
   return (
-    <div className="z-[0] bg-white flex justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
+    <div className="z-[0] bg-white flex flex-col justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
+    <div className="z-[0] flex justify-between items-center w-full" >
         <div className="relative flex items-center">
           <label  onClick={()=>setEdit(true)}>
             <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
@@ -127,7 +127,13 @@ function TimerBar({task}) {
             <FaRegStopCircle onClick={handleStop}
               className="text-2xl text-zinc-400 hover:text-rose-500" />
           </div>
-    </div>    
+    </div> 
+    {task.stop &&
+     <div className='w-full px-2 flex justify-end'>
+      <p className='text-xs text-zinc-300'>{task.stop}</p>
+     </div>  
+    }
+    </div>
     );
   }
   

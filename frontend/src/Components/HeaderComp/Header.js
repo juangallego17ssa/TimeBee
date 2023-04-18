@@ -78,6 +78,14 @@ function Header({ children }) {
         }
         createTrackedTime(data)
     }
+    const handleShowSettings = ()=>{
+        setShowSettings(!showSettings);
+        setShowMenu(false)
+    }
+    const handleShowMenu =()=>{
+        setShowMenu(!showMenu);
+        setShowSettings(false)
+    }
 
 
   return (
@@ -143,10 +151,10 @@ function Header({ children }) {
                     bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
                     >CLOCK IN</button>
                 }
-                <div className="relative" onClick={()=>setShowSettings(!showSettings)}>
+                <div className="relative" onClick={handleShowSettings}>
                  <UserAvator />
                     {showSettings &&
-                    <div className="absolute flex flex-col right-4 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
+                    <div className="absolute flex flex-col right-2 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
                         <div
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                          <FiUser/>
@@ -155,7 +163,7 @@ function Header({ children }) {
                         <div
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                          <FiLogOut/>
-                         <p>LogOut</p>
+                         <p >Logout</p>
                         </div>
                     </div>
                     }
@@ -165,11 +173,11 @@ function Header({ children }) {
                 {showMenu?
                 <RxCross2 onClick={()=>setShowMenu(!showMenu)}
                 className="text-2xl text-zinc-500 md:hidden hover:cursor-pointer hover:text-zinc-800"/>
-                :<HiMenu onClick={()=>setShowMenu(!showMenu)}
+                :<HiMenu onClick={handleShowMenu}
                 className="text-2xl text-zinc-500 md:hidden hover:cursor-pointer hover:text-zinc-800"/>
                 }
                 {showMenu &&
-                <div className="absolute flex flex-col right-4 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">     
+                <div className="absolute flex flex-col right-4 top-14 gap-2 bg-white shadow-md py-2 z-20 rounded-md">     
                     <div onClick={goToTimetracker} 
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                      <FaClock className="text-zinc-500" />
