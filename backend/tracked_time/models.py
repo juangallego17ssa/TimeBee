@@ -8,7 +8,6 @@ from project.models import Project
 
 
 class TrackedTime(models.Model):
-
     KRANKHEIT = '01'
     UNFALL = '02'
     FERIEN = '03'

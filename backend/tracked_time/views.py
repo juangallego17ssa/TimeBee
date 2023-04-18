@@ -90,9 +90,8 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
 
 
 class ListOwnFromView(generics.ListAPIView):
-
-
     serializer_class = TrackedTimeSerializer
+
     def list(self, request, *args, **kwargs):
         fromDate = request.data.get("from")
         queryset = TrackedTime.objects.filter(start__gt=fromDate, project__created_by_id=self.request.user.id)
@@ -107,9 +106,8 @@ class ListOwnFromView(generics.ListAPIView):
 
 
 class ListOwnTaskTodayView(generics.ListAPIView):
-
-
     serializer_class = TrackedTimeSerializer
+
     def list(self, request, *args, **kwargs):
         today = datetime.now().date()
         tomorrow = today + timedelta(1)
