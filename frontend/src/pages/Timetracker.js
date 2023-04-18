@@ -1,4 +1,4 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState,useRef } from 'react';
 import { GiBee } from "react-icons/gi";
 import { AiFillTag } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
@@ -12,26 +12,17 @@ import {
   useCreateTrackedTimeMutation,
   useGetOwnProjectsQuery,
 } from '../api/API';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
 
 
 function Timetracker() {
-  
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchTrackedTimeOwn());
-  }, []);
-  const reduxTrackedTime = useSelector((store) => store.trackedtime);
-  console.log(reduxTrackedTime);
-
+//   Local States  //
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
-  // console.log("project:",selectedProject);
+//GET all tasks created  ?by all user?? 
+  const { data : tasks,isLoading,isSuccess,isError} = useGetTrackedTimeQuery()
+
+
   const name = useRef();
-  //GET all tasks created  ?by all users
-      const { data : tasks,isLoading,isSuccess,isError} = useGetTrackedTimeQuery()
-      // console.log(tasks);
   
   //POST new time tracker for task
       const [createTrackedTime] = useCreateTrackedTimeMutation()
@@ -106,7 +97,7 @@ function Timetracker() {
           </div>
         </div>
 
-        <div className=" md:w-1/3 flex flex-col  bg-emerald-400">
+        <div className=" md:w-2/5 flex flex-col  bg-emerald-400">
           <Calendar/>
         </div>
       </div>
