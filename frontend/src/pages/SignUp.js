@@ -26,11 +26,6 @@ function SignUp() {
         navigate('/verification')
     }
     
-    
-
-
-
-
     return (
       
       <div className="page flex flex-row justify-center items-center w-full md:flex-col p-10">
