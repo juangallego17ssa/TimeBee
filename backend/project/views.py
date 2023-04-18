@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny
 
 from project.models import Project
 from project.serializers import ProjectSerializer
+from user.models import User
 
 
 # Create your views here.
@@ -39,3 +40,17 @@ class RetrieveUpdateDeleteProjectView(RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsSameUserOrReadOnly, IsStaffOrReadOnly]
     serializer_class = ProjectSerializer
     lookup_url_kwarg = 'project_id'
+
+
+class CreateByUsernameView(ListCreateAPIView):
+    """
+    Functionalities:
+        - List all existing projects
+    """
+    queryset = Project.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class = ProjectSerializer
+
+    def perform_create(self, serializer):
+        user = User.objects.get(username=self.request.data.get('username'))
+        serializer.save(created_by=user)

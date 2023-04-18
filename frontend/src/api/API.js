@@ -150,6 +150,14 @@ export const timeBeeAPI = createApi({
       invalidatesTags:['Project']
     }),
 
+    createProjectByUsername: builder.mutation({
+      query: (body) => ({
+        url: 'projects/createbyusername/',
+        method: 'POST',
+        body,
+      }),
+    }),
+
     //Tracked Time
     getTrackedTime: builder.query({
       query: () => 'trackedtime',
@@ -221,6 +229,7 @@ export const {
     useGetProjectByIDQuery,
     useUpdateProjectByIDMutation,
     useDeleteProjectByIDMutation,
+    useCreateProjectByUsernameMutation,
     //TrackedTime
     useGetTrackedTimeQuery,
     useGetOwnTrackedTimeQuery,

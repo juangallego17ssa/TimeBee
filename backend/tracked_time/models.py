@@ -8,7 +8,6 @@ from project.models import Project
 
 
 class TrackedTime(models.Model):
-
     KRANKHEIT = '01'
     UNFALL = '02'
     FERIEN = '03'
@@ -30,8 +29,9 @@ class TrackedTime(models.Model):
     )
 
     TYPE_INPUT = [
-        (1, "Manual"),
-        (2, "Automatic")
+        (0, "Clock"),
+        (1, "Task"),
+        (2, "Manual")
     ]
 
     # id

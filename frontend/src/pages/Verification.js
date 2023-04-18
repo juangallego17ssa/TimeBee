@@ -1,4 +1,4 @@
-import { useValidateRegistrationMutation } from "../api/API";
+import { useValidateRegistrationMutation, useCreateProjectByUsernameMutation } from "../api/API";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ function Verification() {
 
     const navigate = useNavigate()
     const [registerUser, { isLoading, isSuccess, isError, error }] = useValidateRegistrationMutation();
+    const [createProjectByUsername, { isLoading2, isSuccess2, isError2, error2 }] = useCreateProjectByUsernameMutation();
     const [email, setEmail] = useState("")
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -45,12 +46,23 @@ function Verification() {
 
     const [passwordRepeat, setPasswordRepeat] = useState("")
     const handlePasswordRepeatChange = (event) => {
-         setPasswordRepeat(event.target.value);
+        setPasswordRepeat(event.target.value);
     }
 
     const handleClick = async (event) => {
+        event.preventDefault()
         console.log(email)
-        registerUser({ email, validation_code: validationCode, username: userName, workload, password, first_name: firstName, last_name: lastName, password_repeat: passwordRepeat })
+        await registerUser({ email: email, code: validationCode, username: userName, password: password, first_name: firstName, last_name: lastName, password_repeat: passwordRepeat })
+        createProjectByUsername(
+            {
+                "name": "unassigned",
+                "description": "no project assigned",
+                "default": "default",
+                "username": userName
+            }
+        )
+        console.log("end")
+        // goToHome()
     }
 
     const goToHome =  () => {
@@ -81,7 +93,7 @@ function Verification() {
                         <input type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange} required className="password2 flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
                         {isError && <div className="flex justify-center items-center font-semibold text-2xl w-full">There was an error: {error.message}</div>}
                         <div className="buttonwrap flex flex-wrap flex-col justify-center items-center w-60 h-10">
-                            <button onClick={() => handleClick()} className="flex justify-center items-center border-solid rounded-full text-white w-52 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500">Finish registration</button>
+                            <button onClick={handleClick} className="flex justify-center items-center border-solid rounded-full text-white w-52 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500">Finish registration</button>
                         </div>
                     </form>
                 )}

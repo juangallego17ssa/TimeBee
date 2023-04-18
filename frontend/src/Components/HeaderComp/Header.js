@@ -4,6 +4,8 @@ import { FaClock, FaChartArea, FaFileAlt } from "react-icons/fa";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import React, { useState } from 'react';
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
+import {useCreateTrackedTimeMutation} from "../../api/API";
+
 
 function Header({ children }) {
     
@@ -48,9 +50,16 @@ function Header({ children }) {
       navigate("/login");
     };
 
+    const [createTrackedTime,{isloading,error}]=useCreateTrackedTimeMutation()
     const handleClick=()=> {
         setClock(!clock);
         console.log(clock);
+        let currentTime = new Date();
+        const data={
+            "type_of_input": 0,
+            "start": currentTime
+        }
+        createTrackedTime(data)
     }
 
 
