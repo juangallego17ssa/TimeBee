@@ -1,15 +1,20 @@
 import { useValidateRegistrationMutation, useCreateProjectByUsernameMutation } from "../api/API";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
 
 function Verification() {
+    const registrationEmail = useSelector(
+      (state) => state.signupemail.signupemail
+    );
+    console.log(registrationEmail)
 
     const navigate = useNavigate()
     const [registerUser, { isLoading, isSuccess, isError, error }] = useValidateRegistrationMutation();
     const [createProjectByUsername, { isLoading2, isSuccess2, isError2, error2 }] = useCreateProjectByUsernameMutation();
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState(registrationEmail)
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
     }

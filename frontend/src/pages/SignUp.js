@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {  useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../api/API";
+import { useDispatch } from "react-redux";
+import { setSignUpEmail } from "../redux/Slices/signUpEmailAdress";
 
 
 function SignUp() {
@@ -8,15 +10,17 @@ function SignUp() {
     const navigate = useNavigate()
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [registerUser, { isLoading, isSuccess, isError, error }] = useRegisterUserMutation();
+    const [email, setEmail] = useState("");
+    const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         await registerUser(email);
+        dispatch(setSignUpEmail(email));
         setIsSubmitted(true);
         
     };
 
-    const [email, setEmail] = useState("");
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
