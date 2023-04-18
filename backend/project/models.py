@@ -14,6 +14,7 @@ class Project(models.Model):
     description = models.TextField(max_length=200, blank=True)
     # image = models.ImageField(upload_to=project_directory_path, null=True, blank=True)
     created_by = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="created_projects")
+    tag_color = models.CharField(max_length=50, blank=True)
     default = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
