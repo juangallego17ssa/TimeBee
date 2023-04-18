@@ -30,8 +30,9 @@ class TrackedTime(models.Model):
     )
 
     TYPE_INPUT = [
-        (1, "Manual"),
-        (2, "Automatic")
+        (0, "Clock"),
+        (1, "Task"),
+        (2, "Manual")
     ]
 
     # id

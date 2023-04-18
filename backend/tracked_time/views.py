@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
-
+from datetime import datetime, timedelta, time
 from project.models import Project
 from tracked_time.models import TrackedTime
 from tracked_time.serializers import TrackedTimeSerializer
@@ -86,4 +86,44 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
 
+        return Response(serializer.data)
+
+
+class ListOwnFromView(generics.ListAPIView):
+
+
+    serializer_class = TrackedTimeSerializer
+    def list(self, request, *args, **kwargs):
+        fromDate = request.data.get("from")
+        queryset = TrackedTime.objects.filter(start__gt=fromDate, project__created_by_id=self.request.user.id)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class ListOwnTaskTodayView(generics.ListAPIView):
+
+
+    serializer_class = TrackedTimeSerializer
+    def list(self, request, *args, **kwargs):
+        today = datetime.now().date()
+        tomorrow = today + timedelta(1)
+        today_start = datetime.combine(today, time())
+        today_end = datetime.combine(tomorrow, time())
+        queryset = TrackedTime.objects.filter(start__gte=today_start,
+                                              start__lt=today_end,
+                                              project__created_by_id=self.request.user.id,
+                                              type_of_input="1")
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
