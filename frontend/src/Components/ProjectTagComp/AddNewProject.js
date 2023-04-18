@@ -1,9 +1,15 @@
 import React,{useState,useRef} from 'react';
 import { BsCheck } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
+import { useCreateProjectsMutation } from '../../api/API'
 
 export default function AddNewProject({setShowCreateTag, projects, setProjects}) {
-    const projectNameRef= useRef()
+    // RTK 
+    const [createProjects] = useCreateProjectsMutation()
+
+    const projectNameRef= useRef();
+    const projectDescriptionRef= useRef();
+
 
     const [tagColor, setTagColor] = useState('');
     const handleOptionChange = (e)=>{
@@ -14,26 +20,39 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
         e.preventDefault()
         const data={
             name:projectNameRef.current.value,
-            color:tagColor,
+            description:projectDescriptionRef.current.value,
+            // tag_color:tagColor,
         }
         console.log(data)
-        setProjects([...projects,data])
+        createProjects(data)
+        // setProjects([...projects,data])
         setShowCreateTag(false)
         
     }
   return (
-    <div className='z-20'>
+    <div className="z-10">
         <RxCross2 className='absolute right-0 m-1 opacity-30 hover:opacity-100' onClick={()=>setShowCreateTag(false)}/>
     <form onSubmit={handleSubmit}
           className='flex flex-col rounded justify-center items-center shadow bg-white p-6 gap-2'>
         <h2 className='uppercase'>Create new project</h2>
+
+    {/*  PROJECT NAME INPUT  */}
         <label htmlFor='project-name'>
             <input className='border-2 border-zinc-100 focus:outline-teal-400 rounded-full py-0.5 px-3'
             ref={projectNameRef} 
             id='project-name' 
-            placeholder='Enter project name...'/>
+            placeholder='project name...'/>
         </label>
-            <div className='text-zinc-300 '>Choose a color </div>
+
+    {/*  PROJECT DISCRIPTION INPUT  */}
+        <label htmlFor='project-description'>
+            <input className='border-2 border-zinc-100 focus:outline-teal-400 rounded-full py-0.5 px-3'
+            ref={projectDescriptionRef} 
+            id='project-description' 
+            placeholder='project description...'/>
+        </label>
+     {/*  PROJECT TAG COLOR  */}    
+        <div className='text-zinc-300 '>Choose a color </div>
         <fieldset className='flex flex-row gap-1' >
             <div className='relative'>
                 <label htmlFor='red'/>

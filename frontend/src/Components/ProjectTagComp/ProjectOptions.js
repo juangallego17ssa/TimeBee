@@ -4,21 +4,34 @@ import {AiFillTag} from 'react-icons/ai'
 import { RxCross2 } from 'react-icons/rx' 
 
 //RTK
-import { useGetOwnProjectsQuery } from '../../api/API';
+import { useGetOwnProjectsQuery, useDeleteProjectByIDMutation} from '../../api/API';
 
 
-function ProjectOptions({setTag}) {
+function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
+  const { 
+    data : projects=[], 
+    isLoading,
+    isSuccess, 
+    isError, 
+    }
+    = useGetOwnProjectsQuery()
+  
+  const [deleteProjectByID] = useDeleteProjectByIDMutation();
 
-  const { data : projects=[], isLoading, error, refetch } = useGetOwnProjectsQuery()
 
   
   const [ showCreateTag, setShowCreateTag ]= useState(false)
 
   const handleSetProject=(project)=>{
-    console.log(project)
+    setSelectedProject(project)
+    setShowProjectTags(false)
+    // console.log(project)
   }
-
-  if (isLoading){return(<div>Loading</div>)}
+  const handleDeteleProject = (project)=>{
+    // console.log(project.id)
+    deleteProjectByID(project.id)
+    
+  }
 
   return (
     <div className=' z-10 '>
@@ -28,10 +41,16 @@ function ProjectOptions({setTag}) {
         </label>
         {projects.map(project=>
         <div className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
-              onClick={()=>handleSetProject(project)}>
+              >
           <AiFillTag className={`m-1 text-${project.color}-500`} />
-          <p className='' key={project.id} onClick={setTag}>{project.name}</p> 
-          <RxCross2 className='text-zinc-200 hover:text-zinc-900'/>
+          <p className='' key={project.id} 
+            onClick={()=>handleSetProject(project)}>
+          {project.name}</p> 
+            
+          <RxCross2 
+            onClick={()=>handleDeteleProject(project)}
+            className='text-zinc-200 hover:text-zinc-900'/>
+
         </div>
         )}
         <div>
