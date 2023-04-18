@@ -54,9 +54,9 @@ function TimerBar({task}) {
     if (event.key === 'Enter') {
       const trackedtimeId= task.id
       const body = {task_name: taskName}
-      
-      console.log(trackedtimeId,body)
+      // console.log(trackedtimeId,body)
       updateTrackedTimeByID(trackedtimeId,body)
+      .then((data)=>console.log(data))
 
       // setUpdated(BusyBee);
       setEdit(!edit)
