@@ -6,7 +6,7 @@ import Timer from './Timer';
 
 
 function TimerBar({task}) {
-  console.log(task)
+  // console.log(task)
 
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
