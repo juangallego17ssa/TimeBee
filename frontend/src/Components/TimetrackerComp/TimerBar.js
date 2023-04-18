@@ -88,7 +88,7 @@ function TimerBar({task}) {
   return (
     <div className="z-[0] bg-white flex flex-col justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
     <div className="z-[0] flex justify-between items-center w-full" >
-        <div className="relative flex items-center">
+        <div className="relative w-3/5 flex items-center justify-between">
           <label  onClick={()=>setEdit(true)}>
             <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
                       // placeholder="BusyBee1"
@@ -98,21 +98,23 @@ function TimerBar({task}) {
                       onKeyDown={handleKeyDown} 
                     />
           </label>
-              
-            <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-500`}
-                      onClick={()=>setShowProject(!showProject)}/>
-            <p className='border-2 w-36 ml-2'>{task.project.name?task.project.name:''}</p>
-                      {/* {showProject && 
-                        <div>
-                          
-                        </div>
-                      } */}
+            <div className='flex items-center'>
+              <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-500`}
+                        onClick={()=>setShowProject(!showProject)}/>
+              <p className='border-2 w-36 ml-2'>{task.project.name?task.project.name:''}</p>
+                        {/* {showProject && 
+                          <div>
+                            
+                          </div>
+                        } */}
+
+            </div>
             </div>
             {/* {edit && */}
               <FaTrashAlt onClick={handelDeleteTask}
               className="text-md text-zinc-300 hover:text-red-500"/>
             {/* } */}
-            <Timer className="border-2 border-red w-24" start={play}/>
+            <Timer start={play}/>
             {/* <FiEdit onClick={()=>{setEdit(true)}}
               className="text-md text-zinc-400 hover:text-yellow-500" /> */}
           
