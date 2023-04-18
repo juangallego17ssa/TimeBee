@@ -45,7 +45,7 @@ function Verification() {
 
     const [passwordRepeat, setPasswordRepeat] = useState("")
     const handlePasswordRepeatChange = (event) => {
-         setPasswordRepeat(event.target.value);
+        setPasswordRepeat(event.target.value);
     }
 
     const handleClick = async (event) => {
