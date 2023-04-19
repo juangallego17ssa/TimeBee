@@ -21,11 +21,13 @@ function Timetracker() {
 
   // Fetch all the TrackedItems of the actual user and store it in Redux
   const dispatch = useDispatch();
+  const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
+ 
   useEffect(() => {
     dispatch(fetchTrackedTimeOwn());
+    
   }, []);
-  const reduxTrackedTime = useSelector((store) => store.trackedtime);
-  // console.log(reduxTrackedTime);
+
 
 
   const [showProjectTags, setShowProjectTags] = useState(false);
@@ -70,43 +72,9 @@ function Timetracker() {
     console.log('handelDateChanged')
   }
 
-  // Data for the calendar component
-  const BackgroundEvent = [
-    {
-      start: new Date(2023, 3, 17, 10, 30),
-      end: new Date(2023, 3, 17, 18, 30),
-    },
-  ];
-
-  const events = [
-    {
-      title: "Meeting with Bob",
-      start: new Date(2023, 3, 17, 10, 30),
-      end: new Date(2023, 3, 17, 12, 30),
-    },
-    {
-      title: "Lunch with Alice",
-      start: new Date(2023, 3, 19, 12, 0),
-      end: new Date(2023, 3, 19, 13, 0),
-    },
-
-    {
-      title: "Event 1",
-      start: new Date("2023-04-17T07:30:00.000Z"),
-      end: new Date("2023-04-17T13:30:00.000Z"),
-    },
-    {
-      title: "Event 2",
-      start: new Date("2023-04-17T09:00:00.000Z"),
-      end: new Date("2023-04-17T11:00:00.000Z"),
-    },
-    // Add more events as needed
-  ];
-
-
   return (
-    <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:flex-row gap-4">
-      <div className=" Leftcontainer md:w-3/5 flex flex-col px-6">
+    <div className=" Page flex flex-col flex-grow bg-stone-100 h-[90vh] w-full md:flex-row gap-4 mt-6">
+      <div className=" Leftcontainer md:w-3/5 h-full flex flex-col px-6 pb-6">
         {/* -----  Inputwraper ----- */}
         <div className="z-10 flex flex-row justify-center items-center w-full gap-2 ">
           <div className="flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md">
@@ -164,10 +132,9 @@ function Timetracker() {
           {/* <TimerBar addProject={addProject} /> */}
         </div>
       </div>
-      <div className=" md:w-1/3 flex justify-center h-full">
-        <CalendarComponent
-          events={events}
-          BackgroundEvent={BackgroundEvent}
+      <div className=" md:w-1/3 h-full flex-1 px-6 pb-6">
+        <CalendarComponent 
+          events={reduxTrackedTime}
           views={{
             day: true,
           }}
