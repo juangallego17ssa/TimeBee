@@ -73,8 +73,8 @@ function Timetracker() {
   }
 
   return (
-    <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:flex-row gap-4 mt-6">
-      <div className=" Leftcontainer md:w-3/5 flex flex-col px-6">
+    <div className=" Page flex flex-col flex-grow bg-stone-100 h-[90vh] w-full md:flex-row gap-4 mt-6">
+      <div className=" Leftcontainer md:w-3/5 h-full flex flex-col px-6 pb-6">
         {/* -----  Inputwraper ----- */}
         <div className="z-10 flex flex-row justify-center items-center w-full gap-2 ">
           <div className="flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md">
@@ -132,7 +132,7 @@ function Timetracker() {
           {/* <TimerBar addProject={addProject} /> */}
         </div>
       </div>
-      <div className=" md:w-1/3 flex-1 h-full box-content px-6">
+      <div className=" md:w-1/3 h-full flex-1 px-6 pb-6">
         <CalendarComponent 
           events={reduxTrackedTime}
           views={{

@@ -10,12 +10,7 @@ const localizer = momentLocalizer(moment);
 const CalendarComponent = ({ events, views, defaultView }) => {
   const [foregroundEvents, setForegroundEvents] = useState([])
   const [backgroundEvents, setBackgroundEvents] = useState([])
-  const lunch = {
-    title: "Lunch with Alice",
-    type_of_input: "1",
-    start: new Date(2023, 3, 19, 12, 0),
-    end: new Date(2023, 3, 19, 13, 0),
-  };
+
   const processEvents = (events) => {
     const foregroundEvents = []
     const backgroundEvents = []
@@ -50,7 +45,7 @@ const CalendarComponent = ({ events, views, defaultView }) => {
   }, [events])
   
   return (
-    <div>
+    <div className="h-full">
       <Calendar
         localizer={localizer}
         events={foregroundEvents}
@@ -58,6 +53,8 @@ const CalendarComponent = ({ events, views, defaultView }) => {
         views={views}
         defaultView={defaultView}
         showMultiDayTimes={true}
+        dayLayoutAlgorithm={"no-overlap"}
+        popup
       />
     </div>
   );
