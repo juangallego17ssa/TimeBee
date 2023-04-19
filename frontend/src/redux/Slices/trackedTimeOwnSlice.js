@@ -24,7 +24,7 @@ export const fetchTrackedTimeOwn = createAsyncThunk(
 export const trackedTimeOwnSlice = createSlice({
   name: "trackedTime",
   initialState: {
-    trackedtime: {},
+    trackedtime: [],
   },
   reducers: {},
   extraReducers: (builder) => {
