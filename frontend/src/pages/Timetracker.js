@@ -1,4 +1,4 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { GiBee } from "react-icons/gi";
 import { AiFillTag } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
@@ -29,11 +29,11 @@ function Timetracker() {
 
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
-  // console.log("project:",selectedProject);
+//GET all tasks created  ?by all user?? 
+  const { data : tasks,isLoading,isSuccess,isError} = useGetTrackedTimeQuery()
+
+
   const name = useRef();
-  //GET all tasks created  ?by all users
-      const { data : tasks,isLoading,isSuccess,isError} = useGetTrackedTimeQuery()
-      // console.log(tasks);
   
   //POST new time tracker for task
       const [createTrackedTime] = useCreateTrackedTimeMutation()
