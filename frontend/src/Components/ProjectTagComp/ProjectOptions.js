@@ -25,7 +25,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
   const handleSetProject=(project)=>{
     setSelectedProject(project)
     setShowProjectTags(false)
-    // console.log(project)
+    console.log(project.tag_color)
   }
   const handleDeteleProject = (project)=>{
     // console.log(project.id)
@@ -34,7 +34,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
   }
 
   return (
-    <div className=' z-10 '>
+    <div className=' z-20 '>
       <div className='absolute right-0 top-10 width-40 bg-white rounded-md shadow-md'>
         <label htmlFor='project-filter'>
           <input className='m-4 border-2 rounded-full py-1 px-4 focus:outline-teal-400' id='project-filter' placeholder='Find project...'/>
@@ -42,7 +42,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
         {projects.map(project=>
         <div className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
               >
-          <AiFillTag className={`m-1 text-${project.color}-500`} />
+          <AiFillTag className={`m-1 text-${project.tag_color?project.tag_color:'zinc'}-400`} />
           <p className='' key={project.id} 
             onClick={()=>handleSetProject(project)}>
           {project.name}</p> 
