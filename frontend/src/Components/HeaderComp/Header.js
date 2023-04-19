@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import TimeBee from "../../assets/TimeBeeNav.png";
-import { FaClock, FaChartArea, FaFileAlt } from "react-icons/fa";
+import { FaClock, FaChartArea, FaFileAlt,FaCalendarAlt } from "react-icons/fa";
 import { HiMenu }from 'react-icons/hi';
 import { RxCross2 }from 'react-icons/rx';
 import { FiLogOut,FiUser } from "react-icons/fi";
@@ -24,8 +24,8 @@ function Header({ children }) {
     const [isHoverTimetracker, setIsHoverTimetracker] = useState(false);
     const [isHoverDashboard, setIsHoverDashboard] = useState(false);
     const [isHoverReport, setIsHoverReport] = useState(false);
-    
-    
+    const [isHoverCalendar, setIsHoverCalendar] = useState(false);
+
     const [clock, setClock] = useState(false);
     
 //---- get the current date ----//
@@ -62,6 +62,9 @@ function Header({ children }) {
     const goToLogIn = () => {
         navigate("/login");
     };
+    const goToCalendar = () => {
+        navigate("/calendar");
+    };
 
     const logOut = () => {
       localStorage.setItem("access", "");
@@ -91,7 +94,7 @@ function Header({ children }) {
   return (
     <>
 {/* ------- HEADER ------ */}
-    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 px-4 shadow-sm">
+    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-sm">
  {/* ------- logo ------ */}      
         <img onClick={goToHome} src={TimeBee}className="h-10"></img>  
 
@@ -130,6 +133,17 @@ function Header({ children }) {
             <p className="font-semibold text-zinc-600 hover:cursor-pointer">Report</p>
             :
             <FaFileAlt  className=" text-zinc-500 " /> 
+            }
+            </div>  
+        {/*----  to Calendar  ----*/}
+            <div className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
+                onClick={goToCalendar}
+                onMouseEnter ={()=>setIsHoverCalendar(true)}
+                onMouseLeave ={()=>setIsHoverCalendar(false)} >
+            {isHoverCalendar?
+            <p className="font-semibold text-zinc-600 hover:cursor-pointer">Calendar</p>
+            :
+            <FaCalendarAlt  className=" text-zinc-500 " /> 
             }
             </div>  
         
@@ -192,6 +206,11 @@ function Header({ children }) {
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                      <FaFileAlt className="text-zinc-500" />
                      <p>Report</p>
+                    </div>      
+                    <div onClick={goToCalendar}
+                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
+                     <FaCalendarAlt className="text-zinc-500" />
+                     <p>Calendar</p>
                     </div>      
            
                 </div>
