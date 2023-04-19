@@ -10,21 +10,24 @@ import Report from "./pages/Report";
 import RouteProtection from "./Components/HOC/RouteProtection";
 import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
+import Calendar from "./pages/Calendar";
 
 function App() {
   return (
     <>
     <Provider store={store}>
       <div className="flex box-border flex-col w-screen h-screen bg-stone-100" >
+    
         <Header>
           <Routes>
+            <Route path="/signUp" element={<SignUp />} />
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/signUp" element={<SignUp />} />
             <Route path="/verification" element={<Verification/>} />
             <Route path="/timetracker" element={<Timetracker/>} />
             <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
             <Route path="/reports" element={<Report/>} />
+            <Route path="/calendar" element={<Calendar/>} />
           </Routes>
         </Header>
       </div>

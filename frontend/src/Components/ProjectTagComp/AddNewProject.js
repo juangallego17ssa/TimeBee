@@ -21,9 +21,9 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
         const data={
             name:projectNameRef.current.value,
             description:projectDescriptionRef.current.value,
-            // tag_color:tagColor,
+            tag_color:tagColor,
         }
-        console.log(data)
+        // console.log(data)
         createProjects(data)
         // setProjects([...projects,data])
         setShowCreateTag(false)
