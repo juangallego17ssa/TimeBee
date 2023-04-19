@@ -3,6 +3,7 @@ import { FaPlayCircle, FaRegPauseCircle, FaRegStopCircle, FaTrashAlt } from "rea
 import {AiFillTag} from 'react-icons/ai'
 import { FiEdit } from "react-icons/fi";
 import Timer from './Timer';
+import axios from 'axios';
 
 import {
   useUpdateTrackedTimeByIDMutation,
@@ -46,47 +47,48 @@ function TimerBar({task}) {
   const handleEdit = (event) => {
     event.preventDefault();
     setEdit(!edit)
-    console.log(edit)
+    // console.log(edit)
     // refetch();
     // perform the search operation here
   };
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       const trackedtimeId= task.id
-      const body = {task_name: taskName}
-      // console.log(trackedtimeId,body)
-      updateTrackedTimeByID(trackedtimeId,body)
-      .then((data)=>console.log(data))
+      let data ={
+        "task_name": taskName
+      };
+      console.log(trackedtimeId,data)
+      updateTrackedTimeByID({trackedtimeId,...data})
+      .then((result)=>console.log(result))
 
-      // setUpdated(BusyBee);
       setEdit(!edit)
     }
   };
   const handleStop = ()=>{
-    const rackedtimeId = task.id
+    const trackedtimeId = task.id
+    // console.log(trackedtimeId)
     const stopTime = new Date().toISOString()
-    var body = JSON.stringify({
-      "task_name": "new task name"
-    });
-    updateTrackedTimeByID(rackedtimeId,body)
-    .then((data)=>{
-      console.log('success',data)
+    var data = {
+      "stop": stopTime
+    };
+    updateTrackedTimeByID({trackedtimeId,...data})
+    .then((result)=>{
+      console.log(result)
     })
     .catch((error)=>{
       console.log('error',error)
     })
-
   }
   const handelDeleteTask = ()=>{
     const trackedtimeId =task.id
-    // console.log(trackedtimeId)
+    console.log(task.stop)
     deleteTrackedTimeByID(trackedtimeId)
-
   }
 
   return (
-    <div className="z-[0] bg-white flex justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
-        <div className="relative flex items-center">
+    <div className="z-[0] bg-white flex flex-col justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
+    <div className="z-[0] flex justify-between items-center w-full" >
+        <div className="relative w-3/5 flex items-center justify-between">
           <label  onClick={()=>setEdit(true)}>
             <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
                       // placeholder="BusyBee1"
@@ -96,21 +98,23 @@ function TimerBar({task}) {
                       onKeyDown={handleKeyDown} 
                     />
           </label>
-              
-            <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-500`}
-                      onClick={()=>setShowProject(!showProject)}/>
-            <p className='border-2 w-36 ml-2'>{task.project.name?task.project.name:''}</p>
-                      {/* {showProject && 
-                        <div>
-                          
-                        </div>
-                      } */}
+            <div className='flex items-center'>
+              <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-500`}
+                        onClick={()=>setShowProject(!showProject)}/>
+              <p className='border-2 w-36 ml-2'>{task.project.name?task.project.name:''}</p>
+                        {/* {showProject && 
+                          <div>
+                            
+                          </div>
+                        } */}
+
+            </div>
             </div>
             {/* {edit && */}
               <FaTrashAlt onClick={handelDeleteTask}
               className="text-md text-zinc-300 hover:text-red-500"/>
             {/* } */}
-            <Timer className="border-2 border-red w-24" start={play}/>
+            <Timer start={play}/>
             {/* <FiEdit onClick={()=>{setEdit(true)}}
               className="text-md text-zinc-400 hover:text-yellow-500" /> */}
           
@@ -125,7 +129,13 @@ function TimerBar({task}) {
             <FaRegStopCircle onClick={handleStop}
               className="text-2xl text-zinc-400 hover:text-rose-500" />
           </div>
-    </div>    
+    </div> 
+    {task.stop &&
+     <div className='w-full px-2 flex justify-end'>
+      <p className='text-xs text-zinc-300'>{task.stop}</p>
+     </div>  
+    }
+    </div>
     );
   }
   

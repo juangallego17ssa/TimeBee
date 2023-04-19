@@ -15,7 +15,7 @@ function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         await getToken({email, password});
-        navigate('/home')
+        navigate('/timetracker')
     };
   
     const handleSignUp = async (event) => {
