@@ -4,13 +4,14 @@ import { FaClock, FaChartArea, FaFileAlt,FaCalendarAlt } from "react-icons/fa";
 import { HiMenu }from 'react-icons/hi';
 import { RxCross2 }from 'react-icons/rx';
 import { FiLogOut,FiUser } from "react-icons/fi";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import React, { useState } from 'react';
 import UserAvator from "../UserAvator";
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
-import {
-    useCreateTrackedTimeMutation,
-
-} from "../../api/API";
+import {useCreateTrackedTimeMutation, useUpdateTrackedTimeByIDMutation} from "../../api/API";
+import {useDispatch, useSelector} from "react-redux";
+import {setClockID, setClockStart, setClockStop} from "../../redux/Slices/clockSlice";
+import {axiosWithToken} from "../../api/axios";
 import Timetracker from "../../pages/Timetracker";
 
 
@@ -71,7 +72,9 @@ function Header({ children }) {
       navigate("/login");
     };
 
-    const handleClick=()=> {
+    const dispatch = useDispatch();
+    const handleClockIn= async ()=> {
+
         setClock(!clock);
         console.log(clock);
         let currentTime = new Date();
@@ -79,7 +82,11 @@ function Header({ children }) {
             "type_of_input": 0,
             "start": currentTime
         }
-        createTrackedTime(data)
+        const response = await createTrackedTime(data)
+        console.log(response)
+        dispatch(setClockID(response.data.id))
+        dispatch(setClockStart(response.data.start))
+        dispatch(setClockStop(""))
     }
     const handleShowSettings = ()=>{
         setShowSettings(!showSettings);
@@ -90,7 +97,27 @@ function Header({ children }) {
         setShowSettings(false)
     }
 
+    const [updateTrackedTimeByID,{isloading2,error2}]=useUpdateTrackedTimeByIDMutation()
+    const clockID = useSelector( (state) => state.clock.clockID)
 
+    console.log(clockID)
+    const handleClockOut= async ()=> {
+
+        setClock(!clock);
+        console.log(clock);
+        let currentTime = new Date();
+        const data={
+            "stop": currentTime
+        }
+        console.log({clockID, ...data})
+        // const response = await updateTrackedTimeByID({clockID, ...data})
+        const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
+        console.log("now must be stop")
+        console.log(response)
+        dispatch(setClockID(response.data.id))
+        dispatch(setClockStart(response.data.start))
+        dispatch(setClockStop(response.data.stop))
+    }
   return (
     <>
 {/* ------- HEADER ------ */}
@@ -143,10 +170,10 @@ function Header({ children }) {
             {isHoverCalendar?
             <p className="font-semibold text-zinc-600 hover:cursor-pointer">Calendar</p>
             :
-            <FaCalendarAlt  className=" text-zinc-500 " /> 
+            <FaCalendarAlt  className=" text-zinc-500 " />
             }
-            </div>  
-        
+            </div>
+
         </div>
             <div className="flex w-fit items-center gap-2">
                 <p className="p-0.5 text-zinc-600 font-normal ">
@@ -155,12 +182,12 @@ function Header({ children }) {
                 <TimerCountdown  start={clock} />
 
                 {clock ?
-                    <button onClick={handleClick}
+                    <button onClick={handleClockOut}
                     className="w-28 h-10 rounded-full  text-teal-500 border-2 text-sm font-semibold
                      border-teal-500 bg-transparent"
                     >CLOCK OUT</button>
                     :
-                    <button onClick={handleClick}
+                    <button onClick={handleClockIn}
                     className="w-28 h-10 rounded-full  text-white text-sm font-semibold
                     bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
                     >CLOCK IN</button>
@@ -211,8 +238,8 @@ function Header({ children }) {
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                      <FaCalendarAlt className="text-zinc-500" />
                      <p>Calendar</p>
-                    </div>      
-           
+                    </div>
+
                 </div>
                 }
             </div> 
