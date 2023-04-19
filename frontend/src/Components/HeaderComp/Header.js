@@ -5,7 +5,7 @@ import { HiMenu }from 'react-icons/hi';
 import { RxCross2 }from 'react-icons/rx';
 import { FiLogOut,FiUser } from "react-icons/fi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import UserAvator from "../UserAvator";
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
 import {useCreateTrackedTimeMutation, useUpdateTrackedTimeByIDMutation} from "../../api/API";
@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setClockID, setClockStart, setClockStop} from "../../redux/Slices/clockSlice";
 import {axiosWithToken} from "../../api/axios";
 import Timetracker from "../../pages/Timetracker";
+import {setUser} from "../../redux/Slices/userSlice";
 
 
 function Header({ children }) {
@@ -117,6 +118,20 @@ function Header({ children }) {
         dispatch(setClockStart(response.data.start))
         dispatch(setClockStop(response.data.stop))
     }
+
+    useEffect(  () => {
+            const getWorkload = async () => {
+                const response = await axiosWithToken(`me/`)
+                dispatch(setUser(response.data))
+            }
+            getWorkload()
+        } , []
+    )
+
+
+
+
+
   return (
     <>
 {/* ------- HEADER ------ */}

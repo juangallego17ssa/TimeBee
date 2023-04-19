@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import Timer from './Timer';
 import { useGetUserProfileQuery } from '../../api/API';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {axiosWithToken} from "../../api/axios";
 
 
@@ -10,15 +10,8 @@ function TimerCountdown(props) {
     const {data:currentUser,isLoading,isSuccess,isError}=useGetUserProfileQuery()
     // console.log(currentUser.workload/100)
 
-    // const clockTotal =
-    const clockStart = useSelector( (state) => state.clock.clockStart)
-
-    const getWorkload = async ()=> {
-        const response = await axiosWithToken(`me/`)
-        console.log(response)
-    }
-
-    getWorkload()
+    const userWorkload = useSelector( (state) => state)
+    console.log(userWorkload)
 
     let [timer, setTime] = useState(30600*(currentUser?currentUser.workload/100:1));
     const intervalId = useRef()
