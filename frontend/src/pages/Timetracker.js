@@ -27,8 +27,6 @@ function Timetracker() {
     dispatch(fetchTrackedTimeOwn());
     
   }, []);
-  const reduxTrackedTime = useSelector((store) => store.trackedtime);
-  // console.log(reduxTrackedTime);
 
 
   const [showProjectTags, setShowProjectTags] = useState(false);
