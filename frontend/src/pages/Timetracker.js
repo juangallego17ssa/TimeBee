@@ -28,7 +28,7 @@ function Timetracker() {
   const reduxTrackedTime = useSelector((store) => store.trackedtime);
   // console.log(reduxTrackedTime);
 
-
+  const [selectedDate, setSelectedDate]=useState('')
   const [isManual, setIsManual] = useState(false);
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
@@ -37,6 +37,10 @@ function Timetracker() {
   const { data : tasks,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
     // filter out login/logout
       const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
+      const TasksOfDay = filteredTask.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
+        console.log('task for the day:',TasksOfDay)
+      // console.log(new Date(tasks[0].start).toDateString())
+      // console.log(new Date().toDateString())
       
       const handleSearch = (event) => {
         event.preventDefault();
