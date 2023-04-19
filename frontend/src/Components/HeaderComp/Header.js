@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
 import {useCreateTrackedTimeMutation, useUpdateTrackedTimeByIDMutation} from "../../api/API";
 import {useDispatch, useSelector} from "react-redux";
-import {setClockID, setClockStart, setClockStop} from "../../redux/slices/clockSlice";
+import {setClockID, setClockStart, setClockStop} from "../../redux/Slices/clockSlice";
 import {axiosWithToken} from "../../api/axios";
 
 
@@ -84,7 +84,8 @@ function Header({ children }) {
         const data={
             "stop": currentTime
         }
-        // const response = await updateTrackedTimeByID(clockID, data)
+        console.log({clockID, ...data})
+        // const response = await updateTrackedTimeByID({clockID, ...data})
         const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
         console.log("now must be stop")
         console.log(response)
