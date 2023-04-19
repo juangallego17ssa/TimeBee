@@ -10,7 +10,7 @@ import UserAvator from "../UserAvator";
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
 import {useCreateTrackedTimeMutation, useUpdateTrackedTimeByIDMutation} from "../../api/API";
 import {useDispatch, useSelector} from "react-redux";
-import {setClockID, setClockStart, setClockStop} from "../../redux/Slices/clockSlice";
+import {setClockID, setClockStart, setClockStop, setClockDuration} from "../../redux/Slices/clockSlice";
 import {axiosWithToken} from "../../api/axios";
 import Timetracker from "../../pages/Timetracker";
 import {setUser} from "../../redux/Slices/userSlice";
@@ -29,7 +29,8 @@ function Header({ children }) {
     const [isHoverCalendar, setIsHoverCalendar] = useState(false);
 
     const [clock, setClock] = useState(false);
-    
+    const [loaded, setLoaded] = useState(false);
+
 //---- get the current date ----//
     let today = new Date();
     let options = {
@@ -74,21 +75,7 @@ function Header({ children }) {
     };
 
     const dispatch = useDispatch();
-    const handleClockIn= async ()=> {
 
-        setClock(!clock);
-        console.log(clock);
-        let currentTime = new Date();
-        const data={
-            "type_of_input": 0,
-            "start": currentTime
-        }
-        const response = await createTrackedTime(data)
-        console.log(response)
-        dispatch(setClockID(response.data.id))
-        dispatch(setClockStart(response.data.start))
-        dispatch(setClockStop(""))
-    }
     const handleShowSettings = ()=>{
         setShowSettings(!showSettings);
         setShowMenu(false)
@@ -98,25 +85,60 @@ function Header({ children }) {
         setShowSettings(false)
     }
 
+    const handleClockIn= async ()=> {
+        let currentTime = new Date();
+        const data={
+            "type_of_input": 0,
+            "start": currentTime
+        }
+        const response = await createTrackedTime(data)
+        dispatch(setClockID(response.data.id))
+        dispatch(setClockStart(response.data.start))
+        dispatch(setClockStop(""))
+        setClock(true);
+    }
+
+
     const clockID = useSelector( (state) => state.clock.clockID)
 
-    console.log(clockID)
+    // console.log(clockID)
     const handleClockOut= async ()=> {
-
-        setClock(!clock);
-        console.log(clock);
         let currentTime = new Date();
         const data={
             "stop": currentTime
         }
-        console.log({clockID, ...data})
-        // const response = await updateTrackedTimeByID({clockID, ...data})
         const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
-        console.log("now must be stop")
-        console.log(response)
-        dispatch(setClockID(response.data.id))
-        dispatch(setClockStart(response.data.start))
-        dispatch(setClockStop(response.data.stop))
+        dispatch(setClockID(""))
+        dispatch(setClockStart(""))
+        dispatch(setClockStop(""))
+        const startTime = new Date(response.data.start)
+        const stopTime = new Date(response.data.stop)
+        const newDuration = myState.clock.clockDuration+Math.round((stopTime.getTime()-startTime.getTime())/1000)
+        dispatch(setClockDuration(newDuration))
+        setClock(false)
+    }
+
+    const myState = useSelector( (state) => state)
+
+    const getClock = async () => {
+        const response = await axiosWithToken(`trackedtime/getclockinfo/`)
+        if (response.data.latest_time.id) {
+            dispatch(setClockID(response.data.latest_time.id))
+            dispatch(setClockStart(response.data.latest_time.start))
+            setClock(true)
+        }
+        if (response.data.duration) {
+            dispatch(setClockDuration(response.data.duration))
+        }
+        // if (!response.data.latest_time.stop) {
+        //     console.log("found")
+        //     console.log(response.data.latest_time.stop)
+        //     setClock(true)
+        // } else {
+        //     console.log("not found")
+        //     console.log(response.data.latest_time.stop)
+        // }
+        setLoaded(true)
     }
 
     useEffect(  () => {
@@ -125,8 +147,12 @@ function Header({ children }) {
                 dispatch(setUser(response.data))
             }
             getWorkload()
+
+            getClock()
+
         } , []
     )
+
 
 
 
@@ -193,7 +219,7 @@ function Header({ children }) {
                 <p className="p-0.5 text-zinc-600 font-normal ">
                     {today.toLocaleDateString('en-GB',options)}</p>
             
-                <TimerCountdown  start={clock} />
+                <TimerCountdown  start={clock} firstLoad={loaded}/>
 
                 {clock ?
                     <button onClick={handleClockOut}
