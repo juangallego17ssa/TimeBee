@@ -7,7 +7,7 @@ const localizer = momentLocalizer(moment);
 
 const CalendarComponent = ({ events, BackgroundEvent, views, defaultView }) => {
   return (
-    <div>
+    <div className="">
       <Calendar
         localizer={localizer}
         events={events}
