@@ -68,8 +68,9 @@ function Header({ children }) {
     };
 
     const logOut = () => {
-      localStorage.setItem("access", "");
-      navigate("/login");
+        localStorage.removeItem("access");
+        console.log('Access Token removed successfully')
+      navigate("/"); // needs to be changed to /login when homepage is ready and routing changed
     };
 
     const dispatch = useDispatch();
@@ -203,7 +204,7 @@ function Header({ children }) {
                         <div
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                          <FiLogOut/>
-                         <p >Logout</p>
+                         <p onClick={logOut}>Logout</p>
                         </div>
                     </div>
                     }

@@ -79,7 +79,7 @@ function Timetracker() {
         <div className="z-10 flex flex-row justify-center items-center w-full gap-2 ">
           <div className="flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md">
             <input
-              class={`caret-teal-500 py-2 px-4 bg-transparent focus:outline-none flex-grow `}
+              className={`caret-teal-500 py-2 px-4 bg-transparent focus:outline-none flex-grow `}
               placeholder="Add new Busy Bee.."
               ref={name}
             />
