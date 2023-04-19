@@ -22,8 +22,11 @@ function Timetracker() {
 
 // Fetch all the TrackedItems of the actual user and store it in Redux
   const dispatch = useDispatch();
+  const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
+ 
   useEffect(() => {
     dispatch(fetchTrackedTimeOwn());
+    
   }, []);
   const reduxTrackedTime = useSelector((store) => store.trackedtime);
   // console.log(reduxTrackedTime);
@@ -53,40 +56,6 @@ function Timetracker() {
     e.preventDefault();
     console.log('handelDateChanged')
   }
-
-  // Data for the calendar component
-  const BackgroundEvent = [
-    {
-      start: new Date(2023, 3, 17, 10, 30),
-      end: new Date(2023, 3, 17, 18, 30),
-    },
-  ];
-
-  const events = [
-    {
-      title: "Meeting with Bob",
-      start: new Date(2023, 3, 17, 10, 30),
-      end: new Date(2023, 3, 17, 12, 30),
-    },
-    {
-      title: "Lunch with Alice",
-      start: new Date(2023, 3, 19, 12, 0),
-      end: new Date(2023, 3, 19, 13, 0),
-    },
-
-    {
-      title: "Event 1",
-      start: new Date("2023-04-17T07:30:00.000Z"),
-      end: new Date("2023-04-17T13:30:00.000Z"),
-    },
-    {
-      title: "Event 2",
-      start: new Date("2023-04-17T09:00:00.000Z"),
-      end: new Date("2023-04-17T11:00:00.000Z"),
-    },
-    // Add more events as needed
-  ];
-
 
   return (
     // Create timer inputs

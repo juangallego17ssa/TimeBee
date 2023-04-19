@@ -143,7 +143,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-today {
-  background-color: #eaf6ff;
+  background-color: #34d39936;
 }
 
 .rbc-toolbar {
@@ -249,7 +249,7 @@ button.rbc-input::-moz-focus-inner {
           box-shadow: none;
   margin: 0;
   padding: 2px 5px;
-  background-color: #3174ad;
+  background-image: linear-gradient(180deg, #34d399, #06b6d4 80%);
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
@@ -261,8 +261,10 @@ button.rbc-input::-moz-focus-inner {
   pointer-events: none;
 }
 .rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event {
-  background-color: #265985;
+  background: #34d399;
 }
+
+
 .rbc-event:focus, .rbc-day-slot .rbc-background-event:focus {
   outline: 5px auto #3b99fc;
 }
@@ -561,7 +563,7 @@ button.rbc-input::-moz-focus-inner {
   right: 0;
 }
 .rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event {
-  border: 1px solid #265985;
+  border: 1px solid #06b6d4;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -578,7 +580,8 @@ button.rbc-input::-moz-focus-inner {
   position: absolute;
 }
 .rbc-day-slot .rbc-background-event {
-  opacity: 0.75;
+  opacity: 0.5;
+  background: linear-gradient(180deg, #ff38bd 0%, #fcd34d 80%);
 }
 .rbc-day-slot .rbc-event-label {
   -webkit-box-flex: 0;
@@ -802,6 +805,6 @@ button.rbc-input::-moz-focus-inner {
   left: 0;
   right: 0;
   height: 1px;
-  background-color: #74ad31;
+  background-color: #ff38bd;
   pointer-events: none;
 }
