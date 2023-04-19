@@ -22,12 +22,12 @@ const CalendarComponent = ({ events, views, defaultView }) => {
     events.forEach((event) => {
       const copyEvent = {}
       copyEvent.start = new Date(event.start);
-      copyEvent.start.setHours(copyEvent.start.getHours() - 2)
+      // copyEvent.start.setHours(copyEvent.start.getHours() - 2)
       if (event.stop === null) {
         copyEvent.end = new Date();
       } else {
         copyEvent.end = new Date(event.stop);
-        copyEvent.end.setHours(copyEvent.end.getHours() - 2);
+        // copyEvent.end.setHours(copyEvent.end.getHours() - 2);
       }
       copyEvent.title = event.task_name;
       if (event.type_of_input === "0") {
@@ -58,7 +58,6 @@ const CalendarComponent = ({ events, views, defaultView }) => {
         views={views}
         defaultView={defaultView}
         showMultiDayTimes={true}
-        dayLayoutAlgorithm={'overlap'}
       />
     </div>
   );

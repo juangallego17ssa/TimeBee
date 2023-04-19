@@ -29,6 +29,7 @@ function Timetracker() {
   }, []);
 
 
+
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
 //GET all tasks created  ?by all user?? 
@@ -72,7 +73,7 @@ function Timetracker() {
   }
 
   return (
-    <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:flex-row gap-4">
+    <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:flex-row gap-4 mt-6">
       <div className=" Leftcontainer md:w-3/5 flex flex-col px-6">
         {/* -----  Inputwraper ----- */}
         <div className="z-10 flex flex-row justify-center items-center w-full gap-2 ">
@@ -131,8 +132,8 @@ function Timetracker() {
           {/* <TimerBar addProject={addProject} /> */}
         </div>
       </div>
-      <div className=" md:w-1/3 flex justify-center h-full">
-        <CalendarComponent
+      <div className=" md:w-1/3 flex-1 h-full box-content px-6">
+        <CalendarComponent 
           events={reduxTrackedTime}
           views={{
             day: true,
