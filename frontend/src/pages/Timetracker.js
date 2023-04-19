@@ -1,4 +1,4 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { GiBee } from "react-icons/gi";
 import { AiFillTag } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
@@ -9,7 +9,7 @@ import ProjectOptions from '../Components/ProjectTagComp/ProjectOptions';
 import { 
   useGetTrackedTimeQuery, 
   useCreateTrackedTimeMutation,
-  useGetOwnProjectsQuery,
+  useGetOwnTrackedTimeQuery,
 } from '../api/API';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
@@ -18,6 +18,7 @@ import { Views } from 'react-big-calendar';
 
 
 function Timetracker() {
+
   // Fetch all the TrackedItems of the actual user and store it in Redux
   const dispatch = useDispatch();
   const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
@@ -26,15 +27,19 @@ function Timetracker() {
     dispatch(fetchTrackedTimeOwn());
     
   }, []);
-  
+  const reduxTrackedTime = useSelector((store) => store.trackedtime);
+  // console.log(reduxTrackedTime);
+
 
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
-  // console.log("project:",selectedProject);
+//GET all tasks created  ?by all user?? 
+  const { data : tasks,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
+    // filter out login/logout
+      const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
+      // console.log(filteredTask)
+
   const name = useRef();
-  //GET all tasks created  ?by all users
-      const { data : tasks,isLoading,isSuccess,isError} = useGetTrackedTimeQuery()
-      // console.log(tasks);
   
   //POST new time tracker for task
       const [createTrackedTime] = useCreateTrackedTimeMutation()
@@ -54,10 +59,12 @@ function Timetracker() {
       type_of_input:"1",
       start:new Date().toISOString(),
       task_name:name.current.value,
-      project:selectedProject,
+      project:selectedProject.id,
     })
     // console.log(data)
     createTrackedTime(data)
+    .then(result=>console.log(result))
+    
     name.current.value = '';
     setSelectedProject('');
   }
@@ -77,9 +84,9 @@ function Timetracker() {
               placeholder="Add new Busy Bee.."
               ref={name}
             />
-            <div className="relative flex">
+            <div className="relative flex items-center">
               <AiFillTag
-                className=" text-zinc-500 text-xl"
+                className={`m-1 text-${selectedProject.tag_color?selectedProject.tag_color:'zinc'}-400 text-xl`}
                 onClick={() => {
                   setShowProjectTags(!showProjectTags);
                 }}
@@ -113,8 +120,14 @@ function Timetracker() {
           />
         </div>
         <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full h-4/6 md:h-screen overflow-y-scroll">
-          {tasks?.map((task) => (
-            <TimerBar key={task.id} task={task} />
+          {isLoading && <div>Loading</div>
+          
+          }
+          {filteredTask?.map((task) => (
+            <TimerBar key={task.id} 
+            task={task} 
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}/>
           ))}
 
           {/* <TimerBar addProject={addProject} /> */}

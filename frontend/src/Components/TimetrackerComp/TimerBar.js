@@ -2,27 +2,37 @@ import React, { useState ,useRef } from 'react';
 import { FaPlayCircle, FaRegPauseCircle, FaRegStopCircle, FaTrashAlt } from "react-icons/fa";
 import {AiFillTag} from 'react-icons/ai'
 import { FiEdit } from "react-icons/fi";
+import { useGetOwnProjectsQuery } from '../../api/API'
 import Timer from './Timer';
+import axios from 'axios';
 
 import {
   useUpdateTrackedTimeByIDMutation,
   useDeleteTrackedTimeByIDMutation,
 } from '../../api/API'
+import ProjectOptions from '../ProjectTagComp/ProjectOptions';
 
 
 
 function TimerBar({task}) {
-  const taskNameRef = useRef()
+  //List all projects created by user
+  const { data : projects,isLoading,isSuccess,isError,}= useGetOwnProjectsQuery()
+  console.log(projects)
+  const taskNameRef = useRef();
+  const projectRef = useRef();
   const [ updateTrackedTimeByID ]=useUpdateTrackedTimeByIDMutation()
   const [ deleteTrackedTimeByID ]=useDeleteTrackedTimeByIDMutation()
+  
 
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
   const [taskName, setTaskname ]= useState(task.task_name);
+  const [project, setProject ]= useState(task.project.id);
   const [BusyBee, setBusyBee] = useState('');
   const [updated, setUpdated] = useState('');
 
   const [showProject, setShowProject] = useState(false)
+  
 
   const handleChangeTaskName = (event) => {
     event.preventDefault()
@@ -30,6 +40,9 @@ function TimerBar({task}) {
     if(edit){
       setTaskname(newName)
     }
+  }
+  const handleChangeProject = ()=>{
+    console.log(projectRef.current.value)
   }
 
   const handleAddChange = (event) => {
@@ -46,47 +59,52 @@ function TimerBar({task}) {
   const handleEdit = (event) => {
     event.preventDefault();
     setEdit(!edit)
-    console.log(edit)
+    // console.log(edit)
     // refetch();
     // perform the search operation here
   };
+
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       const trackedtimeId= task.id
-      const body = {task_name: taskName}
-      // console.log(trackedtimeId,body)
-      updateTrackedTimeByID(trackedtimeId,body)
-      .then((data)=>console.log(data))
+      let data ={
+        "task_name": taskName,
+        "project":projectRef.current.value, 
+      };
+      console.log(trackedtimeId,data)
+      updateTrackedTimeByID({trackedtimeId,...data})
+      .then((result)=>console.log(result))
 
-      // setUpdated(BusyBee);
       setEdit(!edit)
     }
   };
+
   const handleStop = ()=>{
-    const rackedtimeId = task.id
+    const trackedtimeId = task.id
+    // console.log(trackedtimeId)
     const stopTime = new Date().toISOString()
-    var body = JSON.stringify({
-      "task_name": "new task name"
-    });
-    updateTrackedTimeByID(rackedtimeId,body)
-    .then((data)=>{
-      console.log('success',data)
+    var data = {
+      "stop": stopTime
+      
+    };
+    updateTrackedTimeByID({trackedtimeId,...data})
+    .then((result)=>{
+      console.log(result)
     })
     .catch((error)=>{
       console.log('error',error)
     })
-
   }
   const handelDeleteTask = ()=>{
     const trackedtimeId =task.id
-    // console.log(trackedtimeId)
-    deleteTrackedTimeByID(trackedtimeId)
-
+    console.log(task)
+    // deleteTrackedTimeByID(trackedtimeId)
   }
 
   return (
-    <div className="z-[0] bg-white flex justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
-        <div className="relative flex items-center">
+    <div className="bg-white flex flex-col justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
+    <div className="flex justify-between items-center w-full" >
+        <div className="relative w-3/5 flex items-center justify-between">
           <label  onClick={()=>setEdit(true)}>
             <input className=" bg-transparent focus:outline-teal-500 caret-teal-500 flex-grow "
                       // placeholder="BusyBee1"
@@ -96,21 +114,25 @@ function TimerBar({task}) {
                       onKeyDown={handleKeyDown} 
                     />
           </label>
-              
-            <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-500`}
-                      onClick={()=>setShowProject(!showProject)}/>
-            <p className='border-2 w-36 ml-2'>{task.project.name?task.project.name:''}</p>
-                      {/* {showProject && 
-                        <div>
-                          
-                        </div>
-                      } */}
+            <div className='flex items-center'>
+              <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-400`}/>
+              <label htmlFor="project">
+              <select id="project" name="project" ref={projectRef} onChange={handleChangeProject}>
+                {projects?.map(project=>
+                  <option key={project.id} value={project.id}>{project.name}</option>
+                  )}
+              </select>
+            </label>
+            </div>
+            <div>
+
+            </div>
             </div>
             {/* {edit && */}
               <FaTrashAlt onClick={handelDeleteTask}
               className="text-md text-zinc-300 hover:text-red-500"/>
             {/* } */}
-            <Timer className="border-2 border-red w-24" start={play}/>
+            <Timer start={play}/>
             {/* <FiEdit onClick={()=>{setEdit(true)}}
               className="text-md text-zinc-400 hover:text-yellow-500" /> */}
           
@@ -125,7 +147,13 @@ function TimerBar({task}) {
             <FaRegStopCircle onClick={handleStop}
               className="text-2xl text-zinc-400 hover:text-rose-500" />
           </div>
-    </div>    
+    </div> 
+    {task.stop &&
+     <div className='w-full px-2 flex justify-end'>
+      <p className='text-xs text-zinc-300'>{task.stop}</p>
+     </div>  
+    }
+    </div>
     );
   }
   

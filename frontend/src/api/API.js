@@ -4,7 +4,7 @@ const baseUrl = 'https://timebee.propulsion-learn.ch/backend/api/'
 // const baseUrl = process.env.NODE_ENV === 'production'
 //   ? process.env.REACT_APP_API_BASE_URL_PROD
 //   : process.env.REACT_APP_API_BASE_URL_DEV;
-
+// const baseUrl = 'http://localhost:8000/backend/api/'
 
 export const timeBeeAPI = createApi({
   reducerPath: 'timeBeeAPI',
@@ -184,10 +184,10 @@ export const timeBeeAPI = createApi({
     }),
 
     updateTrackedTimeByID: builder.mutation({
-      query: (trackedtimeId, body) => ({
+      query: ({trackedtimeId, ...data}) => ({
         url: `trackedtime/${trackedtimeId}/`,
         method: 'PATCH',
-        body,
+        body: data,
       }),
       invalidatesTags:['Tasks']
     }),
