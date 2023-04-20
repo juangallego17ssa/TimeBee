@@ -18,22 +18,21 @@ function App() {
   return (
     <>
     <Provider store={store}>
-      <div className="flex box-border flex-col w-screen h-screen bg-stone-100" >
-    
-        <Header>
+      <div className="flex box-border flex-col w-sceen h-screen bg-stone-100" >
+
+        
           <Routes>
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/home" element={<Home />} />
             <Route path="/verification" element={<Verification/>} />
-            <Route path="/timetracker" element={<Timetracker/>} />
-            <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
-            <Route path="/reports" element={<Report/>} />
-            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<RouteProtection route={<Header><Timetracker/></Header>} />} />
+            <Route path="/dashboard" element={<RouteProtection route={<Header><Dashboard /></Header>} />}/>
+            <Route path="/reports" element={<RouteProtection route={<Header><Report/></Header>}/>}/>
+            <Route path="/calendar" element={<RouteProtection route={<Header><Calendar /></Header>} />} />
             <Route path="/profil" element={<Profil />} />
             <Route path="/data" element={<DataProject/>} />
           </Routes>
-        </Header>
       </div>
     </Provider>
     </>
