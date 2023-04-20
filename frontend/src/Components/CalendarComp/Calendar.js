@@ -14,7 +14,7 @@ const CalendarComponent = ({ events, views, defaultView }) => {
   const processEvents = (events) => {
     const foregroundEvents = []
     const backgroundEvents = []
-    events.forEach((event) => {
+    events?.forEach((event) => {
       const copyEvent = {}
       copyEvent.start = new Date(event.start);
       // copyEvent.start.setHours(copyEvent.start.getHours() - 2)
