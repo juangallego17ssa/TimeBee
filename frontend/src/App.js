@@ -11,6 +11,7 @@ import RouteProtection from "./Components/HOC/RouteProtection";
 import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
 import Calendar from "./pages/Calendar";
+import Profil from "./pages/Profil";
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
             <Route path="/timetracker" element={<Timetracker/>} />
             <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
             <Route path="/reports" element={<Report/>} />
-            <Route path="/calendar" element={<Calendar/>} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/profil" element={<Profil/>} />
           </Routes>
         </Header>
       </div>
