@@ -49,7 +49,23 @@ function DataProject() {
       
     const data = [
         {
-            "Days": "2023-04-20T14:12:04.424000+02:00",
+            "days": "2023-04-20T14:12:04.424000+02:00",
+            "unassigned": 50,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "burger": 42,
+            "burgerColor": "hsl(71, 70%, 50%)",
+            "sandwich": 121,
+            "sandwichColor": "hsl(124, 70%, 50%)",
+            "kebab": 141,
+            "kebabColor": "hsl(115, 70%, 50%)",
+            "fries": 195,
+            "friesColor": "hsl(316, 70%, 50%)",
+            "donut": 95,
+            "donutColor": "hsl(3, 70%, 50%)"
+        },
+        {
+
+            "days": "2023-05-20T14:12:04.424000+02:00",
             "unassigned": 50,
             "unassignedColor": "hsl(89, 70%, 50%)",
             "burger": 42,

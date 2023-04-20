@@ -18,12 +18,12 @@ const MyResponsiveBar = ({ data /* see data tab */ }) => (
             'fries',
             'donut'
         ]}
-        indexBy="date"
+        indexBy="days"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
-        layout="horizontal"
-        valueScale={{ type: 'time', format: "%Y-%m-%d" }}
-        xFormat="time:%Y-%m-%d"
+        layout="vertical"
+        valueScale={{ type: 'linear'}}
+        xFormat="time:%b %d"
         indexScale={{ type: 'band', round: true }}
         colors={{ scheme: 'nivo' }}
         defs={[
@@ -73,10 +73,9 @@ const MyResponsiveBar = ({ data /* see data tab */ }) => (
         axisRight={null}
         axisBottom={{
             tickSize: 2,
-            tickValues: 5,
+            tickValues: "every day",
             tickPadding: 5,
             tickRotation: 0,
-            format: "%m-%d",
             legend: 'Days',
             legendPosition: 'middle',
             legendOffset: 32
