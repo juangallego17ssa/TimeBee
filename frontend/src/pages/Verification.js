@@ -74,7 +74,7 @@ function Verification() {
         navigate('/home')
     }
     const goToLogin =  () => {
-        navigate('/')
+        navigate('/login')
     }
 
     return (
@@ -98,7 +98,10 @@ function Verification() {
                         <input type="password" placeholder="Password repeat" value={passwordRepeat} onChange={handlePasswordRepeatChange} required className="password2 flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
                         {isError && <div className="flex justify-center items-center font-semibold text-2xl w-full">There was an error: {error.message}</div>}
                         <div className="buttonwrap flex flex-wrap flex-col justify-center items-center w-60 h-10">
-                            <button onClick={handleClick} className="flex justify-center items-center border-solid rounded-full text-white w-52 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500">Finish registration</button>
+                            <button 
+                            onClick={handleClick} 
+                            className="flex justify-center items-center border-solid rounded-full text-white w-52 h-6 bg-gradient-to-r from-emerald-400 to-cyan-500">
+                            Finish registration</button>
                         </div>
                     </form>
                 )}
