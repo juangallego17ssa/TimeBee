@@ -18,21 +18,26 @@ import ProjectOptions from '../ProjectTagComp/ProjectOptions';
 function TimerBar({task}) {
   //List all projects created by user
   const { data : projects,isLoading,isSuccess,isError,}= useGetOwnProjectsQuery()
-  console.log(projects)
+  // console.log(projects)
+
   const taskNameRef = useRef();
   const projectRef = useRef();
+  const startTimeRef = useRef();
+  const stopTimeRef = useRef();
+
   const [ updateTrackedTimeByID ]=useUpdateTrackedTimeByIDMutation()
   const [ deleteTrackedTimeByID ]=useDeleteTrackedTimeByIDMutation()
   
 
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [editTime, setEditTime] = useState(false);
   const [taskName, setTaskname ]= useState(task.task_name);
   const [project, setProject ]= useState(task.project.id);
   const [BusyBee, setBusyBee] = useState('');
   const [updated, setUpdated] = useState('');
 
-  const [showProject, setShowProject] = useState(false)
+  // const [showProject, setShowProject] = useState(false)
   
 
   const handleChangeTaskName = (event) => {
@@ -70,13 +75,16 @@ function TimerBar({task}) {
       const trackedtimeId= task.id
       let data ={
         "task_name": taskName,
-        "project_id":projectRef.current.value, 
+        "project_id":projectRef.current.value,
+        "start":editTime?startTimeRef.current.value:task.start,
+        "stop":editTime?stopTimeRef.current.value:task.stop,
       };
       // console.log(trackedtimeId,data)
       updateTrackedTimeByID({trackedtimeId,...data})
       .then((result)=>console.log(result))
 
-      setEdit(!edit)
+      setEdit(false)
+      setEditTime(false)
     }
   };
   const handlePlay = ()=>{
@@ -115,59 +123,66 @@ function TimerBar({task}) {
   }
 
   return (
-    <div className="bg-white flex flex-col justify-between items-center py-2 px-4 rounded-full w-full shadow-md">
-    <div className="flex justify-between items-center w-full" >
-        <div className="relative lg:w-3/5 flex items-center justify-between">
-          <label  onClick={()=>setEdit(true)}>
-            <input className={`${edit?'shadow-inner border-teal-500 ':''}rounded-full bg-transparent focus:outline-teal-500 flex-grow px-4`}
-                      // placeholder="BusyBee1"
+    <div className="bg-white flex items-center py-2 px-4 rounded-full w-full shadow-md">
+    <div className={` flex flex-col lg:flex-row items-end w-full`} >
+        <div className="relative flex items-center w-full">
+          <label onClick={()=>setEdit(true)} className='flex' >
+            <input className={`${edit?'shadow-inner border-teal-500 ':''}rounded-full bg-transparent focus:outline-teal-500 px-4`}
                       value={taskName}
                       disabled={!edit}
-                      onChange={handleChangeTaskName} 
+                      onChange={handleChangeTaskName}
                       onKeyDown={handleKeyDown} 
                     />
           </label>
+        <div className='flex items-center'>
+          <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-400 mx-1`}/>
+          {edit?
+          <label htmlFor="project">
+          <select id="project" name="project" ref={projectRef} onChange={handleChangeProject} onKeyDown={handleKeyDown}  >
+            {projects?.map(project=>
+              <option key={project.id} value={project.id}>{project.name}</option>
+              )}
+          </select>
+        </label>
+            :<button onClick={()=>setEdit(true)}>{task.project.name}</button>
+          }
+        </div>
+        {/* <FaTrashAlt onClick={handelDeleteTask}className="text-md text-zinc-300 hover:text-red-500 mx-3"/> */}
         </div>
 
-            <div className='flex items-center'>
-              <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-400`}/>
-              {edit?
-              <label htmlFor="project">
-              <select id="project" name="project" ref={projectRef} onChange={handleChangeProject} >
-                {projects?.map(project=>
-                  <option key={project.id} value={project.id}>{project.name}</option>
-                  )}
-              </select>
-            </label>
-                :<button onClick={()=>setEdit(true)}>{task.project.name}</button>
+        <div className='relative  flex items-center'>
+            {task?.stop?
+            <div className='mx-1'>
+              {editTime?
+              <div className='flex text-sm ma-2' onKeyDown={handleKeyDown} >
+                <input type={'datetime-local'} ref={startTimeRef}/>-
+                <input type={'datetime-local'} ref={stopTimeRef}/>
+              </div>
+              :
+              <div className='flex text-xs w-fit text-zinc-400 gap-2' onClick={()=>setEditTime(!editTime)}>
+                <p>{moment(task.start).format('DD-MMM-yyyy hh:mm')}</p>
+                <span>-</span>
+                <p>{moment(task.stop).format('DD-MMM-yyyy hh:mm')}</p>
+              </div>
               }
             </div>
-
-              <FaTrashAlt onClick={handelDeleteTask}
-              className="text-md text-zinc-300 hover:text-red-500"/>
-
-            <Timer start={play}/>
-
-          
-          <div className="flex gap-2 ">
-            {task?.stop ? 
-            <FaRegStopCircle 
-            className="text-2xl text-zinc-400" />
-            :play?
-            <FaRegStopCircle onClick={handleStop}
-            className="text-2xl text-rose-400" />
             :
-            <FaPlayCircle onClick={handlePlay} 
-            className="text-2xl text-zinc-400 hover:text-emerald-500" />
+            <div className='flex mx-2'>
+              <Timer start={play}/>
+              {play?
+              <FaRegStopCircle onClick={handleStop}
+              className="text-2xl text-rose-400" />
+              :
+              <FaPlayCircle onClick={handlePlay} 
+              className="text-2xl text-zinc-400 hover:text-emerald-500" />
+              }
+            </div>
             }
-          
-          </div>
+        </div>
     </div> 
-    {task.stop &&
-     <div className='w-full px-2 flex justify-end'>
-      <p className='text-xs text-zinc-300'>{moment(task.stop).format('DD MMM yyyy hh:mm:ss')}</p>
-     </div>  
-    }
+      <FaTrashAlt 
+        onClick={handelDeleteTask}
+        className="text-md text-zinc-200 hover:text-red-500 "/>
     </div>
     );
   }
