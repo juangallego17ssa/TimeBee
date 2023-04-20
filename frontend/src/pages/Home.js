@@ -1,9 +1,13 @@
+import TimeBeeLogo from '../assets/TimeBeeNav.png';
 
 
 function Home() {
 
     return (
-      <div className="flex-col bg-gradient-to-r bg-stone-100 w-full h-full">
+      <div className="flex flex-col justify-center object-center">
+        <div>
+          <img src={TimeBeeLogo} alt="Site logo Timebee"></img>
+        </div>
       </div>
     );
   }

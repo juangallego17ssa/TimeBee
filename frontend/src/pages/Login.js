@@ -12,11 +12,6 @@ function Login() {
   const [error, setError] = useState(null);
   const [getToken, { isLoading }] = useGetTokenMutation();
 
-  // const handleSubmit = async (event) => {
-  //     event.preventDefault();
-  //     await getToken({email, password});
-  //     navigate('/timetracker')
-  // };
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,7 +22,7 @@ function Login() {
       if (result.error) {
         throw new Error(result.error);
       } else {
-        navigate("/timetracker");
+        navigate("/");
       }
     } catch (err) {
       setError(err?.response?.data?.detail ?? "Invalid entry please try again");

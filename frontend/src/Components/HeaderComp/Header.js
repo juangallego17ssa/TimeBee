@@ -49,7 +49,7 @@ function Header({ children }) {
     };
     
     const goToTimetracker = () => {
-        navigate("/timetracker");
+        navigate("/");
         setShowMenu(false)
         
     };
@@ -72,7 +72,7 @@ function Header({ children }) {
     const logOut = () => {
         localStorage.removeItem("access");
         console.log('Access Token removed successfully')
-      navigate("/"); // needs to be changed to /login when homepage is ready and routing changed
+      navigate("/login"); 
     };
 
     const dispatch = useDispatch();
