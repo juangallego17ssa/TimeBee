@@ -46,3 +46,6 @@ class TrackedTime(models.Model):
 
     def __str__(self):
         return f'{self.id} - Task {self.task_name} - Project {self.project.name} - User {self.project.created_by.username}'
+
+    class Meta:
+        ordering = ('-start',)
