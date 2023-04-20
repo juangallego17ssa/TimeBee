@@ -41,8 +41,8 @@ function Timetracker() {
     // filter out login/logout
       const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
       const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date(selectedDate).toDateString())
-        console.log('task for the day:',TasksOfDay)
-        console.log('selectedDate',selectedDate)
+        // console.log('task for the day:',TasksOfDay)
+        // console.log('selectedDate',selectedDate)
       // console.log(new Date(tasks[0].start).toDateString())
       // console.log(new Date().toDateString())
       
