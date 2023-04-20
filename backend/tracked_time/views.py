@@ -169,7 +169,7 @@ class ListClockView(generics.ListAPIView):
         queryset = TrackedTime.objects.filter(start__gte=today_start,
                                               start__lt=today_end,
                                               project__created_by_id=self.request.user.id,
-                                              type_of_input="0")
+                                              type_of_input="0").order_by("id")
         data = list(queryset)
         response_obj = {
             "duration": 0,
