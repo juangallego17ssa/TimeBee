@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
@@ -125,3 +126,64 @@ class ListOwnTaskTodayView(generics.ListAPIView):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+# class ListClockView(View):
+#     def get(self, request, *args, **kwargs):
+#         today = datetime.now().date()
+#         tomorrow = today + timedelta(1)
+#         today_start = datetime.combine(today, time())
+#         today_end = datetime.combine(tomorrow, time())
+#         queryset = TrackedTime.objects.filter(start__gte=today_start,
+#                                    start__lt=today_end,
+#                                    # project__created_by_id=self.request.user.id,
+#                                    type_of_input="0")
+#         data = list(queryset)
+#         latest_time = data.pop()
+#         response_obj = {
+#             "duration" : 0,
+#             "latest_time": {
+#                 "id" : latest_time.id,
+#                 "start" : str(latest_time.start)
+#             }
+#         }
+#
+#         # for key in dir(latest_time):
+#         #     if type(getattr(latest_time, key)) == datetime:
+#         #         changed_value = json.dumps({response_obj["latest_time"][key]}, default=str)
+#         #         response_obj["latest_time"][key] = changed_value
+#
+#         for timepoint in data:
+#             response_obj["duration"] += (timepoint.stop - timepoint.start).total_seconds() / 3600
+#
+#         return JsonResponse(response_obj, status=200)
+
+class ListClockView(generics.ListAPIView):
+    serializer_class = TrackedTimeSerializer
+
+    def list(self, request, *args, **kwargs):
+        today = datetime.now().date()
+        tomorrow = today + timedelta(1)
+        today_start = datetime.combine(today, time())
+        today_end = datetime.combine(tomorrow, time())
+        queryset = TrackedTime.objects.filter(start__gte=today_start,
+                                              start__lt=today_end,
+                                              project__created_by_id=self.request.user.id,
+                                              type_of_input="0")
+        data = list(queryset)
+        response_obj = {
+            "duration": 0,
+            "latest_time": {
+                "id": "",
+                "start": ""
+            }
+        }
+        if data:
+            if not data[-1].stop:
+                latest_time = data.pop()
+                response_obj["latest_time"]["id"] = latest_time.id
+                response_obj["latest_time"]["start"] = latest_time.start
+            for timepoint in data:
+                response_obj["duration"] += round((timepoint.stop - timepoint.start).total_seconds())
+
+        return JsonResponse(response_obj, status=200)

@@ -5,7 +5,9 @@ export const clockSlice = createSlice({
     initialState: {
         clockID: null,
         clockStart: "",
-        clockStop: ""
+        clockStop: "",
+        clockDuration: 0,
+        clockTimer: ""
     },
     reducers: {
         setClockID: (state, action) => {
@@ -16,9 +18,15 @@ export const clockSlice = createSlice({
         },
         setClockStop: (state, action) => {
             state.clockStop = action.payload;
+        },
+        setClockDuration: (state, action) => {
+            state.clockDuration = action.payload;
+        },
+        setClockTimer: (state, action) => {
+            state.clockTimer = action.payload;
         }
     }
 });
 
-export const { setClockID, setClockStart, setClockStop } = clockSlice.actions;
+export const { setClockID, setClockStart, setClockStop , setClockDuration, setClockTimer } = clockSlice.actions;
 export default clockSlice.reducer;

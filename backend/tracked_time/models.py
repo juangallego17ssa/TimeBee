@@ -1,7 +1,7 @@
+
 from django.db import models
 
 from project.models import Project
-
 
 # def project_directory_path(instance, filename):
 #     return f"project/{instance.id}/{filename}"
@@ -41,6 +41,7 @@ class TrackedTime(models.Model):
     time_limit = models.IntegerField(null=True, blank=True)
     task_name = models.CharField(max_length=50, blank=True)
     code = models.CharField(max_length=4, choices=CATEGORY_CHOICES, default="00")
+    all_day = models.BooleanField(default=False)
     project = models.ForeignKey(to=Project, on_delete=models.CASCADE, related_name="tracked_times")
 
     def __str__(self):
