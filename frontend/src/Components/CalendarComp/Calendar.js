@@ -45,7 +45,7 @@ const CalendarComponent = ({ events, views, defaultView }) => {
   }, [events])
   
   return (
-    <div className="h-full">
+    <div className="h-full shadow-xl">
       <Calendar
         localizer={localizer}
         events={foregroundEvents}

@@ -16,7 +16,7 @@ function App() {
   return (
     <>
     <Provider store={store}>
-      <div className="flex box-border flex-col w-screen h-screen bg-stone-100" >
+      <div className="flex box-border flex-col w-sceen h-screen bg-stone-100" >
 
         
           <Routes>

@@ -162,7 +162,7 @@ function Header({ children }) {
   return (
     <>
 {/* ------- HEADER ------ */}
-    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-sm">
+    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-lg">
  {/* ------- logo ------ */}      
         <img onClick={goToHome} src={TimeBee}className="h-10"></img>  
 
