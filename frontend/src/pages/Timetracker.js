@@ -28,7 +28,7 @@ function Timetracker() {
     dispatch(fetchTrackedTimeOwn());
     
   }, []);
-  const reduxTrackedTime = useSelector((store) => store.trackedtime);
+  // const reduxTrackedTime = useSelector((store) => store.trackedtime);
   // console.log(reduxTrackedTime);
 
   const [selectedDate, setSelectedDate]=useState('')
@@ -40,7 +40,7 @@ function Timetracker() {
   const { data : tasks,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
     // filter out login/logout
       const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
-      const TasksOfDay = filteredTask.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
+      const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
         console.log('task for the day:',TasksOfDay)
       // console.log(new Date(tasks[0].start).toDateString())
       // console.log(new Date().toDateString())
@@ -104,8 +104,8 @@ function Timetracker() {
       </div>
       <div className="md:w-2/5 md:h-2/3 flex justify-center h-full ">
         <CalendarComponent
-          events={events}
-          BackgroundEvent={BackgroundEvent}
+          // events={events}
+          // BackgroundEvent={BackgroundEvent}
           views={{
             day: true,
           }}
