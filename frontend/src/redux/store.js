@@ -4,6 +4,7 @@ import { timeBeeAPI } from '../api/API';
 import signUpEmailAddress from './Slices/signUpEmailAdress';
 import trackedTimeOwnReducer from './Slices/trackedTimeOwnSlice';
 import clockReducer from "./Slices/clockSlice";
+import userReducer from "./Slices/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     // ...add reducers for other APIs here, if any
     signupemail: signUpEmailAddress,
     trackedtime: trackedTimeOwnReducer,
-    clock: clockReducer
+    clock: clockReducer,
+    user: userReducer
     //   //change view in the user profile
     //   profileview: profileViewSelector
   },
