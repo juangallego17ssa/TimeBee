@@ -40,8 +40,9 @@ function Timetracker() {
   const { data : tasks,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
     // filter out login/logout
       const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
-      const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
+      const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date(selectedDate).toDateString())
         console.log('task for the day:',TasksOfDay)
+        console.log('selectedDate',selectedDate)
       // console.log(new Date(tasks[0].start).toDateString())
       // console.log(new Date().toDateString())
       
@@ -82,7 +83,7 @@ function Timetracker() {
     <div className='flex flex-col md:flex-row '>
       <div className=" Leftcontainer md:w-3/5 flex flex-col px-6">
         <div className="flex">
-          Monday
+          <button onClick={()=>setSelectedDate(new Date())}>Today</button>
           <FaRegCalendarAlt
             className="flex flexwrap w-5 h-5 text-black hover:text-pink-500"
             onClick={handelDateChanged}
