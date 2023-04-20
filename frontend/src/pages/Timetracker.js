@@ -65,63 +65,59 @@ function Timetracker() {
  }
   return (
     <div className="flex flex-col flex-grow bg-stone-100 w-full md:h-full gap-4 px-8 py-4">
-
-{/* //---- Create timer inputs ----// */}
-        <div className='flex items-center w-full gap-2 px-4'>
-          <AddTimeTracker isManual={isManual}/>
-          <div className='flex flex-col'>
-            <div>
-              <AiOutlineClockCircle
-                className={`${
-                  isManual ? "text-zinc-400" : "text-teal-400"
-                } text-xl hover:cursor-pointer hover:text-teal-500`}
-                onClick={() => setIsManual(false)}
-              />
-            </div>
-            <div>
-              <AiOutlineUnorderedList
-                className={`${
-                  isManual ? "text-teal-400" : "text-zinc-400"
-                } text-xl hover:cursor-pointer hover:text-teal-500`}
-                onClick={() => setIsManual(true)}
-              />
-            </div>
+      <div className="flex items-center w-full gap-2 px-4">
+        <AddTimeTracker isManual={isManual} />
+        <div className="flex flex-col">
+          <div>
+            <AiOutlineClockCircle
+              className={`${
+                isManual ? "text-zinc-400" : "text-teal-400"
+              } text-xl hover:cursor-pointer hover:text-teal-500`}
+              onClick={() => setIsManual(false)}
+            />
+          </div>
+          <div>
+            <AiOutlineUnorderedList
+              className={`${
+                isManual ? "text-teal-400" : "text-zinc-400"
+              } text-xl hover:cursor-pointer hover:text-teal-500`}
+              onClick={() => setIsManual(true)}
+            />
           </div>
         </div>
       </div>
-    <div className='flex flex-col md:flex-row h-[80vh]'>
-      <div className="Leftcontainer md:w-3/5 flex flex-col px-6 pb-3">
-        <div className="flex-2">
-          <button onClick={()=>setSelectedDate(new Date())}>Today</button>
-          <FaRegCalendarAlt
-            className="flex flexwrap w-5 h-5 text-black hover:text-pink-500"
-            onClick={handelDateChanged}
+      <div className="flex flex-col md:flex-row h-[80vh]">
+        <div className="Leftcontainer md:w-3/5 flex flex-col px-6 pb-3">
+          <div className="flex ml-4 mb-2">
+            <button onClick={() => setSelectedDate(new Date())}>Today</button>
+            <FaRegCalendarAlt
+              className="flex flexwrap w-5 h-5 text-black hover:text-pink-500 mx-3 mt-0.5"
+              onClick={handelDateChanged}
+            />
+          </div>
+          <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full h-4/6 md:h-screen">
+            {isLoading && <div>Loading</div>}
+            {filteredTask?.map((task) => (
+              <TimerBar
+                key={task.id}
+                task={task}
+                selectedProject={selectedProject}
+                setSelectedProject={setSelectedProject}
+              />
+            ))}
+
+            {/* <TimerBar addProject={addProject} /> */}
+          </div>
+        </div>
+        <div className=" h-full flex-1">
+          <CalendarComponent
+            events={reduxTrackedTime}
+            views={{
+              day: true,
+            }}
+            defaultView={Views.DAY}
           />
         </div>
-        <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full h-4/6 md:h-screen overflow-y-scroll">
-          {isLoading && <div>Loading</div>
-          
-          }
-          {filteredTask?.map((task) => (
-            <TimerBar key={task.id} 
-            task={task} 
-            selectedProject={selectedProject}
-            setSelectedProject={setSelectedProject}/>
-          ))}
-
-          {/* <TimerBar addProject={addProject} /> */}
-        </div>
-      </div>
-      <div className="md:w-2/5 md:h-2/3 flex justify-center h-full ">
-        <CalendarComponent
-          // events={events}
-          // BackgroundEvent={BackgroundEvent}
-          views={{
-            day: true,
-          }}
-          defaultView={Views.DAY}
-        />
-      </div>
       </div>
     </div>
   );
