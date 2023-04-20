@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
 import Calendar from "./pages/Calendar";
 import Profil from "./pages/Profil";
+import DataProject from "./Components/DataProject";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
             <Route path="/dashboard" element={<RouteProtection route={<Dashboard />} />}/>
             <Route path="/reports" element={<Report/>} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/profil" element={<Profil/>} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="/data" element={<DataProject/>} />
           </Routes>
         </Header>
       </div>
