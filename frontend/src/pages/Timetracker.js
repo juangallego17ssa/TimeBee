@@ -40,15 +40,14 @@ function Timetracker() {
   const { data : tasks,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
     // filter out login/logout
       const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
-      const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
-        console.log('task for the day:',TasksOfDay)
+      const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date(selectedDate).toDateString())
+        // console.log('task for the day:',TasksOfDay)
+        // console.log('selectedDate',selectedDate)
       // console.log(new Date(tasks[0].start).toDateString())
       // console.log(new Date().toDateString())
       
       const handleSearch = (event) => {
         event.preventDefault();
-        // refetch();
-        // perform the search operation here
       };
       
 
@@ -57,13 +56,20 @@ function Timetracker() {
     console.log('handelDateChanged')
   }
 
+ if(isLoading){
+  <div>
+    Loading...
+  </div>
+ } else if(isError){
+  console.log('fetch Error')
+ }
   return (
-    // Create timer inputs
-    <div className=" Page flex flex-col flex-grow bg-stone-100 w-full h-full gap-4 px-8 py-4">
-      <div>
-        <div className="flex items-center w-full gap-2 px-4">
-          <AddTimeTracker isManual={isManual} />
-          <div classNameName="flex flex-col">
+    <div className="flex flex-col flex-grow bg-stone-100 w-full md:h-full gap-4 px-8 py-4">
+
+{/* //---- Create timer inputs ----// */}
+        <div className='flex items-center w-full gap-2 px-4'>
+          <AddTimeTracker isManual={isManual}/>
+          <div className='flex flex-col'>
             <div>
               <AiOutlineClockCircle
                 className={`${
@@ -83,38 +89,39 @@ function Timetracker() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row h-[80vh]">
-        <div className=" Leftcontainer md:w-3/5 flex flex-col px-6 pb-3">
-          <div className="flex my-2 mx-4">
-            <p className="mr-4">Monday</p>
-            <FaRegCalendarAlt
-              className="flex flexwrap w-5 h-5 text-black hover:text-pink-500 mt-0.5"
-              onClick={handelDateChanged}
-            />
-          </div>
-          <div className="flex flex-col-reverse justify-end items-center gap-4 bg-stone-100  ">
-            {isLoading && <div>Loading</div>}
-            {filteredTask?.map((task) => (
-              <TimerBar
-                key={task.id}
-                task={task}
-                selectedProject={selectedProject}
-                setSelectedProject={setSelectedProject}
-              />
-            ))}
-
-            {/* <TimerBar addProject={addProject} /> */}
-          </div>
-        </div>
-        <div className="flex-1  items-center px-6 pb-3 bg-stone-100">
-          <CalendarComponent
-            events={reduxTrackedTime}
-            views={{
-              day: true,
-            }}
-            defaultView={Views.DAY}
+    <div className='flex flex-col md:flex-row h-[80vh]'>
+      <div className="Leftcontainer md:w-3/5 flex flex-col px-6 pb-3">
+        <div className="flex-2">
+          <button onClick={()=>setSelectedDate(new Date())}>Today</button>
+          <FaRegCalendarAlt
+            className="flex flexwrap w-5 h-5 text-black hover:text-pink-500"
+            onClick={handelDateChanged}
           />
         </div>
+        <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full h-4/6 md:h-screen overflow-y-scroll">
+          {isLoading && <div>Loading</div>
+          
+          }
+          {filteredTask?.map((task) => (
+            <TimerBar key={task.id} 
+            task={task} 
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}/>
+          ))}
+
+          {/* <TimerBar addProject={addProject} /> */}
+        </div>
+      </div>
+      <div className="md:w-2/5 md:h-2/3 flex justify-center h-full ">
+        <CalendarComponent
+          // events={events}
+          // BackgroundEvent={BackgroundEvent}
+          views={{
+            day: true,
+          }}
+          defaultView={Views.DAY}
+        />
+      </div>
       </div>
     </div>
   );
