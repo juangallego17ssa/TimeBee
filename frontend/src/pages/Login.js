@@ -1,9 +1,11 @@
 import {useState} from "react";
 import { useNavigate } from "react-router";
 import { useGetTokenMutation, useGetUserProfileQuery } from "../api/API";
+import { AiOutlineEye,AiOutlineEyeInvisible } from 'react-icons/ai';
 
 
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate()
     const [email, setEmail] = useState("");
@@ -35,7 +37,19 @@ function Login() {
           <div className="flex flex-row justify-center items-center my-10">
             <form onSubmit={handleSubmit}>
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="Email flex px-4 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="Email flex px-4 my-2 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+              <div className="relative flex items-center">
+              <input type={showPassword?'text':'password'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="Email flex px-4 my-2 bg-white border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg"/>
+              {showPassword?
+              <AiOutlineEye 
+              className="absolute right-2"
+              onClick={()=>setShowPassword(false)}
+              />
+              :
+              <AiOutlineEyeInvisible 
+              className="absolute right-2"
+              onClick={()=>setShowPassword(true)}
+              />}
+              </div>
             </form>
           </div>
           <div className="buttonwrap flex flex-wrap flex-col justify-center items-center w-60 h-10">

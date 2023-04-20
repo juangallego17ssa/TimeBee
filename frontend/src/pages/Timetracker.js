@@ -1,6 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react';
 import { GiBee } from "react-icons/gi";
-import { AiFillTag } from "react-icons/ai";
+import { AiFillTag ,AiOutlineClockCircle, AiOutlineUnorderedList } from "react-icons/ai";
 import TimerBar from '../Components/TimetrackerComp/TimerBar';
 import Timer from '../Components/TimetrackerComp/Timer';
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -15,11 +15,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
 import CalendarComponent from '../Components/CalendarComp/Calendar';
 import { Views } from 'react-big-calendar';
+import AddTimeTracker from '../Components/TimetrackerComp/AddTimeTracker';
 
 
 function Timetracker() {
 
-  // Fetch all the TrackedItems of the actual user and store it in Redux
+// Fetch all the TrackedItems of the actual user and store it in Redux
   const dispatch = useDispatch();
   const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
  
@@ -27,90 +28,59 @@ function Timetracker() {
     dispatch(fetchTrackedTimeOwn());
     
   }, []);
+  // const reduxTrackedTime = useSelector((store) => store.trackedtime);
+  // console.log(reduxTrackedTime);
 
-
-
+  const [selectedDate, setSelectedDate]=useState('')
+  const [isManual, setIsManual] = useState(false);
   const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject,setSelectedProject] = useState({});
-//GET all tasks created  ?by all user?? 
+
+// GET all tasks created by USER 
   const { data : tasks,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
     // filter out login/logout
       const filteredTask = tasks?.filter(task=>task.type_of_input !== "0");
-      // console.log(filteredTask)
+      const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
+        console.log('task for the day:',TasksOfDay)
+      // console.log(new Date(tasks[0].start).toDateString())
+      // console.log(new Date().toDateString())
+      
+      const handleSearch = (event) => {
+        event.preventDefault();
+        // refetch();
+        // perform the search operation here
+      };
+      
 
-  const name = useRef();
-  
-  //POST new time tracker for task
-      const [createTrackedTime] = useCreateTrackedTimeMutation()
-
-
-
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    // refetch();
-    // perform the search operation here
-  };
-  const handleCreateNewTasks=(e)=>{
-    e.preventDefault();
-    
-    const data = ({
-      type_of_input:"1",
-      start:new Date().toISOString(),
-      task_name:name.current.value,
-      project:selectedProject.id,
-    })
-    // console.log(data)
-    createTrackedTime(data)
-    .then(result=>console.log(result))
-    
-    name.current.value = '';
-    setSelectedProject('');
-  }
   const handelDateChanged =(e) =>{
     e.preventDefault();
     console.log('handelDateChanged')
   }
 
   return (
-    <div className=" Page flex flex-col flex-grow bg-stone-100 h-[90vh] w-full md:flex-row gap-4 mt-6">
-      <div className=" Leftcontainer md:w-3/5 h-full flex flex-col px-6 pb-6">
-        {/* -----  Inputwraper ----- */}
-        <div className="z-10 flex flex-row justify-center items-center w-full gap-2 ">
-          <div className="flex flex-row flex-grow  px-6 justify-start items-center bg-white border-2 border-teal-500 rounded-full  shadow-md">
-            <input
-              class={`caret-teal-500 py-2 px-4 bg-transparent focus:outline-none flex-grow `}
-              placeholder="Add new Busy Bee.."
-              ref={name}
-            />
-            <div className="relative flex items-center">
-              <AiFillTag
-                className={`m-1 text-${selectedProject.tag_color?selectedProject.tag_color:'zinc'}-400 text-xl`}
-                onClick={() => {
-                  setShowProjectTags(!showProjectTags);
-                }}
+    // Create timer inputs
+    <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:h-screen gap-4 px-8 py-4">
+      <div>
+        <div className='flex items-center w-full gap-2 px-4'>
+          <AddTimeTracker isManual={isManual}/>
+          <div className='flex flex-col'>
+            <div>
+              <AiOutlineClockCircle 
+              className={`${isManual?'text-zinc-400':'text-teal-400'} text-xl hover:cursor-pointer hover:text-teal-500`}
+              onClick={()=>setIsManual(false)}
               />
-              <p>{selectedProject ? selectedProject.name : ""}</p>
-
-              {showProjectTags && (
-                <ProjectOptions
-                  selectedProject={selectedProject}
-                  setSelectedProject={setSelectedProject}
-                  setShowProjectTags={setShowProjectTags}
-                />
-              )}
+            </div>
+            <div>
+              <AiOutlineUnorderedList 
+              className={`${isManual?'text-teal-400':'text-zinc-400'} text-xl hover:cursor-pointer hover:text-teal-500`}
+              onClick={()=>setIsManual(true)}
+              />
             </div>
           </div>
-
-          <button
-            onClick={handleCreateNewTasks}
-            className="flex justify-center items-center shadow-lg bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% w-16 h-16 rounded-full text-white text-4xl"
-          >
-            {/* <GiBee className="hover:animate-bounce flex h-8 w-8" /> */}+
-          </button>
         </div>
-
-        <div></div>
+      </div>
+    <div className='flex flex-col md:flex-row '>
+      <div className=" Leftcontainer md:w-3/5 flex flex-col px-6">
         <div className="flex">
           Monday
           <FaRegCalendarAlt
@@ -132,14 +102,16 @@ function Timetracker() {
           {/* <TimerBar addProject={addProject} /> */}
         </div>
       </div>
-      <div className=" md:w-1/3 h-full flex-1 px-6 pb-6">
-        <CalendarComponent 
-          events={reduxTrackedTime}
+      <div className="md:w-2/5 md:h-2/3 flex justify-center h-full ">
+        <CalendarComponent
+          // events={events}
+          // BackgroundEvent={BackgroundEvent}
           views={{
             day: true,
           }}
           defaultView={Views.DAY}
         />
+      </div>
       </div>
     </div>
   );
