@@ -18,7 +18,7 @@ import ProjectOptions from '../ProjectTagComp/ProjectOptions';
 function TimerBar({task}) {
   //List all projects created by user
   const { data : projects,isLoading,isSuccess,isError,}= useGetOwnProjectsQuery()
-  console.log(projects)
+  // console.log(projects)
 
   const taskNameRef = useRef();
   const projectRef = useRef();
@@ -31,6 +31,7 @@ function TimerBar({task}) {
 
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [editTime, setEditTime] = useState(false);
   const [taskName, setTaskname ]= useState(task.task_name);
   const [project, setProject ]= useState(task.project.id);
   const [BusyBee, setBusyBee] = useState('');
@@ -75,14 +76,15 @@ function TimerBar({task}) {
       let data ={
         "task_name": taskName,
         "project_id":projectRef.current.value,
-        "start":startTimeRef.current.value,
-        "stop":stopTimeRef.current.value,
+        "start":editTime?startTimeRef.current.value:task.start,
+        "stop":editTime?stopTimeRef.current.value:task.stop,
       };
       // console.log(trackedtimeId,data)
       updateTrackedTimeByID({trackedtimeId,...data})
       .then((result)=>console.log(result))
 
-      setEdit(!edit)
+      setEdit(false)
+      setEditTime(false)
     }
   };
   const handlePlay = ()=>{
@@ -136,7 +138,7 @@ function TimerBar({task}) {
           <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-400 mx-1`}/>
           {edit?
           <label htmlFor="project">
-          <select id="project" name="project" ref={projectRef} onChange={handleChangeProject} >
+          <select id="project" name="project" ref={projectRef} onChange={handleChangeProject} onKeyDown={handleKeyDown}  >
             {projects?.map(project=>
               <option key={project.id} value={project.id}>{project.name}</option>
               )}
@@ -151,13 +153,13 @@ function TimerBar({task}) {
         <div className='relative  flex items-center'>
             {task?.stop?
             <div className='mx-1'>
-              {edit?
-              <div className='flex text-sm ma-2'>
+              {editTime?
+              <div className='flex text-sm ma-2' onKeyDown={handleKeyDown} >
                 <input type={'datetime-local'} ref={startTimeRef}/>-
                 <input type={'datetime-local'} ref={stopTimeRef}/>
               </div>
               :
-              <div className='flex text-xs w-fit text-zinc-400 gap-2' onClick={()=>setEdit(true)}>
+              <div className='flex text-xs w-fit text-zinc-400 gap-2' onClick={()=>setEditTime(!editTime)}>
                 <p>{moment(task.start).format('DD-MMM-yyyy hh:mm')}</p>
                 <span>-</span>
                 <p>{moment(task.stop).format('DD-MMM-yyyy hh:mm')}</p>
