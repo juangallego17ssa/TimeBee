@@ -13,21 +13,17 @@ function DataProject() {
     const dispatch = useDispatch();
     const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
     
-
     useEffect(() => {
         dispatch(fetchTrackedTimeOwn());
     
     }, []);
-    // const reduxTrackedTime = useSelector((store) => store.trackedtime);
-    // console.log(reduxTrackedTime);
-
+    
     const [selectedDate, setSelectedDate] = useState('')
-    const [pieChart, setPieChart] = useState([
-        
-    ])
-
+    
        
-    // console.log(reduxTrackedTime)    
+    // console.log(reduxTrackedTime)
+    
+
  //--------FOR BAR CHART-------------------------------------------------    
 // Filter all Task by project and by Day
     const dataTimeOwn = reduxTrackedTime.reduce((acc, item) => {
@@ -64,7 +60,7 @@ function DataProject() {
     }
    
       
-    console.log(dataTimeOwn);
+    // console.log(dataTimeOwn);
     
     // Preparing Data for Chart
     const newdata = Object.keys(dataTimeOwn).map((day) => {
@@ -79,7 +75,7 @@ function DataProject() {
     });
     //Sorting the dates for Chart from the PAST to FUTURE
     newdata.sort((a, b) => new Date(a.date) - new Date(b.date)).reverse();
-    console.log(newdata);
+    // console.log(newdata);
 
     //Getting the keys to pass to BAR CHarts
     const projects = Object.values(dataTimeOwn).reduce((acc, item) => {
@@ -127,7 +123,7 @@ function DataProject() {
         .map(([project, duration]) => ({ project, duration }))
         .sort((a, b) => b.duration - a.duration);
     
-    console.log(sortedProjects);
+    // console.log(sortedProjects);
 
     const dataPie = sortedProjects.map((item, index) => ({
         id: item.project,
@@ -137,108 +133,65 @@ function DataProject() {
     //---------------------PIE Chart ENDs---------------------
     //--------------------Start Radial Chart---------------------
 
+
+    const dataTimeOwnProject = reduxTrackedTime.reduce((acc, item) => {
+         if (item.stop !== null) {
+             const project = item.project.name;
+             const task_name = item.task_name;
+             const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
+             const hours = parseFloat((duration.asMinutes() / 60).toFixed(2));
     
+             // Add the item to the array for the current day
+             if (!acc[project]) {
+                 acc[project] = [];
+             }
+             acc[project].push({ task_name, hours });
+         }
+         return acc;
+     }, {});
 
+    // console.log(reduxTrackedTime)
+    console.log(dataTimeOwnProject)
 
-
-
-
-
-
-
-    const data=[
-        {
-          "id": "Supermarket",
-          "data": [
-            {
-              "x": "Vegetables",
-              "y": 70
-            },
-            {
-              "x": "Fruits",
-              "y": 45
-            },
-            {
-              "x": "Meat",
-              "y": 179
-            },
-            {
-              "x": "Fish",
-              "y": 117
-            }
-          ]
-        },
-        {
-          "id": "Combini",
-          "data": [
-            {
-              "x": "Vegetables",
-              "y": 169
-            },
-            {
-              "x": "Fruits",
-              "y": 108
-            },
-            {
-              "x": "Meat",
-              "y": 79
-            },
-            {
-              "x": "Fish",
-              "y": 78
-            }
-          ]
-        },
-        {
-          "id": "Online",
-          "data": [
-            {
-              "x": "Vegetables",
-              "y": 58
-            },
-            {
-              "x": "Fruits",
-              "y": 133
-            },
-            {
-              "x": "Meat",
-              "y": 122
-            },
-            {
-              "x": "Fish",
-              "y": 74
-            }
-          ]
-        },
-        {
-          "id": "Marché",
-          "data": [
-            {
-              "x": "Vegetables",
-              "y": 82
-            },
-            {
-              "x": "Fruits",
-              "y": 249
-            },
-            {
-              "x": "Meat",
-              "y": 212
-            },
-            {
-              "x": "Fish",
-              "y": 289
-            }
-          ]
+    // const dataRadial = Object.keys(dataTimeOwnProject).map((project, index) => {
+    //     const data = dataTimeOwnProject[project].map(item => ({
+    //       x: item.task_name,
+    //       y: item.duration.asHours()
+    //     }));
+      
+    //     return {
+    //       id: project,
+    //       data
+    //     };
+    // });
+    const dataRadial = [];
+    for (const [project, items] of Object.entries(dataTimeOwnProject)) {
+        const projectData = {
+          id: project,
+          data: [],
+        };
+      
+        for (const item of items) {
+          const taskData = {
+            x: item.task_name,
+            y: item.hours,
+          };
+          projectData.data.push(taskData);
         }
-      ]
+      
+        dataRadial.push(projectData);
+    }
+
+    console.log(dataRadial)
+
+
   return (
     // Create Barchart
       <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:h-screen gap-4 px-8 py-4">
           <input type="date"/>
           <BarChart data={newdata} keys={projects} />
           <PieChart data={dataPie} />
-          <RadialChart data={data} />
+          <RadialChart data={dataRadial} />
     </div>
   );
   }

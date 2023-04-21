@@ -23,7 +23,7 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
         layout="vertical"
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
-        colors={{ scheme: 'nivo' }}
+        colors={{ scheme: 'spectral' }} //'green-blue' or 'nivo'
         defs={[
             {
                 id: 'dots',

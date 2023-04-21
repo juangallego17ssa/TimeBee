@@ -14,7 +14,7 @@ const MyResponsivePie = ({ data } /* see data tab */ ) => {
         padAngle={6}
         cornerRadius={19}
         activeOuterRadiusOffset={8}
-        colors={{ scheme: 'category10' }}
+        colors={{ scheme: 'spectral' }} //'green-blue' or 'nivo'
         borderWidth={1}
         borderColor={{
             from: 'color',
