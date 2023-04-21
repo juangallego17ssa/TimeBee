@@ -92,12 +92,14 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         # duration = datetime.fromisoformat(request.data["stop"])-instance.start
-        stop = datetime.strptime(request.data["stop"], "%Y-%m-%dT%H:%M:%S.%fZ")
-        start = instance.start.astimezone(pytz.utc).replace(tzinfo=None)
-        duration = stop - start
-        data = request.data
-        data["duration"] = round(duration.total_seconds())
-        # stop = request.data.stop
+        if request.data.get('stop'):
+            stop = datetime.strptime(request.data["stop"], "%Y-%m-%dT%H:%M:%S.%fZ")
+            start = instance.start.astimezone(pytz.utc).replace(tzinfo=None)
+            duration = stop - start
+            data = request.data
+            data["duration"] = round(duration.total_seconds())
+            # stop = request.data.stop
+
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         if project:
