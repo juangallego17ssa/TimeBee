@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import BarChart from '../Components/BarChart';
 import PieChart from '../Components/PieChart/PieChart';
 import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
+import moment from "moment";
 
 
 
@@ -27,13 +28,11 @@ function DataProject() {
     // console.log(reduxTrackedTime);
 
     const [selectedDate, setSelectedDate] = useState('')
-    const [showProjectTags, setShowProjectTags] = useState(false);
-    const [selectedProject, setSelectedProject] = useState({});
     const [dataChart, setDataChart] = useState([{}]);
     
     // GET all project created by USER
     const { data: projects, isLoadingProject, isSuccessProject, isErrorProject } = useGetOwnProjectsQuery()
-    console.log(projects)
+    // console.log(projects)
     
 
 
@@ -43,12 +42,30 @@ function DataProject() {
     const projectTask = tasks?.filter(task => task.type_of_input !== "0");
     
     //console.log(filteredTask)
-    console.log(projectTask)
+    // console.log(projectTask)
     //   const TasksOfDay = filteredTask?.filter(task=>new Date(task.start).toDateString() === new Date().toDateString())
     //     console.log('task for the day:',TasksOfDay)
     // console.log(new Date(tasks[0].start).toDateString())
     // console.log(new Date().toDateString())
   
+
+    const dataTimeOwn = reduxTrackedTime;
+
+    const durations = dataTimeOwn
+      .filter((item) => item.stop !== null)
+      .reduce((acc, item) => {
+        const project = item.project.name;
+        const duration = moment.duration(
+          moment(item.stop).diff(moment(item.start))
+        );
+        acc[project] = acc[project] ? acc[project].add(duration) : duration;
+        // console.log(acc);
+        return acc;
+      }, {});
+    
+    // console.log(dataTimeOwn)
+
+    console.log(durations)
     
     const data = [
         {
