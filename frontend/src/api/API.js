@@ -46,6 +46,7 @@ export const timeBeeAPI = createApi({
       transformResponse: (response) => {
         const { access: token } = response;
         localStorage.setItem('access', token); // Store the token in local storage
+        console.log('Access Token set in localstorage successfully')
         return { data: token };
       },
     }),

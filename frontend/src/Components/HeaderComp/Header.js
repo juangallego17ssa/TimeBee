@@ -49,7 +49,7 @@ function Header({ children }) {
     };
     
     const goToTimetracker = () => {
-        navigate("/timetracker");
+        navigate("/");
         setShowMenu(false)
         
     };
@@ -70,8 +70,9 @@ function Header({ children }) {
     };
 
     const logOut = () => {
-      localStorage.setItem("access", "");
-      navigate("/login");
+        localStorage.removeItem("access");
+        console.log('Access Token removed successfully')
+      navigate("/login"); 
     };
 
     const dispatch = useDispatch();
@@ -172,7 +173,7 @@ function Header({ children }) {
   return (
     <>
 {/* ------- HEADER ------ */}
-    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-sm">
+    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-lg">
  {/* ------- logo ------ */}      
         <img onClick={goToHome} src={TimeBee}className="h-10"></img>  
 
@@ -255,7 +256,7 @@ function Header({ children }) {
                         <div
                          className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                          <FiLogOut/>
-                         <p >Logout</p>
+                         <p onClick={logOut}>Logout</p>
                         </div>
                     </div>
                     }

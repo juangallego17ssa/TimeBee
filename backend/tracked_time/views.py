@@ -17,9 +17,22 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
     Functionalities:
         - List all existing projects
     """
-    queryset = TrackedTime.objects.all()
-    permission_classes = [AllowAny]
     serializer_class = TrackedTimeSerializer
+
+    def get_queryset(self):
+        queryset = TrackedTime.objects.filter(project__created_by=self.request.user)
+
+        start_date_str = self.request.query_params.get('start_date')
+        end_date_str = self.request.query_params.get('end_date')
+
+        if start_date_str and end_date_str:
+            # Assuming the date format passed through query params is YYYY-MM-DD
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+
+            queryset = queryset.filter(start__date__gte=start_date, start__date__lte=end_date)
+
+        return queryset
 
     def create(self, request, *args, **kwargs):
 
