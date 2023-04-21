@@ -56,7 +56,7 @@ const columns = [
 
 export default function ReportTable({data, publicHolidaysOfMonth }) {
   const tableInstance = useTable({ columns, data });
- const holidayDates = publicHolidaysOfMonth.map(item=>item.date)
+ const holidayDates = publicHolidaysOfMonth?.map(item=>item.date)
 //  console.log(holidayDates.includes('2023-04-11'))
 
   const {
@@ -66,20 +66,20 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
     rows,
     prepareRow,
   } = tableInstance;
-
+if(holidayDates)
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups?.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers?.map(column => (
               <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
+        {rows?.map(row => {
           prepareRow(row);
           return (
             <tr 
@@ -87,7 +87,7 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
             value={row}
             onClick={(e)=>console.log(row.cells[0].value)}
             {...row.getRowProps()}>
-              {row.cells.map(cell => (
+              {row.cells?.map(cell => (
                 <td 
                 value={cell.value}
                 className=""
