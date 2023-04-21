@@ -5,6 +5,7 @@ import {
 } from '../api/API';
 import { useDispatch, useSelector } from 'react-redux';
 import BarChart from '../Components/BarChart';
+import PieChart from '../Components/PieChart/PieChart';
 import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
 
 
@@ -28,6 +29,7 @@ function DataProject() {
     const [selectedDate, setSelectedDate] = useState('')
     const [showProjectTags, setShowProjectTags] = useState(false);
     const [selectedProject, setSelectedProject] = useState({});
+    const [dataChart, setDataChart] = useState([{}]);
     
     // GET all project created by USER
     const { data: projects, isLoadingProject, isSuccessProject, isErrorProject } = useGetOwnProjectsQuery()
@@ -46,47 +48,135 @@ function DataProject() {
     //     console.log('task for the day:',TasksOfDay)
     // console.log(new Date(tasks[0].start).toDateString())
     // console.log(new Date().toDateString())
-      
+  
+    
     const data = [
         {
-            "days": "2023-04-20T14:12:04.424000+02:00",
-            "unassigned": 50,
+            "date": "2023-04-20T14:12:04.424000+02:00",
+            "unassigned": 2,
             "unassignedColor": "hsl(89, 70%, 50%)",
-            "burger": 42,
-            "burgerColor": "hsl(71, 70%, 50%)",
-            "sandwich": 121,
-            "sandwichColor": "hsl(124, 70%, 50%)",
-            "kebab": 141,
-            "kebabColor": "hsl(115, 70%, 50%)",
-            "fries": 195,
-            "friesColor": "hsl(316, 70%, 50%)",
-            "donut": 95,
-            "donutColor": "hsl(3, 70%, 50%)"
+            "project1": 4,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project2": 5,
+            "project2Color": "hsl(124, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(115, 70%, 50%)",
+        },
+        {
+            "date": "2023-05-20T14:12:04.424000+02:00",
+            "unassigned": 2,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "project1": 4,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project2": 5,
+            "project2Color": "hsl(124, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(115, 70%, 50%)",
+        },
+        {
+            "date": "2023-06-20T14:12:04.424000+02:00",
+            "unassigned": 2,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "project1": 4,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project2": 5,
+            "project2Color": "hsl(124, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(115, 70%, 50%)",
+        },
+        {
+            "date": "2023-07-20T14:12:04.424000+02:00",
+            "unassigned": 2,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "project1": 4,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project2": 5,
+            "project2Color": "hsl(124, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(115, 70%, 50%)",
+        },
+        {
+            "date": "2023-08-20T14:12:04.424000+02:00",
+            "unassigned": 2,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "project1": 4,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project2": 5,
+            "project2Color": "hsl(124, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(115, 70%, 50%)",
         },
         {
 
-            "days": "2023-05-20T14:12:04.424000+02:00",
-            "unassigned": 50,
+            "date": "2023-09-20T14:12:04.424000+02:00",
+            "unassigned": 3,
             "unassignedColor": "hsl(89, 70%, 50%)",
-            "burger": 42,
-            "burgerColor": "hsl(71, 70%, 50%)",
-            "sandwich": 121,
-            "sandwichColor": "hsl(124, 70%, 50%)",
-            "kebab": 141,
-            "kebabColor": "hsl(115, 70%, 50%)",
-            "fries": 195,
-            "friesColor": "hsl(316, 70%, 50%)",
-            "donut": 95,
-            "donutColor": "hsl(3, 70%, 50%)"
-        }]
+            "project1": 6,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(124, 70%, 50%)",
+        },
+        {
 
- 
+            "date": "2023-10-20T14:12:04.424000+02:00",
+            "unassigned": 3,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "project1": 6,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(124, 70%, 50%)",
+        },
+        {
+
+            "date": "2023-11-20T14:12:04.424000+02:00",
+            "unassigned": 3,
+            "unassignedColor": "hsl(89, 70%, 50%)",
+            "project1": 6,
+            "project1Color": "hsl(71, 70%, 50%)",
+            "project3": 2,
+            "project3Color": "hsl(124, 70%, 50%)",
+        }]
+    
+    const dataPie = [
+        {
+          "id": "erlang",
+          "label": "erlang",
+          "value": 418,
+          "color": "hsl(143, 70%, 50%)"
+        },
+        {
+          "id": "sass",
+          "label": "sass",
+          "value": 341,
+          "color": "hsl(194, 70%, 50%)"
+        },
+        {
+          "id": "javascript",
+          "label": "javascript",
+          "value": 323,
+          "color": "hsl(176, 70%, 50%)"
+        },
+        {
+          "id": "java",
+          "label": "java",
+          "value": 126,
+          "color": "hsl(329, 70%, 50%)"
+        },
+        {
+          "id": "hack",
+          "label": "hack",
+          "value": 166,
+          "color": "hsl(27, 70%, 50%)"
+        }
+      ]
+    
 
   return (
     // Create Barchart
       <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:h-screen gap-4 px-8 py-4">
           <input type="date"/>
-       <BarChart data={data}/>
+          <BarChart data={data} />
+          <PieChart data={dataPie}/>
     </div>
   );
   }

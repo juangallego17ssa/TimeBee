@@ -12,18 +12,15 @@ const MyResponsiveBar = ({ data /* see data tab */ }) => (
         data={data}
         keys={[
             'unassigned',
-            'burger',
-            'sandwich',
-            'kebab',
-            'fries',
-            'donut'
-        ]}
-        indexBy="days"
+            'project1',
+            'project2',
+            'project3']}
+        // keys={[keys]}
+        indexBy="date"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         layout="vertical"
         valueScale={{ type: 'linear'}}
-        xFormat="time:%b %d"
         indexScale={{ type: 'band', round: true }}
         colors={{ scheme: 'nivo' }}
         defs={[
@@ -49,13 +46,7 @@ const MyResponsiveBar = ({ data /* see data tab */ }) => (
         fill={[
             {
                 match: {
-                    id: 'fries'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'sandwich'
+                    id: 'project2'
                 },
                 id: 'lines'
             }
@@ -72,8 +63,7 @@ const MyResponsiveBar = ({ data /* see data tab */ }) => (
         axisTop={null}
         axisRight={null}
         axisBottom={{
-            tickSize: 2,
-            tickValues: "every day",
+            tickSize: 4,
             tickPadding: 5,
             tickRotation: 0,
             legend: 'Days',

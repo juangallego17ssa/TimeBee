@@ -19,8 +19,6 @@ function App() {
     <>
     <Provider store={store}>
       <div className="flex box-border flex-col w-sceen h-screen bg-stone-100" >
-
-        
           <Routes>
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />

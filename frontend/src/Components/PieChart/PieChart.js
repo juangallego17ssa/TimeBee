@@ -5,7 +5,7 @@ import { ResponsivePie } from '@nivo/pie'
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const MyResponsivePie = (data /* see data tab */ ) => {
+const MyResponsivePie = ({ data } /* see data tab */ ) => {
     return(
     <ResponsivePie
         data={data}
