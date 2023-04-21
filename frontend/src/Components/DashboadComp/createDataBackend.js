@@ -4,8 +4,6 @@ import {useCreateTrackedTimeMutation} from "../../api/API";
 
 const CreateDataBackend = () => {
 
-    console.log("Starting")
-
     const [createTrackedTime,{isloading,error}]=useCreateTrackedTimeMutation()
 
     const handleCreateData = async () => {
@@ -22,8 +20,8 @@ const CreateDataBackend = () => {
 
         const generateData = () => {
 
-            const startDate = new Date(2023,3,14)
-            const endDate = new Date(2023,3,21)
+            const startDate = new Date(2023,1,1)
+            const endDate = new Date(2023,3,22)
             let loopDate = startDate
             let start = new Date()
             let stop = new Date()
@@ -99,8 +97,8 @@ const CreateDataBackend = () => {
                             maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (1 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (3 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -111,12 +109,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 2nd Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 5 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 20 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (2 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (3 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -135,8 +133,8 @@ const CreateDataBackend = () => {
                                 8 + Math.round(Math.random()),
                                 Math.random()*60,
                                 Math.random()*60)
-                            minDurationInMilliseconds = (3 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (4 * 3600 + 30 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (1 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (2 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -147,12 +145,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 1st Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 2 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 10 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (2 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (3 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -164,11 +162,11 @@ const CreateDataBackend = () => {
                             })
                             //////////// 2nd Break ////////////
                             minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (2 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (2 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -179,12 +177,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 3rd Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 8 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 20 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (2 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (3 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -203,8 +201,8 @@ const CreateDataBackend = () => {
                                 8 + Math.round(Math.random()),
                                 Math.random()*60,
                                 Math.random()*60)
-                            minDurationInMilliseconds = (3 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (4 * 3600 + 30 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -215,12 +213,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 1st Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 5 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 15 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (2 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -231,12 +229,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 2nd Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 2 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 10 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -247,12 +245,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 3rd Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 45 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 5 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (2 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (3 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -263,12 +261,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 4st Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 10 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 15 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (2 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -287,8 +285,8 @@ const CreateDataBackend = () => {
                                 8 + Math.round(Math.random()),
                                 Math.random()*60,
                                 Math.random()*60)
-                            minDurationInMilliseconds = (3 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (4 * 3600 + 30 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -299,12 +297,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 1st Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 3 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 8 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (2 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -315,12 +313,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 2nd Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 2 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 8 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -331,12 +329,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 3rd Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 35 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 5 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (2 * 3600 + 0 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (3 * 3600 + 0 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -347,12 +345,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 4st Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 2 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 5 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
@@ -363,12 +361,12 @@ const CreateDataBackend = () => {
                                 "duration":duration
                             })
                             //////////// 5st Break ////////////
-                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (1 * 3600 + 15 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 10 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (0 * 3600 + 20 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             start = new Date(stop.getTime()+duration)
-                            minDurationInMilliseconds = (4 * 3600 + 0 * 60 + 0) * 1000
-                            maxDurationInMilliseconds = (5 * 3600 + 0 * 60 + 0) * 1000
+                            minDurationInMilliseconds = (0 * 3600 + 30 * 60 + 0) * 1000
+                            maxDurationInMilliseconds = (1 * 3600 + 30 * 60 + 0) * 1000
                             duration = (minDurationInMilliseconds+ Math.ceil(Math.random()*(maxDurationInMilliseconds-minDurationInMilliseconds)))
                             stop = new Date(start.getTime()+duration)
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
