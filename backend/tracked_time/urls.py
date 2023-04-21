@@ -1,7 +1,6 @@
 from django.urls import path
 from tracked_time.views import ListCreateTrackedTimeView, RetrieveUpdateDeleteTrackedTimeView, ListOwnTrackedTimeView, \
-    ListOwnFromView, ListOwnTaskTodayView, ListClockView
-
+    ListOwnFromView, ListOwnTaskTodayView, ListClockView, ListOwnFromToClockView
 
 urlpatterns = [
     # backend/api/restaurants/
@@ -10,5 +9,6 @@ urlpatterns = [
     path('<int:tracked_time_id>/', RetrieveUpdateDeleteTrackedTimeView.as_view()),
     path('listownfrom/', ListOwnFromView.as_view()),
     path('listowntoday/', ListOwnTaskTodayView.as_view()),
-    path('getclockinfo/', ListClockView.as_view())
+    path('getclockinfo/', ListClockView.as_view()),
+    path('listownfromtoclock/', ListOwnFromToClockView.as_view())
 ]
