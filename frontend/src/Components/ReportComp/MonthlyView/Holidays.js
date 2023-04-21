@@ -2,12 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import {useGetpublicHolidayYearQuery} from '../../../api/API'
 
-export default function Holidays({currentMonth}) {
-    const currentYear = new Date().getFullYear()
-    const { data:PUBLIC_HOLIDAYS, isLoading, isError, isSuccess }=useGetpublicHolidayYearQuery(currentYear)
-    // console.log(currentMonth)
-    const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(holiday => holiday.date.substring(0,7) === currentMonth)
-    // console.log('publicHolidaysOfMonth:',publicHolidaysOfMonth)
+export default function Holidays({currentMonth,publicHolidaysOfMonth}) {
+    // const currentYear = new Date().getFullYear()
+    // const { data:PUBLIC_HOLIDAYS, isLoading, isError, isSuccess }=useGetpublicHolidayYearQuery(currentYear)
+    // // console.log(currentMonth)
+    // const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(holiday => holiday.date.substring(0,7) === currentMonth)
+    // // console.log('publicHolidaysOfMonth:',publicHolidaysOfMonth)
 
   return (
     <div className='box-border mx-4 my-2'>

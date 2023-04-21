@@ -1,7 +1,7 @@
 import { useState,useRef } from "react";
 import moment from "moment";
 import {MdKeyboardArrowLeft,MdKeyboardArrowRight} from 'react-icons/md'
-import {useGetOwnTrackedTimeQuery,useGetClockedTimeQuery} from '../../../api/API'
+import {useGetOwnTrackedTimeQuery,useGetClockedTimeQuery,useGetpublicHolidayYearQuery } from '../../../api/API'
 import ReportTable from "./ReportTable";
 import Holidays from "./Holidays";
 import UserInfo from "./UserInfo";
@@ -27,7 +27,8 @@ export default function MonthlyView() {
   const [startTimes, setStartTimes] = useState('');
   const [stopTimes, setStopTimes] = useState('');
   const [isEditing,setIsEditing]=useState(false);
- 
+
+
   
 
 //FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
@@ -48,7 +49,7 @@ export default function MonthlyView() {
       }
       return acc;
     }, {});  
-    console.log('groupedData:',groupedData)
+    // console.log('groupedData:',groupedData)
 
 /*  CURRENT MONTH  */
     const currentMonth = moment(currentDate).format('yyyy-MM');
@@ -71,6 +72,15 @@ export default function MonthlyView() {
       const day = new Date(date)
       daysInMonth.push(moment(day).format('yyyy-MM-DD'))
     }
+
+/* PUBLIC HOLIDAYS OF CURRENT MONTH*/
+    const currentYear = new Date().getFullYear()
+    const { data:PUBLIC_HOLIDAYS }=useGetpublicHolidayYearQuery(currentYear)
+    // console.log(currentMonth)
+    const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(holiday => holiday.date.substring(0,7) === currentMonth)
+    // console.log('publicHolidaysOfMonth:',publicHolidaysOfMonth)
+
+
 /*  match DAYS in month with CLOCKED DATA  */
 const CLOCK_DATA = daysInMonth.map(date=>{
   if(groupedData){
@@ -128,7 +138,7 @@ if(isLoading){
           <h2 className=" w-60 text-center text-2xl">{moment(currentMonth).format('yyyy MMMM')}</h2>
           <MdKeyboardArrowRight className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800" onClick={prevMonth} />
         </div>
-        <ReportTable data={CLOCK_DATA} currentMonth={currentMonth}/>
+        <ReportTable data={CLOCK_DATA} currentMonth={currentMonth}  publicHolidaysOfMonth={publicHolidaysOfMonth}/>
         
       </section>
       
@@ -142,7 +152,7 @@ if(isLoading){
         {/*  PUBLIC HOLIDAYS FOR THIS MONTH  */}
           <div className="boder-2 bg-white h-1/4 w-full rounded-xl shadow-md py-2">
           <h2 className='felx text-center text font-bold my-3'>HOLIDAYS</h2>
-            <Holidays currentMonth={currentMonth} />
+            <Holidays currentMonth={currentMonth} publicHolidaysOfMonth={publicHolidaysOfMonth}/>
 
           </div>
         {/*  HOLIDAYS FOR THIS MONTH  */}
