@@ -23,6 +23,7 @@ function Timetracker() {
 // Fetch all the TrackedItems of the actual user and store it in Redux
   const dispatch = useDispatch();
   const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
+  
  
   useEffect(() => {
     dispatch(fetchTrackedTimeOwn());

@@ -43,6 +43,7 @@ class TrackedTime(models.Model):
     code = models.CharField(max_length=4, choices=CATEGORY_CHOICES, default="00")
     all_day = models.BooleanField(default=False)
     project = models.ForeignKey(to=Project, on_delete=models.CASCADE, related_name="tracked_times")
+    duration = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.id} - Task {self.task_name} - Project {self.project.name} - User {self.project.created_by.username}'
