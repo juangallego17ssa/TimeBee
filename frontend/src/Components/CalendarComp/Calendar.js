@@ -10,6 +10,7 @@ const localizer = momentLocalizer(moment);
 const CalendarComponent = ({ events, views, defaultView }) => {
   const [foregroundEvents, setForegroundEvents] = useState([])
   const [backgroundEvents, setBackgroundEvents] = useState([])
+  // console.log(events)
 
   const processEvents = (events) => {
     const foregroundEvents = []
@@ -18,7 +19,7 @@ const CalendarComponent = ({ events, views, defaultView }) => {
       const copyEvent = {}
       copyEvent.start = new Date(event.start);
       // copyEvent.start.setHours(copyEvent.start.getHours() - 2)
-      if (event.stop === null) {
+      if (event.stop === null && event.type_of_input === "0") {
         copyEvent.end = new Date();
       } else {
         copyEvent.end = new Date(event.stop);
@@ -45,7 +46,7 @@ const CalendarComponent = ({ events, views, defaultView }) => {
   }, [events])
   
   return (
-    <div className="h-full">
+    <div className="h-full shadow-xl">
       <Calendar
         localizer={localizer}
         events={foregroundEvents}
@@ -54,6 +55,7 @@ const CalendarComponent = ({ events, views, defaultView }) => {
         defaultView={defaultView}
         showMultiDayTimes={true}
         dayLayoutAlgorithm={"no-overlap"}
+        step={60}
         popup
       />
     </div>

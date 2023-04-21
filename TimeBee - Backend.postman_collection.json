@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "15855567-cc53-4f06-8f0a-709925af1dc4",
+		"_postman_id": "7a05273e-0068-487f-84e3-e2005841355a",
 		"name": "TimeBee - Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26058432"
+		"_exporter_id": "26058432",
+		"_collection_link": "https://martian-comet-470819.postman.co/workspace/Week-6~224320e1-9c43-4a48-9075-49a64eca6cc9/collection/26058432-7a05273e-0068-487f-84e3-e2005841355a?action=share&creator=26058432&source=collection_link"
 	},
 	"item": [
 		{
@@ -631,6 +632,16 @@
 				{
 					"name": "List Tracked Time",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -688,6 +699,47 @@
 					"response": []
 				},
 				{
+					"name": "List Own Clock From To",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"2023-04-19\",\r\n    \"to\": \"2023-04-21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/trackedtime/listownfromtoclock/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"trackedtime",
+								"listownfromtoclock",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "List Own Tracked Time Today",
 					"request": {
 						"auth": {
@@ -722,13 +774,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/backend/api/trackedtime/own/",
+							"raw": "{{baseURL}}/trackedtime/own/",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
-								"backend",
-								"api",
 								"trackedtime",
 								"own",
 								""
@@ -857,13 +907,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/trackedtime/55/",
+							"raw": "{{baseURL}}/trackedtime/111/",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"trackedtime",
-								"55",
+								"111",
 								""
 							]
 						}

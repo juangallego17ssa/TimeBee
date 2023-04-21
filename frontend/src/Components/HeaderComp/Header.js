@@ -49,7 +49,7 @@ function Header({ children }) {
     };
     
     const goToTimetracker = () => {
-        navigate("/timetracker");
+        navigate("/");
         setShowMenu(false)
         
     };
@@ -70,8 +70,9 @@ function Header({ children }) {
     };
 
     const logOut = () => {
-      localStorage.setItem("access", "");
-      navigate("/login");
+        localStorage.removeItem("access");
+        console.log('Access Token removed successfully')
+      navigate("/login"); 
     };
 
     const dispatch = useDispatch();
@@ -86,12 +87,15 @@ function Header({ children }) {
     }
 
     const handleClockIn= async ()=> {
+
         let currentTime = new Date();
         const data={
             "type_of_input": 0,
             "start": currentTime
         }
         const response = await createTrackedTime(data)
+        console.log("clockin")
+        console.log(response)
         dispatch(setClockID(response.data.id))
         dispatch(setClockStart(response.data.start))
         dispatch(setClockStop(""))
@@ -104,8 +108,16 @@ function Header({ children }) {
     // console.log(clockID)
     const handleClockOut= async ()=> {
         let currentTime = new Date();
+        // const offset = currentTime.getTimezoneOffset();
+        // currentTime.setHours(currentTime.getHours() - offset/60);
+        // const timezoneOffset = (offset > 0 ? "-" : "+") +
+        //                 Math.abs(offset / 60).toString().padStart(2, "0") + ":" +
+        //                 Math.abs(offset % 60).toString().padStart(2, "0");
+        // const isoCurrentTime = currentTime.toISOString().slice(0, -1) + timezoneOffset;
+        // currentTime = isoCurrentTime
+        // console.log(currentTime)
         const data={
-            "stop": currentTime
+            "stop": currentTime.toISOString()
         }
         const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
         dispatch(setClockID(""))
@@ -142,7 +154,7 @@ function Header({ children }) {
     }
 
     useEffect(  () => {
-            const getWorkload = async () => {
+        const getWorkload = async () => {
                 const response = await axiosWithToken(`me/`)
                 dispatch(setUser(response.data))
             }
@@ -160,134 +172,167 @@ function Header({ children }) {
 
   return (
     <>
-{/* ------- HEADER ------ */}
-    <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-sm">
- {/* ------- logo ------ */}      
-        <img onClick={goToHome} src={TimeBee}className="h-10"></img>  
+      {/* ------- HEADER ------ */}
+      <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-lg">
+        {/* ------- logo ------ */}
+        <img onClick={goToHome} src={TimeBee} className="h-10"></img>
 
         <div className="flex justify-end md:flex-row md:items-center flex-grow">
-    {/* ------- navigation icons ------ */}
-        <div className="hidden md:w-1/4 justify-evenly gap-10 mr-10 md:flex md:flex-row"> 
-     
-        {/*---- to Timetracker ----*/}
-            <div id='timetracker' className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
-                onClick={goToTimetracker}
-                onMouseEnter ={()=>setIsHoverTimetracker(true)}
-                onMouseLeave ={()=>setIsHoverTimetracker(false)} >
-            {isHoverTimetracker?
-            <p className="font-semibold text-zinc-600 hover:cursor-pointer">Timetracker</p>
-            :
-            <FaClock  className=" text-zinc-500 " /> 
-            }
-            </div> 
-        {/*----  to Dashborad  ----*/}                   
-            <div className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
-                onClick={goToDashboard}
-                onMouseEnter ={()=>setIsHoverDashboard(true)}
-                onMouseLeave ={()=>setIsHoverDashboard(false)} >
-            {isHoverDashboard?
-            <p className="font-semibold text-zinc-600 hover:cursor-pointer">Dashborad</p>
-            :
-            <FaChartArea  className=" text-zinc-500 " /> 
-            }
-            </div>  
-        {/*----  to Report  ----*/}
-            <div className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
-                onClick={goToReports}
-                onMouseEnter ={()=>setIsHoverReport(true)}
-                onMouseLeave ={()=>setIsHoverReport(false)} >
-            {isHoverReport?
-            <p className="font-semibold text-zinc-600 hover:cursor-pointer">Report</p>
-            :
-            <FaFileAlt  className=" text-zinc-500 " /> 
-            }
-            </div>  
-        {/*----  to Calendar  ----*/}
-            <div className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
-                onClick={goToCalendar}
-                onMouseEnter ={()=>setIsHoverCalendar(true)}
-                onMouseLeave ={()=>setIsHoverCalendar(false)} >
-            {isHoverCalendar?
-            <p className="font-semibold text-zinc-600 hover:cursor-pointer">Calendar</p>
-            :
-            <FaCalendarAlt  className=" text-zinc-500 " />
-            }
+          {/* ------- navigation icons ------ */}
+          <div className="hidden md:w-1/4 justify-evenly gap-10 mr-10 md:flex md:flex-row">
+            {/*---- to Timetracker ----*/}
+            <div
+              id="timetracker"
+              className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
+              onClick={goToTimetracker}
+              onMouseEnter={() => setIsHoverTimetracker(true)}
+              onMouseLeave={() => setIsHoverTimetracker(false)}
+            >
+              {isHoverTimetracker ? (
+                <p className="font-semibold text-zinc-600 hover:cursor-pointer">
+                  Timetracker
+                </p>
+              ) : (
+                <FaClock className=" text-zinc-500 " />
+              )}
+            </div>
+            {/*----  to Dashborad  ----*/}
+            <div
+              className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
+              onClick={goToDashboard}
+              onMouseEnter={() => setIsHoverDashboard(true)}
+              onMouseLeave={() => setIsHoverDashboard(false)}
+            >
+              {isHoverDashboard ? (
+                <p className="font-semibold text-zinc-600 hover:cursor-pointer">
+                  Dashborad
+                </p>
+              ) : (
+                <FaChartArea className=" text-zinc-500 " />
+              )}
+            </div>
+            {/*----  to Report  ----*/}
+            <div
+              className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
+              onClick={goToReports}
+              onMouseEnter={() => setIsHoverReport(true)}
+              onMouseLeave={() => setIsHoverReport(false)}
+            >
+              {isHoverReport ? (
+                <p className="font-semibold text-zinc-600 hover:cursor-pointer">
+                  Report
+                </p>
+              ) : (
+                <FaFileAlt className=" text-zinc-500 " />
+              )}
+            </div>
+            {/*----  to Calendar  ----*/}
+            <div
+              className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
+              onClick={goToCalendar}
+              onMouseEnter={() => setIsHoverCalendar(true)}
+              onMouseLeave={() => setIsHoverCalendar(false)}
+            >
+              {isHoverCalendar ? (
+                <p className="font-semibold text-zinc-600 hover:cursor-pointer">
+                  Calendar
+                </p>
+              ) : (
+                <FaCalendarAlt className=" text-zinc-500 " />
+              )}
+            </div>
+          </div>
+          <div className="flex w-fit items-center gap-2">
+            <p className="p-0.5 text-zinc-600 font-normal ">
+              {today.toLocaleDateString("en-GB", options)}
+            </p>
+            {!loaded ? (
+              <div className="font-bold text-m w-20">Loading...</div>
+            ) : (
+              <TimerCountdown start={clock} firstLoad={loaded} />
+            )}
+            {clock ? (
+              <button
+                onClick={handleClockOut}
+                className="w-28 h-10 rounded-full  text-teal-500 border-2 text-sm font-semibold
+                     border-teal-500 bg-transparent"
+              >
+                CLOCK OUT
+              </button>
+            ) : (
+              <button
+                onClick={handleClockIn}
+                className="w-28 h-10 rounded-full  text-white text-sm font-semibold
+                    bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
+              >
+                CLOCK IN
+              </button>
+            )}
+            <div className="relative" onClick={handleShowSettings}>
+              <UserAvator />
+              {showSettings && (
+                <div className="absolute flex flex-col right-2 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
+                  <div className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
+                    <FiUser />
+                    <p>Profile</p>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
+                    <FiLogOut />
+                    <p onClick={logOut}>Logout</p>
+                  </div>
+                </div>
+              )}
             </div>
 
-        </div>
-            <div className="flex w-fit items-center gap-2">
-                <p className="p-0.5 text-zinc-600 font-normal ">
-                    {today.toLocaleDateString('en-GB',options)}</p>
-            
-                <TimerCountdown  start={clock} firstLoad={loaded}/>
-
-                {clock ?
-                    <button onClick={handleClockOut}
-                    className="w-28 h-10 rounded-full  text-teal-500 border-2 text-sm font-semibold
-                     border-teal-500 bg-transparent"
-                    >CLOCK OUT</button>
-                    :
-                    <button onClick={handleClockIn}
-                    className="w-28 h-10 rounded-full  text-white text-sm font-semibold
-                    bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
-                    >CLOCK IN</button>
-                }
-                <div className="relative" onClick={handleShowSettings}>
-                 <UserAvator />
-                    {showSettings &&
-                    <div className="absolute flex flex-col right-2 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
-                        <div
-                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
-                         <FiUser/>
-                         <p>Profile</p>
-                        </div>
-                        <div
-                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
-                         <FiLogOut/>
-                         <p >Logout</p>
-                        </div>
-                    </div>
-                    }
+            {/* ------- menu icons ------ */}
+            {showMenu ? (
+              <RxCross2
+                onClick={() => setShowMenu(!showMenu)}
+                className="text-2xl text-zinc-500 md:hidden hover:cursor-pointer hover:text-zinc-800"
+              />
+            ) : (
+              <HiMenu
+                onClick={handleShowMenu}
+                className="text-2xl text-zinc-500 md:hidden hover:cursor-pointer hover:text-zinc-800"
+              />
+            )}
+            {showMenu && (
+              <div className="absolute flex flex-col right-4 top-14 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
+                <div
+                  onClick={goToTimetracker}
+                  className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
+                >
+                  <FaClock className="text-zinc-500" />
+                  <p>Timetracker</p>
                 </div>
-
-    {/* ------- menu icons ------ */}
-                {showMenu?
-                <RxCross2 onClick={()=>setShowMenu(!showMenu)}
-                className="text-2xl text-zinc-500 md:hidden hover:cursor-pointer hover:text-zinc-800"/>
-                :<HiMenu onClick={handleShowMenu}
-                className="text-2xl text-zinc-500 md:hidden hover:cursor-pointer hover:text-zinc-800"/>
-                }
-                {showMenu &&
-                <div className="absolute flex flex-col right-4 top-14 gap-2 bg-white shadow-md py-2 z-20 rounded-md">     
-                    <div onClick={goToTimetracker} 
-                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
-                     <FaClock className="text-zinc-500" />
-                     <p>Timetracker</p>
-                    </div>      
-                    <div onClick={goToDashboard} 
-                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
-                     <FaChartArea  className="text-zinc-500" />
-                     <p>Dashbord</p>
-                    </div>      
-                    <div onClick={goToReports}
-                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
-                     <FaFileAlt className="text-zinc-500" />
-                     <p>Report</p>
-                    </div>      
-                    <div onClick={goToCalendar}
-                         className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
-                     <FaCalendarAlt className="text-zinc-500" />
-                     <p>Calendar</p>
-                    </div>
-
+                <div
+                  onClick={goToDashboard}
+                  className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
+                >
+                  <FaChartArea className="text-zinc-500" />
+                  <p>Dashbord</p>
                 </div>
-                }
-            </div> 
+                <div
+                  onClick={goToReports}
+                  className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
+                >
+                  <FaFileAlt className="text-zinc-500" />
+                  <p>Report</p>
+                </div>
+                <div
+                  onClick={goToCalendar}
+                  className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
+                >
+                  <FaCalendarAlt className="text-zinc-500" />
+                  <p>Calendar</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-
-    </div>
-    {/* ------- PAGES ------ */}
-        {children}
+      </div>
+      {/* ------- PAGES ------ */}
+      {children}
     </>
   );
 }
