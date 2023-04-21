@@ -39,10 +39,11 @@ function TimerBar({ task }) {
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editTime, setEditTime] = useState(false);
-  const [taskName, setTaskname] = useState(task.task_name);
-  const [project, setProject] = useState(task.project.id);
-  const [BusyBee, setBusyBee] = useState("");
-  const [updated, setUpdated] = useState("");
+  const [editProject, setEditProject] = useState(false);
+  const [taskName, setTaskname ]= useState(task.task_name);
+  const [project, setProject ]= useState(task.project.id);
+  const [BusyBee, setBusyBee] = useState('');
+  const [updated, setUpdated] = useState('');
 
   // const [showProject, setShowProject] = useState(false)
 
@@ -77,21 +78,22 @@ function TimerBar({ task }) {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      const trackedtimeId = task.id;
-      let data = {
-        task_name: taskName,
-        project_id: projectRef.current.value,
-        start: editTime ? startTimeRef.current.value : task.start,
-        stop: editTime ? stopTimeRef.current.value : task.stop,
+    if (event.key === 'Enter') {
+      const trackedtimeId= task.id
+      let data ={
+        "task_name": taskName,
+        "project_id":editProject?projectRef.current.value:task.project.id,
+        "start":editTime?startTimeRef.current.value:task.start,
+        "stop":editTime?stopTimeRef.current.value:task.stop,
       };
-      // console.log(trackedtimeId,data)
-      updateTrackedTimeByID({ trackedtimeId, ...data }).then((result) =>
-        console.log(result)
-      );
+      console.log(trackedtimeId,data)
+      updateTrackedTimeByID({trackedtimeId,...data})
+      .then((result)=>console.log(result))
+      .catch(error=>console.log(error))
 
-      setEdit(false);
-      setEditTime(false);
+      setEdit(false)
+      setEditTime(false)
+      setEditProject(false)
     }
   };
   const handlePlay = () => {
@@ -154,7 +156,7 @@ function TimerBar({ task }) {
               className="mx-1"
             />
             <div className="hidden md:w-1/4 md:flex md:flex-row">
-              {edit ? (
+              {editProject ? (
                 <label htmlFor="project">
                   <select
                     id="project"
@@ -171,7 +173,7 @@ function TimerBar({ task }) {
                   </select>
                 </label>
               ) : (
-                <button onClick={() => setEdit(true)}>
+                <button onClick={() => setEditProject(true)}>
                   {task.project.name}
                 </button>
               )}

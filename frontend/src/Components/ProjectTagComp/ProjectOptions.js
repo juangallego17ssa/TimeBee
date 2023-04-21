@@ -60,7 +60,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
       </div>
       {showCreateTag && 
         <div className='fixed top-1/3 left-1/3'>
-          <AddNewProject setShowCreateTag={setShowCreateTag} projects={projects}/>
+          <AddNewProject setShowCreateTag={setShowCreateTag} projects={projects} />
         </div>
           }
     </div>
