@@ -87,12 +87,15 @@ function Header({ children }) {
     }
 
     const handleClockIn= async ()=> {
+
         let currentTime = new Date();
         const data={
             "type_of_input": 0,
             "start": currentTime
         }
         const response = await createTrackedTime(data)
+        console.log("clockin")
+        console.log(response)
         dispatch(setClockID(response.data.id))
         dispatch(setClockStart(response.data.start))
         dispatch(setClockStop(""))
@@ -105,8 +108,16 @@ function Header({ children }) {
     // console.log(clockID)
     const handleClockOut= async ()=> {
         let currentTime = new Date();
+        // const offset = currentTime.getTimezoneOffset();
+        // currentTime.setHours(currentTime.getHours() - offset/60);
+        // const timezoneOffset = (offset > 0 ? "-" : "+") +
+        //                 Math.abs(offset / 60).toString().padStart(2, "0") + ":" +
+        //                 Math.abs(offset % 60).toString().padStart(2, "0");
+        // const isoCurrentTime = currentTime.toISOString().slice(0, -1) + timezoneOffset;
+        // currentTime = isoCurrentTime
+        // console.log(currentTime)
         const data={
-            "stop": currentTime
+            "stop": currentTime.toISOString()
         }
         const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
         dispatch(setClockID(""))

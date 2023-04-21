@@ -11,6 +11,7 @@ class TrackedTimeSerializer(serializers.ModelSerializer):
     stop = serializers.DateTimeField(required=False)
     time_limit = serializers.IntegerField(required=False)
     task_name = serializers.CharField(required=False)
+    duration = serializers.IntegerField(required=False)
     # category = CategorySerializer(required=True)
     project = ProjectSerializer(read_only=True)
 
