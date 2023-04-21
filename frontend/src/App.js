@@ -13,7 +13,7 @@ import Verification from "./pages/Verification";
 import Calendar from "./pages/Calendar";
 import Test from "./pages/test";
 import Profil from "./pages/Profil";
-import DataProject from "./Components/DataProject";
+import DataProject from "./Components/DashboadComp/DataProject";
 
 function App() {
   return (

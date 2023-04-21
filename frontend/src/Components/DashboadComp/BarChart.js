@@ -7,20 +7,21 @@ import { ResponsiveBar } from '@nivo/bar'
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const MyResponsiveBar = ({ data /* see data tab */ }) => (
+const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
+    
     <ResponsiveBar
         data={data}
-        keys={[
-            'unassigned',
-            'project1',
-            'project2',
-            'project3']}
-        // keys={[keys]}
+        // keys={[
+        //     'unassigned',
+        //     'project1',
+        //     'project2',
+        //     'project3']}
+        keys={keys}
         indexBy="date"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         layout="vertical"
-        valueScale={{ type: 'linear'}}
+        valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
         colors={{ scheme: 'nivo' }}
         defs={[
@@ -115,10 +116,17 @@ const MyResponsiveBar = ({ data /* see data tab */ }) => (
                 ]
             }
         ]}
-        tooltip={function(){}}
+        
+        tooltip={({ id, data }) => {
+            return(
+                <div>
+                    {data.date}
+                    <div>{id}: {data[id]} hours</div>
+                </div>)
+        }}
         role="application"
         ariaLabel="Nivo bar chart demo"
-        barAriaLabel={function(e){return e.id+": "+e.formattedValue+" in country: "+e.indexValue}}
+        // barAriaLabel={function(e){return e.date+": "+e.formattedValue+" in country: "+e.indexValue}}
     />
 )
 
