@@ -8,7 +8,7 @@ from project.models import Project
 from tracked_time.models import TrackedTime
 from tracked_time.serializers import TrackedTimeSerializer
 import pytz
-from datetime import datetime
+
 
 # Create your views here.
 
@@ -65,6 +65,9 @@ class ListOwnTrackedTimeView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = TrackedTime.objects.filter(project__created_by_id=self.request.user.id)
+        type_of_input = self.request.query_params.get('type_of_input')
+        if type_of_input:
+            queryset = queryset.filter(type_of_input=self.request.query_params.get('type_of_input'))
         return queryset
 
 
@@ -209,6 +212,7 @@ class ListClockView(generics.ListAPIView):
 
         return JsonResponse(response_obj, status=200)
 
+
 class ListOwnFromToClockView(generics.ListAPIView):
     serializer_class = TrackedTimeSerializer
 
@@ -231,6 +235,8 @@ class ListOwnFromToClockView(generics.ListAPIView):
         response_arr = []
         response_week_arr = []
         response_month_arr = []
+        response_week_obj = {}
+        response_month_obj = {}
 
         def calculateTime(total_seconds):
             hours, remainder = divmod(total_seconds, 3600)
@@ -256,7 +262,8 @@ class ListOwnFromToClockView(generics.ListAPIView):
                             response["first_clock"] = trackedStartInTZ
                         if response["last_clock"] < trackedStopInTZ:
                             response["last_clock"] = trackedStopInTZ
-                        response["time_span"] = round((response["last_clock"] - response["first_clock"]).total_seconds())
+                        response["time_span"] = round(
+                            (response["last_clock"] - response["first_clock"]).total_seconds())
                         response["breaks"] += 1
                         flag = False
                         break
@@ -273,11 +280,10 @@ class ListOwnFromToClockView(generics.ListAPIView):
                     response_obj["duration"] = trackedTime.duration
                     response_obj["first_clock"] = trackedStartInTZ
                     response_obj["last_clock"] = trackedStopInTZ
-                    response_obj["time_span"] = round((response_obj["last_clock"] - response_obj["first_clock"]).total_seconds())
+                    response_obj["time_span"] = round(
+                        (response_obj["last_clock"] - response_obj["first_clock"]).total_seconds())
                     response_obj["breaks"] = 0
                     response_arr.append(response_obj)
-
-
 
             for day in response_arr:
 
@@ -288,22 +294,28 @@ class ListOwnFromToClockView(generics.ListAPIView):
                     if response["year"] == isoDate.year and response["week"] == isoDate.week:
                         response["amount_days"] += 1
                         response["duration_total"] += day["duration"]
-                        response_week_obj["duration_average"] = round(response_week_obj["duration_total"] / response_week_obj["amount_days"])
-                        response_week_obj["first_clock_sum"] += day["first_clock"].time().hour * 3600 + day["first_clock"].time().minute * 60 + day["first_clock"].time().second
-                        response_week_obj["first_clock_average"] = calculateTime(round(response_week_obj["first_clock_sum"] / response_week_obj["amount_days"]))
-                        response_week_obj["last_clock_sum"] += day["last_clock"].time().hour * 3600 + day["last_clock"].time().minute * 60 + day["last_clock"].time().second
-                        response_week_obj["last_clock_average"] = calculateTime(round(response_week_obj["last_clock_sum"] / response_week_obj["amount_days"]))
+                        response_week_obj["duration_average"] = round(
+                            response_week_obj["duration_total"] / response_week_obj["amount_days"])
+                        response_week_obj["first_clock_sum"] += day["first_clock"].time().hour * 3600 + day[
+                            "first_clock"].time().minute * 60 + day["first_clock"].time().second
+                        response_week_obj["first_clock_average"] = calculateTime(
+                            round(response_week_obj["first_clock_sum"] / response_week_obj["amount_days"]))
+                        response_week_obj["last_clock_sum"] += day["last_clock"].time().hour * 3600 + day[
+                            "last_clock"].time().minute * 60 + day["last_clock"].time().second
+                        response_week_obj["last_clock_average"] = calculateTime(
+                            round(response_week_obj["last_clock_sum"] / response_week_obj["amount_days"]))
                         response_week_obj["time_span_total"] += day["time_span"]
-                        response_week_obj["time_span_average"] = round(response_week_obj["time_span_total"] / response_week_obj["amount_days"])
+                        response_week_obj["time_span_average"] = round(
+                            response_week_obj["time_span_total"] / response_week_obj["amount_days"])
                         response_week_obj["breaks_total"] += day["breaks"]
-                        response_week_obj["breaks_average"] = round(response_week_obj["breaks_total"] / response_week_obj["amount_days"])
+                        response_week_obj["breaks_average"] = round(
+                            response_week_obj["breaks_total"] / response_week_obj["amount_days"])
                         flag = False
                         break
 
                 if flag:
-
                     response_week_obj = {
-                        "year":"",
+                        "year": "",
                         "week": "",
                         "amount_days": 0,
                         "duration_total": 0,
@@ -321,18 +333,23 @@ class ListOwnFromToClockView(generics.ListAPIView):
                     response_week_obj["week"] = datetime.combine(day["date"], datetime.min.time()).isocalendar().week
                     response_week_obj["amount_days"] = 1
                     response_week_obj["duration_total"] = day["duration"]
-                    response_week_obj["duration_average"] = round(response_week_obj["duration_total"] / response_week_obj["amount_days"])
-                    response_week_obj["first_clock_sum"] = day["first_clock"].time().hour*3600 + day["first_clock"].time().minute*60+day["first_clock"].time().second
-                    response_week_obj["first_clock_average"] = calculateTime(round(response_week_obj["first_clock_sum"] / response_week_obj["amount_days"]))
-                    response_week_obj["last_clock_sum"] = day["last_clock"].time().hour*3600 + day["last_clock"].time().minute*60+day["last_clock"].time().second
-                    response_week_obj["last_clock_average"] = calculateTime(round(response_week_obj["last_clock_sum"] / response_week_obj["amount_days"]))
+                    response_week_obj["duration_average"] = round(
+                        response_week_obj["duration_total"] / response_week_obj["amount_days"])
+                    response_week_obj["first_clock_sum"] = day["first_clock"].time().hour * 3600 + day[
+                        "first_clock"].time().minute * 60 + day["first_clock"].time().second
+                    response_week_obj["first_clock_average"] = calculateTime(
+                        round(response_week_obj["first_clock_sum"] / response_week_obj["amount_days"]))
+                    response_week_obj["last_clock_sum"] = day["last_clock"].time().hour * 3600 + day[
+                        "last_clock"].time().minute * 60 + day["last_clock"].time().second
+                    response_week_obj["last_clock_average"] = calculateTime(
+                        round(response_week_obj["last_clock_sum"] / response_week_obj["amount_days"]))
                     response_week_obj["time_span_total"] = day["time_span"]
-                    response_week_obj["time_span_average"] = round(response_week_obj["time_span_total"] / response_week_obj["amount_days"])
+                    response_week_obj["time_span_average"] = round(
+                        response_week_obj["time_span_total"] / response_week_obj["amount_days"])
                     response_week_obj["breaks_total"] = day["breaks"]
-                    response_week_obj["breaks_average"] = round(response_week_obj["breaks_total"] / response_week_obj["amount_days"])
+                    response_week_obj["breaks_average"] = round(
+                        response_week_obj["breaks_total"] / response_week_obj["amount_days"])
                     response_week_arr.append(response_week_obj)
-
-
 
             for day in response_arr:
 
@@ -342,22 +359,28 @@ class ListOwnFromToClockView(generics.ListAPIView):
                     if response["year"] == day["date"].year and response["month"] == day["date"].month:
                         response["amount_days"] += 1
                         response["duration_total"] += day["duration"]
-                        response_month_obj["duration_average"] = round(response_month_obj["duration_total"] / response_month_obj["amount_days"])
-                        response_month_obj["first_clock_sum"] += day["first_clock"].time().hour * 3600 + day["first_clock"].time().minute * 60 + day["first_clock"].time().second
-                        response_month_obj["first_clock_average"] = calculateTime(round(response_month_obj["first_clock_sum"] / response_month_obj["amount_days"]))
-                        response_month_obj["last_clock_sum"] += day["last_clock"].time().hour * 3600 + day["last_clock"].time().minute * 60 + day["last_clock"].time().second
-                        response_month_obj["last_clock_average"] = calculateTime(round(response_month_obj["last_clock_sum"] / response_month_obj["amount_days"]))
+                        response_month_obj["duration_average"] = round(
+                            response_month_obj["duration_total"] / response_month_obj["amount_days"])
+                        response_month_obj["first_clock_sum"] += day["first_clock"].time().hour * 3600 + day[
+                            "first_clock"].time().minute * 60 + day["first_clock"].time().second
+                        response_month_obj["first_clock_average"] = calculateTime(
+                            round(response_month_obj["first_clock_sum"] / response_month_obj["amount_days"]))
+                        response_month_obj["last_clock_sum"] += day["last_clock"].time().hour * 3600 + day[
+                            "last_clock"].time().minute * 60 + day["last_clock"].time().second
+                        response_month_obj["last_clock_average"] = calculateTime(
+                            round(response_month_obj["last_clock_sum"] / response_month_obj["amount_days"]))
                         response_month_obj["time_span_total"] += day["time_span"]
-                        response_month_obj["time_span_average"] = round(response_month_obj["time_span_total"] / response_month_obj["amount_days"])
+                        response_month_obj["time_span_average"] = round(
+                            response_month_obj["time_span_total"] / response_month_obj["amount_days"])
                         response_month_obj["breaks_total"] += day["breaks"]
-                        response_month_obj["breaks_average"] = round(response_month_obj["breaks_total"] / response_month_obj["amount_days"])
+                        response_month_obj["breaks_average"] = round(
+                            response_month_obj["breaks_total"] / response_month_obj["amount_days"])
                         flag = False
                         break
 
                 if flag:
-
                     response_month_obj = {
-                        "year":"",
+                        "year": "",
                         "month": "",
                         "amount_days": 0,
                         "duration_total": 0,
@@ -375,44 +398,47 @@ class ListOwnFromToClockView(generics.ListAPIView):
                     response_month_obj["month"] = day["date"].month
                     response_month_obj["amount_days"] = 1
                     response_month_obj["duration_total"] = day["duration"]
-                    response_month_obj["duration_average"] = round(response_month_obj["duration_total"] / response_month_obj["amount_days"])
-                    response_month_obj["first_clock_sum"] = day["first_clock"].time().hour*3600 + day["first_clock"].time().minute*60+day["first_clock"].time().second
-                    response_month_obj["first_clock_average"] = calculateTime(round(response_month_obj["first_clock_sum"] / response_month_obj["amount_days"]))
-                    response_month_obj["last_clock_sum"] = day["last_clock"].time().hour*3600 + day["last_clock"].time().minute*60+day["last_clock"].time().second
-                    response_month_obj["last_clock_average"] = calculateTime(round(response_month_obj["last_clock_sum"] / response_month_obj["amount_days"]))
+                    response_month_obj["duration_average"] = round(
+                        response_month_obj["duration_total"] / response_month_obj["amount_days"])
+                    response_month_obj["first_clock_sum"] = day["first_clock"].time().hour * 3600 + day[
+                        "first_clock"].time().minute * 60 + day["first_clock"].time().second
+                    response_month_obj["first_clock_average"] = calculateTime(
+                        round(response_month_obj["first_clock_sum"] / response_month_obj["amount_days"]))
+                    response_month_obj["last_clock_sum"] = day["last_clock"].time().hour * 3600 + day[
+                        "last_clock"].time().minute * 60 + day["last_clock"].time().second
+                    response_month_obj["last_clock_average"] = calculateTime(
+                        round(response_month_obj["last_clock_sum"] / response_month_obj["amount_days"]))
                     response_month_obj["time_span_total"] = day["time_span"]
-                    response_month_obj["time_span_average"] = round(response_month_obj["time_span_total"] / response_month_obj["amount_days"])
+                    response_month_obj["time_span_average"] = round(
+                        response_month_obj["time_span_total"] / response_month_obj["amount_days"])
                     response_month_obj["breaks_total"] = day["breaks"]
-                    response_month_obj["breaks_average"] = round(response_month_obj["breaks_total"] / response_month_obj["amount_days"])
+                    response_month_obj["breaks_average"] = round(
+                        response_month_obj["breaks_total"] / response_month_obj["amount_days"])
                     response_month_arr.append(response_month_obj)
 
-
-            sumDuration=0
-            sumStart=0
-            sumStop=0
-            sumBreaks=0
-            days=len(response_arr)
+            sumDuration = 0
+            sumStart = 0
+            sumStop = 0
+            sumBreaks = 0
+            days = len(response_arr)
             for day in response_arr:
                 sumDuration += day["duration"]
-                sumStart += day["first_clock"].time().hour*3600 + day["first_clock"].time().minute*60+day["first_clock"].time().second
-                sumStop += day["last_clock"].time().hour*3600 + day["last_clock"].time().minute*60+day["last_clock"].time().second
+                sumStart += day["first_clock"].time().hour * 3600 + day["first_clock"].time().minute * 60 + day[
+                    "first_clock"].time().second
+                sumStop += day["last_clock"].time().hour * 3600 + day["last_clock"].time().minute * 60 + day[
+                    "last_clock"].time().second
                 sumBreaks += day["breaks"]
-
 
             final_response = {
                 "average": {
                     "duration": round(sumDuration / days),
-                    "start": calculateTime(sumStart / days) ,
-                    "stop": calculateTime(sumStop / days) ,
+                    "start": calculateTime(sumStart / days),
+                    "stop": calculateTime(sumStop / days),
                     "breaks": round(sumBreaks / days)
                 },
                 "detail": response_arr,
                 "detail_weekly": response_week_arr,
                 "detail_monthly": response_month_arr
             }
-
-
-
-
 
         return JsonResponse(final_response, status=200, safe=False)
