@@ -11,6 +11,7 @@ import RouteProtection from "./Components/HOC/RouteProtection";
 import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
 import Calendar from "./pages/Calendar";
+import Test from "./pages/test";
 
 function App() {
   return (
@@ -24,10 +25,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/verification" element={<Verification/>} />
             <Route path="/home" element={<Home />} />
+            <Route path="/test" element={<Test />} />
             <Route path="/" element={<RouteProtection route={<Header><Timetracker/></Header>} />} />
             <Route path="/dashboard" element={<RouteProtection route={<Header><Dashboard /></Header>} />}/>
             <Route path="/reports" element={<RouteProtection route={<Header><Report/></Header>}/>}/>
-            <Route path="/calendar" element={<RouteProtection route={<Header><Calendar/></Header>}/>} />
+            <Route path="/calendar" element={<RouteProtection route={<Header><Calendar /></Header>} />} />
           </Routes>
       </div>
     </Provider>
