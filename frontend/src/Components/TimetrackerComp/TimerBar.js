@@ -32,6 +32,7 @@ function TimerBar({task}) {
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editTime, setEditTime] = useState(false);
+  const [editProject, setEditProject] = useState(false);
   const [taskName, setTaskname ]= useState(task.task_name);
   const [project, setProject ]= useState(task.project.id);
   const [BusyBee, setBusyBee] = useState('');
@@ -75,16 +76,18 @@ function TimerBar({task}) {
       const trackedtimeId= task.id
       let data ={
         "task_name": taskName,
-        "project_id":projectRef.current.value,
+        "project_id":editProject?projectRef.current.value:task.project.id,
         "start":editTime?startTimeRef.current.value:task.start,
         "stop":editTime?stopTimeRef.current.value:task.stop,
       };
-      // console.log(trackedtimeId,data)
+      console.log(trackedtimeId,data)
       updateTrackedTimeByID({trackedtimeId,...data})
       .then((result)=>console.log(result))
+      .catch(error=>console.log(error))
 
       setEdit(false)
       setEditTime(false)
+      setEditProject(false)
     }
   };
   const handlePlay = ()=>{
@@ -136,7 +139,7 @@ function TimerBar({task}) {
           </label>
         <div className='flex items-center'>
           <AiFillTag className={`text-${task.project.tag_color?task.project.tag_color:'zinc'}-400 mx-1`}/>
-          {edit?
+          {editProject?
           <label htmlFor="project">
           <select id="project" name="project" ref={projectRef} onChange={handleChangeProject} onKeyDown={handleKeyDown}  >
             {projects?.map(project=>
@@ -144,7 +147,7 @@ function TimerBar({task}) {
               )}
           </select>
         </label>
-            :<button onClick={()=>setEdit(true)}>{task.project.name}</button>
+            :<button onClick={()=>setEditProject(true)}>{task.project.name}</button>
           }
         </div>
         {/* <FaTrashAlt onClick={handelDeleteTask}className="text-md text-zinc-300 hover:text-red-500 mx-3"/> */}

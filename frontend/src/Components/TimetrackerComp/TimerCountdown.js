@@ -85,7 +85,7 @@ function TimerCountdown(props) {
 
     
     return (
-        <div className="font-bold text-m w-20">{myState.clock.clockTimer}</div>
+        <div className="font-bold text-m w-20">{myState?.clock.clockTimer}</div>
     )
 }
 export default TimerCountdown; 

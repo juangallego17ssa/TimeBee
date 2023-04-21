@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 export default function UserAvator() {
    const USER = useSelector( (state) => state.user.user)
+   const username = USER?.username
   //  console.log(USER.username.charAt(0).toUpperCase())
 
     // const {data:currentUser,isLoading,isSuccess,isError} = useGetUserProfileQuery()
@@ -15,7 +16,7 @@ export default function UserAvator() {
       <img src={USER.avatar}/>
       :
       <p className='uppercase text-center text-2xl font-bold text-white'>
-        {USER.username.charAt(0).toUpperCase()}
+        {username.charAt(0)}
       </p>
       }
     </div>

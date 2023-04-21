@@ -1,13 +1,13 @@
 import { useState,useRef } from "react";
 import moment from "moment";
 import {MdKeyboardArrowLeft,MdKeyboardArrowRight} from 'react-icons/md'
-import {useGetOwnTrackedTimeQuery} from '../../../api/API'
+import {useGetOwnTrackedTimeQuery,useGetClockedTimeQuery} from '../../../api/API'
 import ReportTable from "./ReportTable";
 import Holidays from "./Holidays";
 import UserInfo from "./UserInfo";
 
 export default function MonthlyView() {
-    const DEFAULT_CLOCK_IN = '09:00';
+  const DEFAULT_CLOCK_IN = '09:00';
   const DEFAULT_CLOCK_OUT = '18:00';
   const DEFAULT_WORKINK_TIME = (8.5)*3600000
 
@@ -30,17 +30,17 @@ export default function MonthlyView() {
  
   
 
-//FETCH CLOCK IN/OUT DATA
-    const { data ,isLoading,isSuccess,isError} = useGetOwnTrackedTimeQuery()
-/* filter out type_of_input === "0" */
-    const clockInOut = data?.filter(data=>data.type_of_input === '0')
-    // console.log(clockInOut)
+//FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
+    const { data ,isLoading,isSuccess,isError} = useGetClockedTimeQuery()
+
+    // const clockInOut = data?.filter(data=>data.type_of_input === '0')
+    // console.log(data)
 
 /* group the data by date */
-    const groupedData = clockInOut?.reduce((acc, item) => {
+    const groupedData = data?.reduce((acc, item) => {
       const date = item.start.substring(0, 10); // extract the date from the start timestamp
       if (!acc[date]) {
-        acc[date] = {id:[], start: [], stop: [] }; // create a new object for the date if it doesn't exist
+        acc[date] = { start: [], stop: [] }; // create a new object for the date if it doesn't exist
       }
       acc[date].start.push(item.start);
       if (item.stop) {
