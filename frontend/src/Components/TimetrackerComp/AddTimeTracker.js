@@ -25,20 +25,47 @@ export default function AddTimeTracker({isManual}) {
     const [createTrackedTime] = useCreateTrackedTimeMutation()
     
     const handleCreateTimer=(e)=>{
-      e.preventDefault();   
-      const data = ({
-        type_of_input:"1",
-        start:new Date().toISOString(),
-        task_name:taskNameRef.current.value,
-        project_id:selectedProject.id,
-      })
-      console.log(data)
-      createTrackedTime(data)
-      .then(result=>console.log(result))
+      e.preventDefault();
+
+      //---- FROM HERE IS THE REAL CODE ----//
       
-      // Clean up input
-      taskNameRef.current.value = '';
-      setSelectedProject('');
+      const data = ({
+          type_of_input:"1",
+          start:new Date().toISOString(),
+          task_name:taskNameRef.current.value,
+          project_id:selectedProject.id,
+        })
+        console.log(data)
+        createTrackedTime(data)
+        .then(result=>console.log(result))
+        
+        // Clean up input
+        taskNameRef.current.value = '';
+        setSelectedProject('');
+      }
+    
+      
+      // ------------END-------------//
+
+      // ---- Create FAKE CLOCK-IN/OUT data ----// !!! comment out when after use
+        // const month = 3
+        // const start_date = 1 
+        // const end_date = 17
+        //   for(let i=start_date; i<=end_date; i++){ // !!! careful with the weekeds and holidays
+        //     const date = i
+        //     const start = new Date(`2023-${month}-${date} 09:${Math.floor(Math.random()*60)}`).toISOString()
+        //     const stop = new Date(`2023-${month}-${date} 18:${Math.floor(Math.random()*60)}`).toISOString()
+        //     const new_data={
+        //       "type_of_input": "0",
+        //       "task_name":"clock-in/out",
+        //       "start": start,
+        //       "stop": stop
+        //   }
+        //   createTrackedTime(new_data)
+        //   .then(result=>console.log(result)).catch(err=>console.log(err))
+        //   } 
+      // ------------END-------------//
+
     }
 
 // Manual Create
@@ -162,4 +189,4 @@ export default function AddTimeTracker({isManual}) {
         </div>
       );
     }
-}
+
