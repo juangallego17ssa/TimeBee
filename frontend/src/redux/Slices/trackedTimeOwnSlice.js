@@ -5,21 +5,29 @@ export const fetchTrackedTimeOwn = createAsyncThunk(
   async () => {
     const Token = localStorage.getItem("access");
     if (Token) {
-      let myHeaders = new Headers();
-      let requestOptions = {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${Token}`);
+
+      const requestOptions = {
         method: "GET",
         headers: myHeaders,
       };
-      myHeaders.append("Authorization", `Bearer ${Token}`);
-      return fetch(
-        "https://timebee.propulsion-learn.ch/backend/api/trackedtime/own/",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .catch((error) => console.log(error));
+
+      try {
+        const response = await fetch(
+          "https://timebee.propulsion-learn.ch/backend/api/trackedtime/own/",
+          requestOptions
+        );
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     }
   }
 );
+
 
 export const trackedTimeOwnSlice = createSlice({
   name: "trackedTime",
