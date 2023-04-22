@@ -18,166 +18,169 @@ import {setUser} from "../../redux/Slices/userSlice";
 
 function Header({ children }) {
 //---- RTK Query ----//
-    const [createTrackedTime,{isloading,error}]=useCreateTrackedTimeMutation()
+  const [createTrackedTime,{isloading,error}]=useCreateTrackedTimeMutation()
 
 //---- Local States ----//
-    const [showMenu, setShowMenu] = useState(false);
-    const [showSettings, setShowSettings] = useState(false);
-    const [isHoverTimetracker, setIsHoverTimetracker] = useState(false);
-    const [isHoverDashboard, setIsHoverDashboard] = useState(false);
-    const [isHoverReport, setIsHoverReport] = useState(false);
-    const [isHoverCalendar, setIsHoverCalendar] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [isHoverTimetracker, setIsHoverTimetracker] = useState(false);
+  const [isHoverDashboard, setIsHoverDashboard] = useState(false);
+  const [isHoverReport, setIsHoverReport] = useState(false);
+  const [isHoverCalendar, setIsHoverCalendar] = useState(false);
+  const [shouldReload, setShouldReload] = useState(true);
 
-    const [clock, setClock] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+  const [clock, setClock] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
 
 //---- get the current date ----//
-    let today = new Date();
-    let options = {
-        weekday:'short',
-        day:'numeric',
-        month:'long',
-        year:'numeric'
-    } 
-    
+  let today = new Date();
+  let options = {
+    weekday:'short',
+    day:'numeric',
+    month:'long',
+    year:'numeric'
+  } 
+  
 //---- navigations ----//
-    const navigate = useNavigate();
-    
-    const goToReports = () => {
-        navigate("/reports");
-        setShowMenu(false)
-    };
-    
-    const goToTimetracker = () => {
-        navigate("/");
-        setShowMenu(false)
+  const navigate = useNavigate();
+  
+  const goToReports = () => {
+    navigate("/reports");
+    setShowMenu(false)
+  };
+  
+  const goToTimetracker = () => {
+    navigate("/");
+    setShowMenu(false)
+      
+  };
+  const goToDashboard = () => {
+    navigate("/dashboard");
+    setShowMenu(false)
+  };
+  
+  const goToHome = () => {
+    navigate("/");
+  };
+
+  const goToLogIn = () => {
+    navigate("/login");
+  };
+  const goToCalendar = () => {
+      navigate("/calendar");
+  };
+
+  const logOut = () => {
+    localStorage.removeItem("access");
+    console.log('Access Token removed successfully')
+    navigate("/login"); 
+  };
+
+  const dispatch = useDispatch();
+
+  const handleShowSettings = ()=>{
+      setShowSettings(!showSettings);
+      setShowMenu(false)
+  }
+  const handleShowMenu =()=>{
+      setShowMenu(!showMenu);
+      setShowSettings(false)
+  }
+
+  const handleClockIn= async ()=> {
+    let currentTime = new Date();
+    const data={
+        "type_of_input": 0,
+        "start": currentTime
+    }
+    const response = await createTrackedTime(data)
+    console.log("clockin")
+    console.log(response)
+    dispatch(setClockID(response.data.id))
+    dispatch(setClockStart(response.data.start))
+    dispatch(setClockStop(""))
+    setClock(true);
+  }
+
+
+  const clockID = useSelector( (state) => state.clock.clockID)
+
+  // console.log(clockID)
+  const handleClockOut= async ()=> {
+    let currentTime = new Date();
+    // const offset = currentTime.getTimezoneOffset();
+    // currentTime.setHours(currentTime.getHours() - offset/60);
+    // const timezoneOffset = (offset > 0 ? "-" : "+") +
+    //                 Math.abs(offset / 60).toString().padStart(2, "0") + ":" +
+    //                 Math.abs(offset % 60).toString().padStart(2, "0");
+    // const isoCurrentTime = currentTime.toISOString().slice(0, -1) + timezoneOffset;
+    // currentTime = isoCurrentTime
+    // console.log(currentTime)
+    const data={
+        "stop": currentTime.toISOString()
+    }
+    const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
+    dispatch(setClockID(""))
+    dispatch(setClockStart(""))
+    dispatch(setClockStop(""))
+    const startTime = new Date(response.data.start)
+    const stopTime = new Date(response.data.stop)
+    const newDuration = myState.clock.clockDuration+Math.round((stopTime.getTime()-startTime.getTime())/1000)
+    dispatch(setClockDuration(newDuration))
+    setClock(false)
+  }
+
+  const myState = useSelector( (state) => state)
+
+  const getClock = async () => {
+    const response = await axiosWithToken(`trackedtime/getclockinfo/`)
+    if (response.data.latest_time.id) {
+        dispatch(setClockID(response.data.latest_time.id))
+        dispatch(setClockStart(response.data.latest_time.start))
+        setClock(true)
         
-    };
-    const goToDashboard = () => {
-        navigate("/dashboard");
-        setShowMenu(false)
-    };
+      }
+      if (response.data.duration) {
+          dispatch(setClockDuration(response.data.duration))
+      }
+    // if (!response.data.latest_time.stop) {
+    //     console.log("found")
+    //     console.log(response.data.latest_time.stop)
+    //     setClock(true)
+    // } else {
+    //     console.log("not found")
+    //     console.log(response.data.latest_time.stop)
+    // }
+    setLoaded(true)
+  }
+
+  useEffect(() => {
+    const getWorkload = async () => {
+      const response = await axiosWithToken(`me/`)
+      dispatch(setUser(response.data))   
+    }
+    getWorkload()
+    getClock();
     
-    const goToHome = () => {
-        navigate("/");
-    };
-
-    const goToLogIn = () => {
-        navigate("/login");
-    };
-    const goToCalendar = () => {
-        navigate("/calendar");
-    };
-
-    const logOut = () => {
-        localStorage.removeItem("access");
-        console.log('Access Token removed successfully')
-      navigate("/login"); 
-    };
-
-    const dispatch = useDispatch();
-
-    const handleShowSettings = ()=>{
-        setShowSettings(!showSettings);
-        setShowMenu(false)
-    }
-    const handleShowMenu =()=>{
-        setShowMenu(!showMenu);
-        setShowSettings(false)
-    }
-
-    const handleClockIn= async ()=> {
-
-        let currentTime = new Date();
-        const data={
-            "type_of_input": 0,
-            "start": currentTime
-        }
-        const response = await createTrackedTime(data)
-        console.log("clockin")
-        console.log(response)
-        dispatch(setClockID(response.data.id))
-        dispatch(setClockStart(response.data.start))
-        dispatch(setClockStop(""))
-        setClock(true);
-    }
-
-
-    const clockID = useSelector( (state) => state.clock.clockID)
-
-    // console.log(clockID)
-    const handleClockOut= async ()=> {
-        let currentTime = new Date();
-        // const offset = currentTime.getTimezoneOffset();
-        // currentTime.setHours(currentTime.getHours() - offset/60);
-        // const timezoneOffset = (offset > 0 ? "-" : "+") +
-        //                 Math.abs(offset / 60).toString().padStart(2, "0") + ":" +
-        //                 Math.abs(offset % 60).toString().padStart(2, "0");
-        // const isoCurrentTime = currentTime.toISOString().slice(0, -1) + timezoneOffset;
-        // currentTime = isoCurrentTime
-        // console.log(currentTime)
-        const data={
-            "stop": currentTime.toISOString()
-        }
-        const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
-        dispatch(setClockID(""))
-        dispatch(setClockStart(""))
-        dispatch(setClockStop(""))
-        const startTime = new Date(response.data.start)
-        const stopTime = new Date(response.data.stop)
-        const newDuration = myState.clock.clockDuration+Math.round((stopTime.getTime()-startTime.getTime())/1000)
-        dispatch(setClockDuration(newDuration))
-        setClock(false)
-    }
-
-    const myState = useSelector( (state) => state)
-
-    const getClock = async () => {
-        const response = await axiosWithToken(`trackedtime/getclockinfo/`)
-        if (response.data.latest_time.id) {
-            dispatch(setClockID(response.data.latest_time.id))
-            dispatch(setClockStart(response.data.latest_time.start))
-            setClock(true)
-        }
-        if (response.data.duration) {
-            dispatch(setClockDuration(response.data.duration))
-        }
-        // if (!response.data.latest_time.stop) {
-        //     console.log("found")
-        //     console.log(response.data.latest_time.stop)
-        //     setClock(true)
-        // } else {
-        //     console.log("not found")
-        //     console.log(response.data.latest_time.stop)
-        // }
-        setLoaded(true)
-    }
-
-    useEffect(  () => {
-        const getWorkload = async () => {
-                const response = await axiosWithToken(`me/`)
-                dispatch(setUser(response.data))
-            }
-            getWorkload()
-
-            getClock()
-
-        } , []
-    )
-
-
-
-
-
+  }, [])
+  
+  
 
   return (
     <>
       {/* ------- HEADER ------ */}
-      <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-lg">
+      <div className="relative m-0 flex justify-between items-center bg-stone-100  py-2 pl-4 pr-8 shadow-lg">
         {/* ------- logo ------ */}
-        <img onClick={goToHome} src={TimeBee} className="h-10"></img>
+        <div className="flex justify-start mr-2">
+          <img
+            onClick={goToHome}
+            src={TimeBee}
+            className=" w-auto max-h-10 object-cover "
+          ></img>
+        </div>
 
-        <div className="flex justify-end md:flex-row md:items-center flex-grow">
+        <div className="flex justify-end md:flex-row md:items-center flex-grow ">
           {/* ------- navigation icons ------ */}
           <div className="hidden md:w-1/4 justify-evenly gap-10 mr-10 md:flex md:flex-row">
             {/*---- to Timetracker ----*/}
@@ -242,10 +245,10 @@ function Header({ children }) {
               )}
             </div>
           </div>
-          <div className="flex w-fit items-center gap-2">
-            <p className="p-0.5 text-zinc-600 font-normal ">
+          <div className="flex items-center gap-2">
+            <div className="p-0.5 text-zinc-600 text-md hidden md:block h-full">
               {today.toLocaleDateString("en-GB", options)}
-            </p>
+            </div>
             {!loaded ? (
               <div className="font-bold text-m w-20">Loading...</div>
             ) : (

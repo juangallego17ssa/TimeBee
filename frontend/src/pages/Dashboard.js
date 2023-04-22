@@ -3,6 +3,7 @@ import {useState} from "react";
 import MyResponsiveTimeRange from "../Components/DashboadComp/timeRange";
 import MyTimeRange from "../Components/DashboadComp/test";
 import MyComposedChart from "../Components/DashboadComp/composedChart";
+import CreateDataBackend from "../Components/DashboadComp/createDataBackend";
 
 function Dashboard() {
 
@@ -2892,9 +2893,11 @@ function Dashboard() {
 
     return (
      <div className="flex-col bg-gradient-to-r from-cyan-500 from-10% via-sky-500 via-20% to-emerald-500 to-80% w-full h-full">Here is Dashboard Page
+       <div className="h-48">{CreateDataBackend()}</div>
        <div className="h-48">{MyResponsiveCalendar(data)}</div>
        <div className="h-48">{MyResponsiveTimeRange(data2)}</div>
        <div className="h-48">{MyComposedChart()}</div>
+
      </div>
     );
   }

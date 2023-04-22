@@ -159,6 +159,11 @@ export const timeBeeAPI = createApi({
       }),
     }),
 
+    //Clocked DATA 
+    getClockedTime: builder.query({
+      query: () => 'trackedtime/own/?type_of_input=0',
+      providesTags:['Tasks']
+    }),
     //Tracked Time
     getTrackedTime: builder.query({
       query: () => 'trackedtime',
@@ -231,6 +236,10 @@ export const {
     useUpdateProjectByIDMutation,
     useDeleteProjectByIDMutation,
     useCreateProjectByUsernameMutation,
+
+    //ClockedTime
+    useGetClockedTimeQuery,
+
     //TrackedTime
     useGetTrackedTimeQuery,
     useGetOwnTrackedTimeQuery,
