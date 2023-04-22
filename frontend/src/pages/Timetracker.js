@@ -42,6 +42,7 @@ function Timetracker() {
   const [tableFilterDataClock, setTableFilterDataClock] = useState([]);
   const [tableShowDataClock, setTableShowDataClock] = useState([]);
   
+  
 
   const prepareTheDataForTaskTable = (reduxTrackedTime, date) => {
     const filteredOnlyTaskData = reduxTrackedTime?.filter(
@@ -88,9 +89,9 @@ function Timetracker() {
     setTableShowDataClock(generatedTableDataClock);
   }, [reduxTrackedTime, selectedDate]);
 
-  console.log(selectedDate);
-  console.log(tableFilterDataTask);
-  console.log(tableShowDataTask);
+  // console.log(selectedDate);
+  // console.log(tableFilterDataTask);
+  // console.log(tableShowDataTask);
 
   const handleSearch = (event) => {
     event.preventDefault();
