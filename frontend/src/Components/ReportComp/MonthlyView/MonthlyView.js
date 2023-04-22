@@ -38,11 +38,8 @@ export default function MonthlyView() {
     // console.log(data)
 
 /* group the data by date */
-useEffect(() => {
-  return () => {
-    effect
-  };
-}, [input]);
+
+
     const groupedData = data?.reduce((acc, item) => {
       const date = item.start.substring(0, 10); // extract the date from the start timestamp
       if (!acc[date]) {

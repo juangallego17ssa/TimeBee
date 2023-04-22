@@ -66,7 +66,7 @@ export default function AddTimeTracker({isManual}) {
         //   } 
       // ------------END-------------//
 
-    }
+    
 
 // Manual Create
     const handleCreateMaually=(e)=>{
@@ -189,4 +189,4 @@ export default function AddTimeTracker({isManual}) {
         </div>
       );
     }
-
+  }
