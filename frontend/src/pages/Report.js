@@ -1,6 +1,8 @@
-import { useState,useRef } from "react";
+import { useState,useRef,useEffect } from "react";
 import MonthlyView from "../Components/ReportComp/MonthlyView/MonthlyView";
 import AnnualView from "../Components/ReportComp/AnnualView/AnnualView";
+import {useCreateTrackedTimeMutation} from '../api/API'
+import moment from "moment";
 
 
 
@@ -11,6 +13,7 @@ function Report() {
   return(
     <section className="mx-6">
     <div className="switch-view-btn flex gap-3">
+     
       <button
       className="bg-black text-white font-bold px-4 py-2 rounded-lg"
       onClick={()=>setShowAnnualReport(false)}
@@ -31,8 +34,8 @@ function Report() {
       <MonthlyView />
     }
     </section>
+
+
   )
 } 
   export default Report;
-
-  const woking_hour_data={}
