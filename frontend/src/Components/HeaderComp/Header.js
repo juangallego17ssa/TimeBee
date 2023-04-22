@@ -170,11 +170,17 @@ function Header({ children }) {
   return (
     <>
       {/* ------- HEADER ------ */}
-      <div className="relative m-0 flex justify-between bg-stone-100 w-screen py-2 pl-4 pr-8 shadow-lg">
+      <div className="relative m-0 flex justify-between items-center bg-stone-100  py-2 pl-4 pr-8 shadow-lg">
         {/* ------- logo ------ */}
-        <img onClick={goToHome} src={TimeBee} className="h-10"></img>
+        <div className="flex justify-start mr-2">
+          <img
+            onClick={goToHome}
+            src={TimeBee}
+            className=" w-auto max-h-10 object-cover "
+          ></img>
+        </div>
 
-        <div className="flex justify-end md:flex-row md:items-center flex-grow">
+        <div className="flex justify-end md:flex-row md:items-center flex-grow ">
           {/* ------- navigation icons ------ */}
           <div className="hidden md:w-1/4 justify-evenly gap-10 mr-10 md:flex md:flex-row">
             {/*---- to Timetracker ----*/}
@@ -239,10 +245,10 @@ function Header({ children }) {
               )}
             </div>
           </div>
-          <div className="flex w-fit items-center gap-2">
-            <p className="p-0.5 text-zinc-600 font-normal ">
+          <div className="flex items-center gap-2">
+            <div className="p-0.5 text-zinc-600 text-md hidden md:block h-full">
               {today.toLocaleDateString("en-GB", options)}
-            </p>
+            </div>
             {!loaded ? (
               <div className="font-bold text-m w-20">Loading...</div>
             ) : (
