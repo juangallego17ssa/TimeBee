@@ -5,6 +5,7 @@ import PieChart from '../PieChart/PieChart';
 import { fetchTrackedTimeOwn } from '../../redux/Slices/trackedTimeOwnSlice';
 import moment from "moment";
 import RadialChart from './RadialChart';
+import MyResponsiveBar from './BarChart';
 
 
 function DataProject() {
@@ -20,14 +21,20 @@ function DataProject() {
     
     const [selectedDate, setSelectedDate] = useState('')
     
-       
     // console.log(reduxTrackedTime)
+
+//--------Filtering Data by Week, Month, Year--------
     
 
+
+
+
+
+
  //--------FOR BAR CHART-------------------------------------------------    
-// Filter all Task by project and by Day
+// Filter all Task by project and by Day and not Clock in/out
     const dataTimeOwn = reduxTrackedTime.reduce((acc, item) => {
-        if (item.stop !== null) {
+        if (item.stop !== null && item.type_of_input !== "0") {
           const project = item.project.name;
           const day = moment(item.stop).format('MMM DD');
           const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
@@ -60,7 +67,7 @@ function DataProject() {
     }
    
       
-    // console.log(dataTimeOwn);
+    console.log(dataTimeOwn);
     
     // Preparing Data for Chart
     const newdata = Object.keys(dataTimeOwn).map((day) => {
@@ -88,9 +95,9 @@ function DataProject() {
     }, []);
     //-------------------------------End BAR Chart---------------------------------
     //------------------Start Pie Chart--------------------------------------------
-    
+    // Group by Project and calculate duration from start stop by day and not Clock in/out
     const dataTimeOwnSum = reduxTrackedTime.reduce((acc, item) => {
-        if (item.stop !== null) {
+        if (item.stop !== null && item.type_of_input !== "0") {
             const project = item.project.name;
             const day = moment(item.stop).format('MMM DD');
             const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
@@ -124,7 +131,7 @@ function DataProject() {
         .sort((a, b) => b.duration - a.duration);
     
     // console.log(sortedProjects);
-
+    // Transfer data into Chart data
     const dataPie = sortedProjects.map((item, index) => ({
         id: item.project,
         label: item.project,
@@ -133,9 +140,9 @@ function DataProject() {
     //---------------------PIE Chart ENDs---------------------
     //--------------------Start Radial Chart---------------------
 
-
+    // Group by Project every task and duration and not Clock in/out
     const dataTimeOwnProject = reduxTrackedTime.reduce((acc, item) => {
-         if (item.stop !== null) {
+         if (item.stop !== null && item.type_of_input !== "0") {
              const project = item.project.name;
              const task_name = item.task_name;
              const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
@@ -153,17 +160,6 @@ function DataProject() {
     // console.log(reduxTrackedTime)
     console.log(dataTimeOwnProject)
 
-    // const dataRadial = Object.keys(dataTimeOwnProject).map((project, index) => {
-    //     const data = dataTimeOwnProject[project].map(item => ({
-    //       x: item.task_name,
-    //       y: item.duration.asHours()
-    //     }));
-      
-    //     return {
-    //       id: project,
-    //       data
-    //     };
-    // });
     const dataRadial = [];
     for (const [project, items] of Object.entries(dataTimeOwnProject)) {
         const projectData = {
@@ -187,11 +183,13 @@ function DataProject() {
 
   return (
     // Create Barchart
-      <div className=" Page flex flex-col flex-grow bg-stone-100 w-full md:h-screen gap-4 px-8 py-4">
-          <input type="date"/>
-          <BarChart data={newdata} keys={projects} />
-          <PieChart data={dataPie} />
-          <RadialChart data={dataRadial} />
+      <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-screen px-8 py-4">
+        <div className='flex flex-col '>
+            <input type="date" />
+        </div>
+        <BarChart data={newdata} keys={projects}/>
+        <PieChart data={dataPie} />
+        <RadialChart data={dataRadial} />   
     </div>
   );
   }

@@ -44,14 +44,6 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
                 spacing: 10
             }
         ]}
-        fill={[
-            {
-                match: {
-                    id: 'project2'
-                },
-                id: 'lines'
-            }
-        ]}
         borderColor={{
             from: 'color',
             modifiers: [
@@ -98,7 +90,7 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
                 anchor: 'bottom-right',
                 direction: 'column',
                 justify: false,
-                translateX: 120,
+                translateX: 100,
                 translateY: 0,
                 itemsSpacing: 2,
                 itemWidth: 100,
