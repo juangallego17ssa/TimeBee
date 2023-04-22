@@ -12,14 +12,14 @@ import SignUp from "./pages/SignUp";
 import Verification from "./pages/Verification";
 import Calendar from "./pages/Calendar";
 import Test from "./pages/test";
+import Profil from "./pages/Profil";
+import DataProject from "./Components/DashboadComp/DataProject";
 
 function App() {
   return (
     <>
     <Provider store={store}>
-      <div className="flex box-border flex-col w-sceen h-screen  bg-stone-100" >
-
-        
+      <div className="flex box-border flex-col w-sceen h-screen bg-stone-100" >
           <Routes>
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
@@ -29,7 +29,9 @@ function App() {
             <Route path="/" element={<RouteProtection route={<Header><Timetracker/></Header>} />} />
             <Route path="/dashboard" element={<RouteProtection route={<Header><Dashboard /></Header>} />}/>
             <Route path="/reports" element={<RouteProtection route={<Header><Report/></Header>}/>}/>
-            <Route path="/calendar" element={<RouteProtection route={<Header><Calendar /></Header>} />} />
+            <Route path="/calendar" element={<RouteProtection route={<Header><Calendar  /></Header>}  />} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="/data" element={<DataProject/>} />
           </Routes>
       </div>
     </Provider>
