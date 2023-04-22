@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "./react-big-calendar_own.css";
@@ -7,7 +7,7 @@ import "./react-big-calendar_own.css";
 const localizer = momentLocalizer(moment);
 
 
-const CalendarComponent = ({ events, views, defaultView }) => {
+const CalendarComponent = ({ events, views, defaultView, selectedDate, onDateChange }) => {
   const [foregroundEvents, setForegroundEvents] = useState([])
   const [backgroundEvents, setBackgroundEvents] = useState([])
   // console.log(events)
@@ -37,13 +37,20 @@ const CalendarComponent = ({ events, views, defaultView }) => {
     return [foregroundEvents, backgroundEvents]
   }
 
+  
+
+
+  const handelDateChange = (newDate) => {
+    onDateChange(newDate)
+  }
+
   useEffect(() => {
     
     const [eventsFiltered, backgroundEventsFiltered] = processEvents(events) 
     setForegroundEvents(eventsFiltered)
     setBackgroundEvents(backgroundEventsFiltered)
     // console.log(eventsFiltered)
-  }, [events])
+  }, [events, selectedDate])
   
   return (
     <div className="h-full shadow-xl">
@@ -57,6 +64,9 @@ const CalendarComponent = ({ events, views, defaultView }) => {
         dayLayoutAlgorithm={"no-overlap"}
         step={60}
         popup
+        date={selectedDate}
+        onNavigate={handelDateChange}
+        
       />
     </div>
   );
