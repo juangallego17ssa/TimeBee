@@ -10,7 +10,9 @@ import { setClockTimer } from "../../redux/Slices/clockSlice";
 
 function TimerCountdown(props) {
 
-    const myState = useSelector( (state) => state)
+    const myState = useSelector((state) => state)
+    
+    
 
     const TimeFormat = (seconds) => {
         let x = 1
@@ -40,17 +42,17 @@ function TimerCountdown(props) {
     const intervalId = useRef()
 
     useEffect(() => {
-        if (props.start) {
-            intervalId.current = setInterval(() => {
-                updateTime();
-            }, 200);
-            return () => clearInterval(intervalId);
-        } else {
-            updateTime();
-            clearInterval(intervalId.current);
-        };
-        return () => clearInterval(intervalId.current);
-      }, [props.firstLoad, props.start]);
+      if (props.start) {
+        intervalId.current = setInterval(() => {
+          updateTime();
+        }, 200);
+        return () => clearInterval(intervalId);
+      } else {
+        updateTime();
+        clearInterval(intervalId.current);
+      }
+      return () => clearInterval(intervalId.current);
+    }, [props.firstLoad, props.start, props.workloadLoaded]);
 
     // const {data:currentUser,isLoading,isSuccess,isError}=useGetUserProfileQuery()
     // console.log(currentUser.workload/100)
@@ -85,7 +87,7 @@ function TimerCountdown(props) {
 
     
     return (
-        <div className="font-bold text-m w-20">{myState.clock.clockTimer}</div>
+        <div className="font-bold text-m w-20">{myState?.clock.clockTimer}</div>
     )
 }
 export default TimerCountdown; 

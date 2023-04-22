@@ -25,6 +25,11 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
         }
         // console.log(data)
         createProjects(data)
+        .then(result=> {
+            const data = result.data
+            setProjects(data)
+        })
+        
         // setProjects([...projects,data])
         setShowCreateTag(false)
         
