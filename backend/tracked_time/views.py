@@ -291,11 +291,11 @@ class ListOwnFromToClockView(generics.ListAPIView):
 
                 flag = True
 
-                for response in response_week_arr:
+                for response_week_obj in response_week_arr:
                     isoDate = datetime.combine(day["date"], datetime.min.time()).isocalendar()
-                    if response["year"] == isoDate.year and response["week"] == isoDate.week:
-                        response["amount_days"] += 1
-                        response["duration_total"] += day["duration"]
+                    if response_week_obj["year"] == isoDate.year and response_week_obj["week"] == isoDate.week:
+                        response_week_obj["amount_days"] += 1
+                        response_week_obj["duration_total"] += day["duration"]
                         response_week_obj["duration_average"] = round(
                             response_week_obj["duration_total"] / response_week_obj["amount_days"])
                         response_week_obj["first_clock_sum"] += day["first_clock"].time().hour * 3600 + day[
@@ -323,9 +323,9 @@ class ListOwnFromToClockView(generics.ListAPIView):
                         "duration_total": 0,
                         "duration_average": 0,
                         "first_clock_sum": 0,
-                        "first_clock_average": 0,
+                        "first_clock_average": "",
                         "last_clock_sum": 0,
-                        "last_clock_average": 0,
+                        "last_clock_average": "",
                         "time_span_total": 0,
                         "time_span_average": 0,
                         "breaks_total": 0,
@@ -357,10 +357,10 @@ class ListOwnFromToClockView(generics.ListAPIView):
 
                 flag = True
 
-                for response in response_month_arr:
-                    if response["year"] == day["date"].year and response["month"] == day["date"].month:
-                        response["amount_days"] += 1
-                        response["duration_total"] += day["duration"]
+                for response_month_obj in response_month_arr:
+                    if response_month_obj["year"] == day["date"].year and response_month_obj["month"] == day["date"].month:
+                        response_month_obj["amount_days"] += 1
+                        response_month_obj["duration_total"] += day["duration"]
                         response_month_obj["duration_average"] = round(
                             response_month_obj["duration_total"] / response_month_obj["amount_days"])
                         response_month_obj["first_clock_sum"] += day["first_clock"].time().hour * 3600 + day[
@@ -388,9 +388,9 @@ class ListOwnFromToClockView(generics.ListAPIView):
                         "duration_total": 0,
                         "duration_average": 0,
                         "first_clock_sum": 0,
-                        "first_clock_average": 0,
+                        "first_clock_average": "",
                         "last_clock_sum": 0,
-                        "last_clock_average": 0,
+                        "last_clock_average": "",
                         "time_span_total": 0,
                         "time_span_average": 0,
                         "breaks_total": 0,
@@ -436,7 +436,7 @@ class ListOwnFromToClockView(generics.ListAPIView):
                     "duration": round(sumDuration / days),
                     "start": calculateTime(sumStart / days),
                     "stop": calculateTime(sumStop / days),
-                    "breaks": round(sumBreaks / days)
+                    "breaks": sumBreaks / days
                 },
                 "detail": response_arr,
                 "detail_weekly": response_week_arr,
