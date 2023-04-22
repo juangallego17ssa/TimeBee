@@ -5,7 +5,7 @@ import { ResponsivePie } from '@nivo/pie'
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const MyResponsivePie = (data /* see data tab */ ) => {
+const MyResponsivePie = ({ data } /* see data tab */ ) => {
     return(
     <ResponsivePie
         data={data}
@@ -14,7 +14,7 @@ const MyResponsivePie = (data /* see data tab */ ) => {
         padAngle={6}
         cornerRadius={19}
         activeOuterRadiusOffset={8}
-        colors={{ scheme: 'category10' }}
+        colors={{ scheme: 'spectral' }} //'green-blue' or 'nivo'
         borderWidth={1}
         borderColor={{
             from: 'color',
@@ -59,56 +59,6 @@ const MyResponsivePie = (data /* see data tab */ ) => {
                 spacing: 10
             }
         ]}
-        fill={[
-            {
-                match: {
-                    id: 'ruby'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'c'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'go'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'python'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'scala'
-                },
-                id: 'lines'
-            },
-            {
-                match: {
-                    id: 'lisp'
-                },
-                id: 'lines'
-            },
-            {
-                match: {
-                    id: 'elixir'
-                },
-                id: 'lines'
-            },
-            {
-                match: {
-                    id: 'javascript'
-                },
-                id: 'lines'
-            }
-        ]}
         legends={[
             {
                 anchor: 'bottom',
@@ -116,7 +66,7 @@ const MyResponsivePie = (data /* see data tab */ ) => {
                 justify: false,
                 translateX: 0,
                 translateY: 56,
-                itemsSpacing: 0,
+                itemsSpacing: 50,
                 itemWidth: 100,
                 itemHeight: 18,
                 itemTextColor: '#999',
