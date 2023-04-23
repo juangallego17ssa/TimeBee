@@ -139,7 +139,6 @@ function Header({ children }) {
         dispatch(setClockID(response.data.latest_time.id))
         dispatch(setClockStart(response.data.latest_time.start))
         setClock(true)
-        
       }
       if (response.data.duration) {
           dispatch(setClockDuration(response.data.duration))

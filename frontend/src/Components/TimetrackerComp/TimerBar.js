@@ -21,12 +21,13 @@ import ProjectOptions from "../ProjectTagComp/ProjectOptions";
 function TimerBar({ task }) {
   //List all projects created by user
   const {
-    data: projects,
+    data,
     isLoading,
     isSuccess,
     isError,
   } = useGetOwnProjectsQuery();
-  // console.log(projects)
+  const projects = data?.filter(project=>project.default !== 'default')
+  console.log(projects)
 
   const taskNameRef = useRef();
   const projectRef = useRef();
@@ -84,9 +85,9 @@ function TimerBar({ task }) {
         "task_name": taskName,
         "project_id":editProject?projectRef.current.value:task.project.id,
         "start":editTime?startTimeRef.current.value:task.start,
-        "stop":editTime?stopTimeRef.current.value:task.stop,
       };
-      console.log(trackedtimeId,data)
+      if(task.stop){data.stop=editTime?stopTimeRef.current.value:task.stop}
+      // console.log(task,trackedtimeId,data)
       updateTrackedTimeByID({trackedtimeId,...data})
       .then((result)=>console.log(result))
       .catch(error=>console.log(error))

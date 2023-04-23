@@ -62,7 +62,7 @@ const MyComposedChart = () => {
 
 
     return (
-        <ComposedChart width={730} height={250} data={data} className="bg-white">
+        <ComposedChart width={630} height={250} data={data} className="bg-white">
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
