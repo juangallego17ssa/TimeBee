@@ -25,9 +25,9 @@ function Profil() {
 
   console.log(value)
     return (
-      <div className="flex flex-rows flex-grow justify-evenly bg-stone-100 md:h-full  w-full h-full p-10 gap-10">
+      <div className="flex flex-rows justify-evenly bg-stone-100 md:h-full  w-full h-full p-10 gap-10">
         <UserDisplay />
-        <div className="flex flex-col justify-center items-center bg-stone-100 md:h-1/2  w-1/4 h-full gap-4">
+        <div className="flex md:flex-col justify-center items-center bg-stone-100 md:h-1/2  md:w-1/4 h-full gap-4">
           <div className="flex flex-col justify-center bg-white h-full md:h-1/2 rounded-xl  w-full shadow-xl">
             <p className='flex items-center justify-center font-bold py-5'>PUBLIC HOLIDAYS THIS MONTH</p>
             <Holidays currentMonth={currentMonth}
