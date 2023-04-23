@@ -219,8 +219,10 @@ class ListOwnFromToClockView(generics.ListAPIView):
     serializer_class = TrackedTimeSerializer
 
     def list(self, request, *args, **kwargs):
-        fromDate = datetime.strptime(request.data.get("from"), "%Y-%m-%d").date()
-        toDate = datetime.strptime(request.data.get("to"), "%Y-%m-%d").date()
+        # fromDate = datetime.strptime(request.data.get("from"), "%Y-%m-%d").date()
+        fromDate = datetime.strptime(self.request.query_params.get('from'), "%Y-%m-%d").date()
+        # toDate = datetime.strptime(request.data.get("to"), "%Y-%m-%d").date()
+        toDate = datetime.strptime(self.request.query_params.get('to'), "%Y-%m-%d").date()
         # timeOffset = request.data.get("time_offset")
         # today = datetime.now().date()
 
@@ -234,6 +236,7 @@ class ListOwnFromToClockView(generics.ListAPIView):
                                               project__created_by_id=self.request.user.id,
                                               type_of_input="0").order_by("id")
         data = list(queryset)
+        final_response = {}
         response_arr = []
         response_week_arr = []
         response_month_arr = []
@@ -310,8 +313,8 @@ class ListOwnFromToClockView(generics.ListAPIView):
                         response_week_obj["time_span_average"] = round(
                             response_week_obj["time_span_total"] / response_week_obj["amount_days"])
                         response_week_obj["breaks_total"] += day["breaks"]
-                        response_week_obj["breaks_average"] = round(
-                            response_week_obj["breaks_total"] / response_week_obj["amount_days"])
+                        response_week_obj["breaks_average"] = response_week_obj["breaks_total"] / response_week_obj[
+                            "amount_days"]
                         flag = False
                         break
 
