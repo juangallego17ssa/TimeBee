@@ -1,11 +1,6 @@
-// import MyResponsiveCalendar from "../Components/DashboadComp/responsiveCalender";
 import {useEffect, useState} from "react";
-// import MyResponsiveTimeRange from "../Components/DashboadComp/timeRange";
-// import MyTimeRange from "../Components/DashboadComp/test";
-// import MyComposedChart from "../Components/DashboadComp/composedChart";
-// import CreateDataBackend from "../Components/DashboadComp/createDataBackend";
 
-// import {setClockID, setClockStart} from "../redux/Slices/clockSlice";
+
 import React, { PureComponent } from 'react';
 import {
     BarChart,
@@ -16,7 +11,7 @@ import {
 } from 'recharts';
 import {axiosWithToken} from "../../api/axios";
 
-const ClockChart = () => {
+const EfficientTime = () => {
 
     function getISOWeek(date) {
       const januaryFourth = new Date(date.getFullYear(), 0, 4);
@@ -388,4 +383,4 @@ const ClockChart = () => {
     );
   }
 
-export default ClockChart
+export default EfficientTime
