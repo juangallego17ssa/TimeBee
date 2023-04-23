@@ -11,7 +11,7 @@ function Report() {
 
 
   return(
-    <section className="mx-6">
+    <section className="mx-6 inline-block h-[88%]">
     <div className="switch-view-btn flex gap-3">
      
       <button
