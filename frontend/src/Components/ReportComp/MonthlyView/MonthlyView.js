@@ -104,6 +104,7 @@ const CLOCK_DATA = daysInMonth.map(date=>{
       return { date:date, start:'', stop:'' }
     }
   }
+  return
 })
 // console.log('CLOCK_DATA=',JSON.stringify(CLOCK_DATA))
 
@@ -126,9 +127,13 @@ const handleChangeStopTime =(event)=>{
 if(isLoading){
   return <div>Loading...</div>
 }else if(isError){
-
+  console.log(Error)
+  return(
+  <div className="flex flex-col">
+    <h2>Oops!</h2>
+    <p>something is wrong here</p>
+  </div>)
 }
-
     return (
       <div className="flex flex-col lg:flex-row item-center bg-stone-100 h-screen">
 
