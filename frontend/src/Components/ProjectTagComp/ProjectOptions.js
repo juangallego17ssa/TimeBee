@@ -95,15 +95,22 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
           )
           }
         <div>
-          <p className='m-4 text-teal-500 hover:cursor-pointer hover:font-semibold text-center capitalize'
-          onClick={()=>setShowCreateTag(!showCreateTag)}>Create new project</p>
+          <p
+            className="m-4 text-teal-500 hover:cursor-pointer hover:font-semibold text-center capitalize"
+            onClick={() => setShowCreateTag(!showCreateTag)}
+          >
+            Create new project
+          </p>
         </div>
       </div>
-      {showCreateTag && 
-        <div className='fixed top-1/3 left-1/3'>
-          <AddNewProject setShowCreateTag={setShowCreateTag} projects={projects} />
+      {showCreateTag && (
+        <div className="fixed top-1/3 left-1/3">
+          <AddNewProject
+            setShowCreateTag={setShowCreateTag}
+            projects={projects}
+          />
         </div>
-          }
+      )}
     </div>
   );
 }

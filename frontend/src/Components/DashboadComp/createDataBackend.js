@@ -20,7 +20,7 @@ const CreateDataBackend = () => {
 
         const generateData = () => {
 
-            const startDate = new Date(2023,1,1)
+            const startDate = new Date(2022,0,2)
             const endDate = new Date(2023,3,22)
             let loopDate = startDate
             let start = new Date()
@@ -411,7 +411,7 @@ const CreateDataBackend = () => {
 
 
     return(
-        <button onClick={handleCreateData}>Hello</button>
+        <button onClick={handleCreateData}>Press to create data</button>
     )
 }
 
