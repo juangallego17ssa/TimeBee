@@ -9,12 +9,14 @@ import { useGetOwnProjectsQuery, useDeleteProjectByIDMutation} from '../../api/A
 
 function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
   const { 
-    data : projects=[], 
+    data, 
     isLoading,
     isSuccess, 
     isError, 
     }
     = useGetOwnProjectsQuery()
+    const projects = data.filter(project => project.default !== 'default')
+    // console.log(projects)
   
   const [deleteProjectByID] = useDeleteProjectByIDMutation();
 
@@ -40,7 +42,8 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
           <input className='m-4 border-2 rounded-full py-1 px-4 focus:outline-teal-400' id='project-filter' placeholder='Find project...'/>
         </label>
         {projects.map(project=>
-        <div className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
+        <div key={project.id}
+        className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
               >
           <AiFillTag className={`m-1 text-${project.tag_color?project.tag_color:'zinc'}-400`} />
           <p className='' key={project.id} 
