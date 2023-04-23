@@ -1,7 +1,6 @@
 import MyComposedChart from "../Components/DashboadComp/composedChart";
 import DataProject from "../Components/DashboadComp/DataProject";
 import EfficientTime from "../Components/DashboadComp/EfficientTime";
-import DataProject from "../Components/DashboadComp/DataProject";
 
 function Dashboard() {
 
