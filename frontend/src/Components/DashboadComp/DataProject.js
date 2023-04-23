@@ -9,42 +9,52 @@ import MyResponsiveBar from './BarChart';
 import { axiosWithToken } from "../../api/axios";
 import Calendar from 'react-calendar';
 import "../ReportComp/Calendar_styles.css";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 
 function DataProject() {
 
     // Fetch all the TrackedItems of the actual user and store it in Redux
     const dispatch = useDispatch();
-    const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
+    // const reduxTrackedTime = useSelector((store) => store.trackedtime.trackedtime);
     
     useEffect(() => {
         dispatch(fetchTrackedTimeOwn());
     
     }, []);
-    
-    const [selectedDate, setSelectedDate] = useState('');
+
     const [selectedOption, setSelectedOption] = useState('week');
     const [trackedTimerange, setTrackedTimeRange] = useState([]);
-    const [value, onChange] = useState(new Date());
+    const [value, setValue] = useState(new Date());
+    const [datePicker, setDatePicker] = useState(false);
+    const [inputChange, setInputChange] = useState(false)
 
+   
     function handleOptionChange(event) {
         setSelectedOption(event.target.value);
     }
+
+    function handleDatePickerChange() {
+        setDatePicker(!datePicker)
+    }
+
+    function handleInputChange(event) {
+        setInputChange(event.target.checked)
+    }
     
-    // console.log(reduxTrackedTime)
     //------------------Select Date by Datepicker-----------------------
 
     console.log(value)
     let todayPick = value[1];
     let startdayPick = value[0];
 
-    console.log(todayPick)
-    console.log(startdayPick)
+    // console.log(todayPick)
+    // console.log(startdayPick)
 
     //--------Filtering Data by Week, Month, Year with select--------
     const today = new Date();
 
-    let startday;  
+    let startday; 
 
     if (selectedOption === 'week') {
         const OneWeekAgo = new Date();
@@ -58,27 +68,38 @@ function DataProject() {
         const oneYearAgo = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
         startday = oneYearAgo;
     }
+
+
+    if (inputChange === false) {
+        todayPick = today
+        startdayPick = startday
+    }
+    
+    console.log(inputChange)
     
     // console.log(startday)
     ///trackedtime/?start_date=2023-04-01&end_date=2023-04-30 endpoint to get user info an all tracked times
 
     useEffect(() => {
-        const endDateString = moment(today).format('YYYY-MM-DD');
-        const startDateString = moment(startday).format('YYYY-MM-DD');
+        const endDateString = moment(todayPick).format('YYYY-MM-DD');
+        const startDateString = moment(startdayPick).format('YYYY-MM-DD');
         const getTrackedTime = async () => {
                const response = await axiosWithToken(`trackedtime/?start_date=${startDateString}&end_date=${endDateString}`)
                setTrackedTimeRange(response.data)   
            }
           getTrackedTime()
         
-        //   console.log(startDateString)
-        //   console.log(endDateString)
+           console.log(startDateString)
+           console.log(endDateString)
         
-      }, [selectedOption])
+    }, [selectedOption,value])
+    
+
+
 
  //--------FOR BAR CHART-------------------------------------------------    
 // Filter all Task by project and by Day and not Clock in/out
-    const dataTimeOwn = reduxTrackedTime.reduce((acc, item) => {
+    const dataTimeOwn = trackedTimerange.reduce((acc, item) => {
         if (item.stop !== null && item.type_of_input !== "0") {
           const project = item.project.name;
           const day = moment(item.stop).format('MMM DD');
@@ -141,7 +162,7 @@ function DataProject() {
     //-------------------------------End BAR Chart---------------------------------
     //------------------Start Pie Chart--------------------------------------------
     // Group by Project and calculate duration from start stop by day and not Clock in/out
-    const dataTimeOwnSum = reduxTrackedTime.reduce((acc, item) => {
+    const dataTimeOwnSum = trackedTimerange.reduce((acc, item) => {
         if (item.stop !== null && item.type_of_input !== "0") {
             const project = item.project.name;
             const day = moment(item.stop).format('MMM DD');
@@ -186,7 +207,7 @@ function DataProject() {
     //--------------------Start Radial Chart---------------------
 
     // Group by Project every task and duration and not Clock in/out
-    const dataTimeOwnProject = reduxTrackedTime.reduce((acc, item) => {
+    const dataTimeOwnProject = trackedTimerange.reduce((acc, item) => {
          if (item.stop !== null && item.type_of_input !== "0") {
              const project = item.project.name;
              const task_name = item.task_name;
@@ -228,25 +249,45 @@ function DataProject() {
 
   return (
     // Create Barchart
-      <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-screen px-8 py-4">
-        <div className='flex flex-col '>
-        <Calendar onChange={onChange} value={value} showWeekNumbers={true} 
-          selectRange={true} 
-          defaultValue={value} />
-          </div>
-        <div>
-            <select value={selectedOption} onChange={handleOptionChange}>
-                <option value="week">Week</option>
-                <option value="month">Month</option>
-                <option value="year">Year</option>
-            </select>
-                {/* <p>You selected {selectedOption}</p> */}
-                <p>Start date: {moment(startday).format('YYYY-MM-DD')}</p>
-                <p>End date: {moment(today).format('YYYY-MM-DD')}</p>
+      <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-full px-8 py-4 rounded-3xl overflow-scroll">
+          <div className='flex flex-rows justify-start items-start'>
+            <label htmlFor='toggle-switch'>
+                <input type="checkbox" checked={inputChange} onChange={handleInputChange} id="toggle-switch" className="cursor-pointer h-5 w-8 rounded-full appearance-none border-teal-400 bg-opacity-10 border-2 checked:bg-teal-400 transition duration-200 relative"/>
+            </label>
+              {inputChange ?
+                <div className='flex px-2'>
+                  <FaRegCalendarAlt onClick={handleDatePickerChange} />
+                  {datePicker &&
+                      <div>
+                          <Calendar onChange={setValue} value={value} showWeekNumbers={true}
+                              selectRange={true}
+                              defaultValue={value} />
+                      </div>}
+                </div>
+                  :
+                  <div className='flex px-2'>
+                      <select value={selectedOption} onChange={handleOptionChange} className='bg-teal-400 text-white rounded-2xl px-2'>
+                          <option value="week">Week</option>
+                          <option value="month">Month</option>
+                          <option value="year">Year</option>
+                      </select>
+                      {/* <p>You selected {selectedOption}</p> */}
+                      <p className='text-sm px-2'>Start date: {moment(startday).format('YYYY-MM-DD')}</p>
+                      <p className='text-sm px-2'>End date: {moment(today).format('YYYY-MM-DD')}</p>
+                  </div>
+              }
         </div>
-        <BarChart data={newdata} keys={projects}/>
-        <PieChart data={dataPie} />
-        <RadialChart data={dataRadial} />   
+        <div className=" Container flex flex-col flex-grow w-full md:h-full">
+          <BarChart data={newdata} keys={projects}/>  
+        </div >
+          <div className=" Container flex flow-col md:flex-rows flex-grow w-full md:h-full">
+            <div className=" Container flex flex-grow w-1/2 md:h-full ">
+                <PieChart data={dataPie} />
+            </div>
+            <div className=" Container flex  flex-grow  w-1/2 md:h-full">
+              <RadialChart data={dataRadial} />
+            </div>
+        </div>  
     </div>
   );
   }
