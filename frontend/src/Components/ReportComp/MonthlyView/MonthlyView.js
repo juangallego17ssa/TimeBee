@@ -38,6 +38,8 @@ export default function MonthlyView() {
     // console.log(data)
 
 /* group the data by date */
+
+
     const groupedData = data?.reduce((acc, item) => {
       const date = item.start.substring(0, 10); // extract the date from the start timestamp
       if (!acc[date]) {
@@ -49,7 +51,7 @@ export default function MonthlyView() {
       }
       return acc;
     }, {});  
-    // console.log('groupedData:',groupedData)
+    console.log('groupedData:',groupedData)
 
 /*  CURRENT MONTH  */
     const currentMonth = moment(currentDate).format('yyyy-MM');
