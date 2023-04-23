@@ -15,7 +15,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
     isError, 
     }
     = useGetOwnProjectsQuery()
-    const projects = data.filter(project => project.default !== 'default')
+    const projects = data?.filter(project => project.default !== 'default')
     // console.log(projects)
   
   const [deleteProjectByID] = useDeleteProjectByIDMutation();
@@ -26,7 +26,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
 
   const handleFilterProject = (e)=>{
     const all_projects = projects
-    const filtered = all_projects.filter(project=>project.name.includes(e.target.value))
+    const filtered = all_projects?.filter(project=>project.name.includes(e.target.value))
     setFilteredProject(filtered)
   }
 
@@ -72,7 +72,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
 
           </div>
           :
-          projects.map(project=>
+          projects?.map(project=>
           <div key={project.id}
           className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
                 >
