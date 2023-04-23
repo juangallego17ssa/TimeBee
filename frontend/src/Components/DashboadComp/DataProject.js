@@ -1,16 +1,15 @@
-import React, { useState,useRef,useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import BarChart from './BarChart';
-import PieChart from '../PieChart/PieChart';
-import { fetchTrackedTimeOwn } from '../../redux/Slices/trackedTimeOwnSlice';
+import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import BarChart from "./BarChart";
+import PieChart from "../PieChart/PieChart";
+import { fetchTrackedTimeOwn } from "../../redux/Slices/trackedTimeOwnSlice";
 import moment from "moment";
-import RadialChart from './RadialChart';
-import MyResponsiveBar from './BarChart';
+import RadialChart from "./RadialChart";
+import MyResponsiveBar from "./BarChart";
 import { axiosWithToken } from "../../api/axios";
-import Calendar from 'react-calendar';
+import Calendar from "react-calendar";
 import "../ReportComp/Calendar_styles.css";
 import { FaRegCalendarAlt } from "react-icons/fa";
-
 
 function DataProject() {
 
@@ -44,15 +43,15 @@ function DataProject() {
     
     //------------------Select Date by Datepicker-----------------------
 
-    console.log(value)
-    let todayPick = value[1];
-    let startdayPick = value[0];
+  console.log(value);
+  let todayPick = value[1];
+  let startdayPick = value[0];
 
     // console.log(todayPick)
     // console.log(startdayPick)
 
-    //--------Filtering Data by Week, Month, Year with select--------
-    const today = new Date();
+  //--------Filtering Data by Week, Month, Year with select--------
+  const today = new Date();
 
     let startday; 
 
@@ -223,29 +222,28 @@ function DataProject() {
          return acc;
      }, {});
 
-    // console.log(reduxTrackedTime)
-    console.log(dataTimeOwnProject)
+  // console.log(reduxTrackedTime)
+  console.log(dataTimeOwnProject);
 
-    const dataRadial = [];
-    for (const [project, items] of Object.entries(dataTimeOwnProject)) {
-        const projectData = {
-          id: project,
-          data: [],
-        };
-      
-        for (const item of items) {
-          const taskData = {
-            x: item.task_name,
-            y: item.hours,
-          };
-          projectData.data.push(taskData);
-        }
-      
-        dataRadial.push(projectData);
+  const dataRadial = [];
+  for (const [project, items] of Object.entries(dataTimeOwnProject)) {
+    const projectData = {
+      id: project,
+      data: [],
+    };
+
+    for (const item of items) {
+      const taskData = {
+        x: item.task_name,
+        y: item.hours,
+      };
+      projectData.data.push(taskData);
     }
 
-    console.log(dataRadial)
+    dataRadial.push(projectData);
+  }
 
+  console.log(dataRadial);
 
   return (
     // Create Barchart
@@ -290,6 +288,6 @@ function DataProject() {
         </div>  
     </div>
   );
-  }
-  
-  export default DataProject;
+}
+
+export default DataProject;

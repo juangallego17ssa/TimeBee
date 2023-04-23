@@ -9,18 +9,26 @@ import { useGetOwnProjectsQuery, useDeleteProjectByIDMutation} from '../../api/A
 
 function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
   const { 
-    data : projects=[], 
+    data, 
     isLoading,
     isSuccess, 
     isError, 
     }
     = useGetOwnProjectsQuery()
+    const projects = data?.filter(project => project.default !== 'default')
+    // console.log(projects)
   
   const [deleteProjectByID] = useDeleteProjectByIDMutation();
+  const [isSearch,setIsSearch] = useState(false);
+  const [filteredProjects,setFilteredProject] = useState([]);
 
-
-  
   const [ showCreateTag, setShowCreateTag ]= useState(false)
+
+  const handleFilterProject = (e)=>{
+    const all_projects = projects
+    const filtered = all_projects?.filter(project=>project.name.includes(e.target.value))
+    setFilteredProject(filtered)
+  }
 
   const handleSetProject=(project)=>{
     setSelectedProject(project)
@@ -34,37 +42,58 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
   }
 
   return (
-    <div className=" z-20 ">
-      <div className="absolute right-0 top-10 width-40 bg-white rounded-md shadow-md">
-        <label htmlFor="project-filter">
-          <input
-            className="m-4 border-2 rounded-full py-1 px-4 focus:outline-teal-400"
-            id="project-filter"
-            placeholder="Find project..."
+    <div className=' z-20 '>
+      <div className='absolute right-0 top-10 width-40 bg-white rounded-md shadow-md'>
+        <label htmlFor='project-filter'>
+          <input className='m-4 border-2 rounded-full py-1 px-4 focus:outline-teal-400' 
+          id='project-filter'
+          onChange={handleFilterProject}
+          onClick={()=>setIsSearch(!isSearch)}
+          placeholder='Find project...'
           />
+          
         </label>
-        {projects.map((project) => (
-          <div className="grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4">
-            <AiFillTag
-              style={{
-                color: `${project.tag_color ? project.tag_color : "zinc"}`,
-              }}
-              className="m-1"
-            />
-            <p
-              className=""
-              key={project.id}
-              onClick={() => handleSetProject(project)}
-            >
-              {project.name}
-            </p>
+        { isSearch?
+          <div>
+            {filteredProjects.map(project=>
+            <div key={project.id}
+               className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
+                >
+            <AiFillTag className={`m-1 text-${project.tag_color?project.tag_color:'zinc'}-400`} />
+            <p className='' 
+              onClick={()=>handleSetProject(project)}>
+            {project.name}</p> 
+              
+            <RxCross2 
+              onClick={()=>handleDeteleProject(project)}
+              className='text-zinc-200 hover:text-zinc-900'/>
+            </div>
+            )}
 
-            <RxCross2
-              onClick={() => handleDeteleProject(project)}
-              className="text-zinc-200 hover:text-zinc-900"
-            />
           </div>
-        ))}
+          :
+          projects?.map(project=>
+          <div key={project.id}
+          className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
+                >
+            <AiFillTag 
+             style={{
+              color: `${
+                project.tag_color ? project.tag_color : "zinc"
+              }`,
+            }}
+            className={`m-1 text-${project.tag_color?project.tag_color:'zinc'}-400`} />
+            <p className='' key={project.id} 
+              onClick={()=>handleSetProject(project)}>
+            {project.name}</p> 
+              
+            <RxCross2 
+              onClick={()=>handleDeteleProject(project)}
+              className='text-zinc-200 hover:text-zinc-900'/>
+
+          </div>
+          )
+          }
         <div>
           <p
             className="m-4 text-teal-500 hover:cursor-pointer hover:font-semibold text-center capitalize"
