@@ -15,7 +15,7 @@ export const fetchTrackedTimeOwn = createAsyncThunk(
 
       try {
         const response = await fetch(
-          "https://timebee.propulsion-learn.ch/backend/api/trackedtime/own/",
+          "https://timebee.propulsion-learn.ch/backend/api/trackedtime/",
           requestOptions
         );
         const data = await response.json();

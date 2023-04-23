@@ -89,37 +89,51 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
   } = tableInstance;
 if(holidayDates)
   return (
-    <table className="w-full" {...getTableProps()}>
-      <thead className="" >
-        {headerGroups?.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers?.map(column => (
-              <th 
-              {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows?.map(row => {
-          prepareRow(row);
-          return (
-            <tr 
-            className={`${holidayDates.includes(row.cells[0].value) | moment(row.cells[0].value).format('ddd') === 'Sun' | moment(row.cells[0].value).format('ddd') === 'Sat' ? 'bg-stone-50 text-zinc-500' :''} border-2`}
-            value={row}
-            onClick={(e)=>console.log(row.cells[0].value)}
-            {...row.getRowProps()}>
-              {row.cells?.map(cell => (
-                <td 
-                value={cell.value}
-                className=""
-                // onClick={(e)=>console.log(e.target)}
-                {...cell.getCellProps()}>{cell.render('Cell')}</td>
+    <div className="h-[98%] w-[98%] flex-col items-center justify-center">
+      <table
+        className="table-auto text-[12px] text-center m-auto w-[80%]"
+        {...getTableProps()}
+      >
+        <thead className="">
+          {headerGroups?.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers?.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows?.map((row) => {
+            prepareRow(row);
+            return (
+              <tr
+                className={`${
+                  holidayDates.includes(row.cells[0].value) |
+                  (moment(row.cells[0].value).format("ddd") === "Sun") |
+                  (moment(row.cells[0].value).format("ddd") === "Sat")
+                    ? "bg-stone-50 text-zinc-500"
+                    : ""
+                } border-2`}
+                value={row}
+                onClick={(e) => console.log(row.cells[0].value)}
+                {...row.getRowProps()}
+              >
+                {row.cells?.map((cell) => (
+                  <td
+                    value={cell.value}
+                    className=""
+                    // onClick={(e)=>console.log(e.target)}
+                    {...cell.getCellProps()}
+                  >
+                    {cell.render("Cell")}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }

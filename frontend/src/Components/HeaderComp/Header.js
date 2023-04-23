@@ -176,6 +176,7 @@ function Header({ children }) {
             onClick={goToHome}
             src={TimeBee}
             className=" w-auto max-h-10 object-cover "
+            alt="Logo"
           ></img>
         </div>
 
