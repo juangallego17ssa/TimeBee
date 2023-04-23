@@ -82,7 +82,7 @@ export default function MonthlyView() {
 /* WORKING DAY */
     const WORKDAYS = []
     for(let i=0 ; i<daysInMonth.length; i++){
-      if(moment(daysInMonth[i]).format('ddd') !== 'Sat' && moment(daysInMonth[i]).format('ddd') !== 'Sun' && !holidayDates.includes(daysInMonth[i])){
+      if(moment(daysInMonth[i]).format('ddd') !== 'Sat' && moment(daysInMonth[i]).format('ddd') !== 'Sun' && !holidayDates?.includes(daysInMonth[i])){
         WORKDAYS.push(daysInMonth[i])
       }
     }
@@ -106,8 +106,8 @@ const CLOCK_DATA = daysInMonth?.map(date=>{
 
   if(groupedData){
     if(groupedData[date]){
-      const start = moment(groupedData[date].start[0])
-      const stop = moment(groupedData[date].stop[groupedData[date].stop.length -1])
+      const start = moment(groupedData[date]?.start[0])
+      const stop = moment(groupedData[date]?.stop[groupedData[date].stop.length -1])
       
       const duration =stop>start?moment.duration(stop.diff(start)).asMilliseconds():''
       const worked_time = moment.utc(duration).format('HH:mm')
@@ -127,17 +127,17 @@ const CLOCK_DATA = daysInMonth?.map(date=>{
   }
   return
 })
-console.log('CLOCK_DATA=',CLOCK_DATA.filter(data=>data.start).length)
+// console.log('CLOCK_DATA=',CLOCK_DATA?.filter(data=>data.start).length)
 
 // total work time of the month in milliseconds
 let TOTAL_WORKED_TIME = 0
 let OVER_TIME = 0
 if(CLOCK_DATA){
   for (let i = 0; i <CLOCK_DATA.length ; i++) {
-    if(CLOCK_DATA[i].duration){
-      TOTAL_WORKED_TIME += CLOCK_DATA[i].duration;
+    if(CLOCK_DATA[i]?.duration){
+      TOTAL_WORKED_TIME += CLOCK_DATA[i]?.duration;
     }
-    if(CLOCK_DATA[i].over_time){
+    if(CLOCK_DATA[i]?.over_time){
       OVER_TIME += CLOCK_DATA[i].over_time;
     }
   }
