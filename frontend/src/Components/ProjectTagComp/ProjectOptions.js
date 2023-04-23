@@ -76,7 +76,13 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
           <div key={project.id}
           className='grid grid-cols-[30px_1fr_10px] items-center hover:bg-stone-100 mb-2 px-4'
                 >
-            <AiFillTag className={`m-1 text-${project.tag_color?project.tag_color:'zinc'}-400`} />
+            <AiFillTag 
+             style={{
+              color: `${
+                project.tag_color ? project.tag_color : "zinc"
+              }`,
+            }}
+            className={`m-1 text-${project.tag_color?project.tag_color:'zinc'}-400`} />
             <p className='' key={project.id} 
               onClick={()=>handleSetProject(project)}>
             {project.name}</p> 
