@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import CalendarComponent from '../Components/CalendarComp/Calendar';
 import moment from 'moment'
-import { useGetTrackedTimeByStartDateEndDateQuery } from '../api/API';
+import { useGetTrackedTimeFromToDateQuery } from "../api/API";
 
 function Calendar() {
  
   const [selectedDate, setSelectedDate] = useState(new Date());
    
   const currentDate = moment(selectedDate)
-  const startDate = currentDate.clone().subtract(1, 'month').startOf("month").format("YYYY-MM-DD");
-  const endDate = currentDate.clone().add(1, 'month').endOf("month").format("YYYY-MM-DD");
+  const start_date = currentDate.clone().subtract(1, 'month').startOf("month").format("YYYY-MM-DD");
+  const end_date = currentDate.clone().add(1, 'month').endOf("month").format("YYYY-MM-DD");
 
   // console.log(
   //   "First date of the month:",
@@ -23,12 +23,12 @@ function Calendar() {
     isLoading,
     isSuccess,
     isError,
-  } = useGetTrackedTimeByStartDateEndDateQuery( {startDate, endDate});
+  } = useGetTrackedTimeFromToDateQuery({ start_date, end_date });
 
 
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
-    console.log("newDate", newDate)
+    
   };
 
   return (
