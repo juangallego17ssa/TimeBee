@@ -6,12 +6,10 @@ import { useCreateTrackedTimeMutation } from '../../api/API';
 function AddCodeDay(props) {
     
     const [createTrackedTime] = useCreateTrackedTimeMutation()
-
-
-    const startTimeRef=useRef()
-    const endTimeRef=useRef()
-
+    
     const [selectedOption, setSelectedOption] = useState('03');
+    const [startTime, setStartTime] = useState(new Date());
+    const [endTime, setEndTime] = useState(new Date());
 
     console.log(selectedOption)
 
@@ -19,20 +17,33 @@ function AddCodeDay(props) {
         setSelectedOption(event.target.value);
     }
 
+    function handleStartChange(event) {
+        event.preventDefault();
+        setStartTime(new Date(event.target.value));
+    }
+
+    function handleEndChange(event) {
+        event.preventDefault();
+        setEndTime(new Date(event.target.value));
+    }
+
+    console.log(startTime)
+    console.log(endTime)
+
     //Create leave
     const handleCreateMaually = (e) => {
         e.preventDefault();
          const data = ({
              type_of_input: "2",
              code: selectedOption,
-             start: startTimeRef.current.value,
-             stop: endTimeRef.current.value,
+             start: startTime,
+             stop: endTime,
         })
         
         console.log(data)
         
-        createTrackedTime(data)
-        .then(result=>console.log(result))
+        // createTrackedTime(data)
+        // .then(result=>console.log(result))
         
     }
 
@@ -53,9 +64,13 @@ function AddCodeDay(props) {
             </div>
             <div className="flex flex-rows justify-evenly items-center bg-white md:h-20  w-full">
                 <p className='font-semibold pr-1'>From</p>
-                <input type="datetime-local" ref={startTimeRef} className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg'/>
+                <label htmlFor='starttime'>
+                    <input type="datetime-local" onChange={handleStartChange} id='starttime' className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg'/>
+                </label>
                 <p className='font-semibold px-1 '>TO</p>
-                <input type="datetime-local" ref={endTimeRef} className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg'/>
+                <label htmlFor='endtime'>
+                    <input type="datetime-local" onChange={handleEndChange} id='endtime' className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg' />
+                </label>
             </div>
             <form className="flex flex-col justify-center items-center bg-white md:h-10  w-full p-5">
                 <button onClick={handleCreateMaually} className="flex flex-wrap justify-center items-center text-white w-32 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-500">Submit</button>
