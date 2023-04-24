@@ -66,7 +66,7 @@ export default function MonthlyView() {
     }
     return acc;
   }, {});
-  // console.log("groupedData:", groupedData);
+  console.log("groupedData:", groupedData);
 
   /*  handel change MONTH  */
   const prevMonth = () => {
@@ -99,7 +99,7 @@ export default function MonthlyView() {
   const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(
     (holiday) => holiday.date.substring(0, 7) === currentMonth
   );
-  // console.log("publicHolidaysOfMonth:", publicHolidaysOfMonth);
+  // console.log("publicHolidaysOfMonth:", publicHolidaysOfMonth[0].holiday_name);
   const holidayDates = publicHolidaysOfMonth?.map((holiday) => holiday.date);
   
   /* WORKING DAY */
@@ -144,6 +144,13 @@ export default function MonthlyView() {
     //       };
     //     }
     //   }
+    let notes = ''
+    for (let i=0 ; i < publicHolidaysOfMonth?.length; i++){
+      if(date.includes(publicHolidaysOfMonth[i].date)){
+        notes = (publicHolidaysOfMonth[i].holiday_name)
+      }
+    }
+    // console.log('notes:',notes)
       
       if (groupedData) {
         if (groupedData[date]) {
@@ -160,6 +167,7 @@ export default function MonthlyView() {
             ? moment.duration(stop.diff(start)).asMilliseconds()
             : "";
         const worked_time = moment.utc(duration).format("HH:mm");
+        const notes = ""
         return {
           track_id: "",
           date: date,
@@ -169,15 +177,16 @@ export default function MonthlyView() {
           duration: duration,
           worked_time: worked_time,
           over_time: DEFAULT_WORKINK_TIME - duration,
+          notes:notes,
         };
       } else {
-        return { date: date, start: "", stop: "" };
+        return { date: date, start: "", stop: "", notes: notes };
       }
     }
     return;
   });
   // console.log('CLOCK_DATA=',CLOCK_DATA?.filter(data=>data.start).length)
-  // console.log('CLOCK_DATA=',CLOCK_DATA)
+  console.log('CLOCK_DATA=',CLOCK_DATA)
 
   // total work time of the month in milliseconds
   let TOTAL_WORKED_TIME = 0;
