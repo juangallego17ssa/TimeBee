@@ -48,15 +48,11 @@ export default function MonthlyView() {
    const {data,isLoading,isSuccess,isError} = useGetTrackedTimeFromToDateQuery({
     start_date: moment(firstDayOfMonth).format('yyyy-MM-DD'),
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
-    // type_of_input:'0'
   })
     const clocledData = data?.filter(data=>data.type_of_input === 0) 
   //  console.log('clocledData for this month:',clocledData)
 
-
-  //FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
-  // const { data, isLoading, isSuccess, isError } = useGetClockedTimeQuery();
-  console.log("data=",data[1])
+  // console.log("data=",data)
 
 
   /* group the data by date */
