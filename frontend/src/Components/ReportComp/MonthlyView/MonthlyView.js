@@ -1,6 +1,6 @@
 import { useState,useRef } from "react";
 import { useSelector } from 'react-redux';
-
+import Loader from "../../Loader";
 import moment from "moment";
 import {MdKeyboardArrowLeft,MdKeyboardArrowRight} from 'react-icons/md'
 import {
@@ -235,7 +235,11 @@ const handleExportToExcel = () => {
 };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+    <div className=" h-screen w-screen flex justify-center items-center">
+      <Loader />
+      </div>
+    );
   } else if (isError) {
     console.log(Error);
     return (

@@ -20,12 +20,13 @@ const columns = [
     Cell: ({ value }) => {
       if(value){
         return (
-        <input
-          className={`bg-transparent text-center`}
-          type="text"
-          defaultValue={value}
-          // onChange={(e) => handleInputChange(e, 'start')}
-        />
+        <p className={`bg-transparent text-center`}>{value}</p>       
+        // <input
+        //   className={`bg-transparent text-center`}
+        //   type="text"
+        //   defaultValue={value}
+        //   // onChange={(e) => handleInputChange(e, 'start')}
+        // />
         )
       }else return <div className={`bg-transparent text-center`}>-</div>
 
@@ -37,12 +38,13 @@ const columns = [
     Cell: ({ value }) => {
       if(value){
         return(
-          <input
-            className={`bg-transparent text-center`}
-            type="text"
-            defaultValue={value}
-            // onChange={(e) => handleInputChange(e, 'stop')}
-          />
+          <p className={`bg-transparent text-center`}>{value}</p>       
+          // <input
+          //   className={`bg-transparent text-center`}
+          //   type="text"
+          //   defaultValue={value}
+          //   // onChange={(e) => handleInputChange(e, 'stop')}
+          // />
         )
       }else return <div className={`bg-transparent text-center`}>-</div>
   },
