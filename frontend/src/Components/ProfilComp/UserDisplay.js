@@ -16,7 +16,6 @@ function UserDisplay() {
     function handleMouseEnter() {
     setIsHovered(true);
     }
-    console.log(isHovered)
     function handleMouseLeave() {
     setIsHovered(false);
     }

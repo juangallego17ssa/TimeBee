@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
-import moment from "moment";
+import React, { useState } from 'react';
 import { useCreateTrackedTimeMutation } from '../../api/API';
 
 
-function AddCodeDay(props) {
+function AddCodeDay() {
     
     const [createTrackedTime] = useCreateTrackedTimeMutation()
     
@@ -42,8 +41,8 @@ function AddCodeDay(props) {
         
         console.log(data)
         
-        // createTrackedTime(data)
-        // .then(result=>console.log(result))
+        createTrackedTime(data)
+        .then(result=>console.log(result))
         
     }
 
@@ -53,7 +52,7 @@ function AddCodeDay(props) {
                 <select value={selectedOption} onChange={handleOptionChange} className='bg-teal-400 text-white rounded-2xl px-2'>
                     <option value="00">Work</option>
                     <option value="01">Sick</option>
-                    <option value="02">Accident</option>
+                    <option value="02">Injury</option>
                     <option value="03">Vacation</option>
                     <option value="04">Paid Vacation</option>
                     <option value="05">Unpaid Vacation</option>
@@ -65,11 +64,11 @@ function AddCodeDay(props) {
             <div className="flex flex-rows justify-evenly items-center bg-white md:h-20  w-full">
                 <p className='font-semibold pr-1'>From</p>
                 <label htmlFor='starttime'>
-                    <input type="datetime-local" onChange={handleStartChange} id='starttime' className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg'/>
+                    <input type="date" onChange={handleStartChange} id='starttime' className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg'/>
                 </label>
                 <p className='font-semibold px-1 '>TO</p>
                 <label htmlFor='endtime'>
-                    <input type="datetime-local" onChange={handleEndChange} id='endtime' className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg' />
+                    <input type="date" onChange={handleEndChange} id='endtime' className='InputTo border-2 border-teal-500 rounded-full caret-teal-500 shadow-lg' />
                 </label>
             </div>
             <form className="flex flex-col justify-center items-center bg-white md:h-10  w-full p-5">
