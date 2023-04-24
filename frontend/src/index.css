@@ -14,6 +14,16 @@
   @apply transform scale-110 translate-x-3;
 }
 
+#projekt-clock-switch::after{
+  content: 'Clock';
+  @apply h-7 w-16 rounded-md text-justify px-1 font-bold text-white bg-black border-2 border-stone-400 absolute left-0 top-0 transform scale-110 transition duration-200;
+}
+
+#projekt-clock-switch:checked::after{
+content: 'Project';
+@apply transform scale-110 translate-x-3;
+}
+
 
 
 

@@ -18,7 +18,7 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
         //     'project3']}
         keys={keys}
         indexBy="date"
-        margin={{ top: 70, right: 10, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 10, bottom: 40, left: 60 }}
         padding={0.3}
         layout="vertical"
         valueScale={{ type: 'linear' }}
@@ -91,10 +91,10 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
                 direction: 'row',
                 justify: false,
                 translateX: 0,
-                translateY: -40,
+                translateY: -15,
                 itemsSpacing: 2,
                 itemWidth: 100,
-                itemHeight: 20,
+                itemHeight: 10,
                 itemDirection: 'bottom-to-top',
                 itemOpacity: 0.85,
                 symbolSize: 20,
