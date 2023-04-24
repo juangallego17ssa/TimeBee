@@ -211,6 +211,12 @@ export const timeBeeAPI = createApi({
         `trackedtime/?start_date=${selectedDate}&end_date=${selectedDate}`,
       providesTags: ["Tasks"],
     }),
+
+    getTrackedTimeFromToDate: builder.query({
+      query: ({start_date,end_date}) =>
+        `trackedtime/?start_date=${start_date}&end_date=${end_date}`,
+      providesTags: ["Tasks"],
+    }),
   }),
 });
 
@@ -253,5 +259,6 @@ export const {
     useUpdateTrackedTimeByIDMutation,
     useDeleteTrackedTimeByIDMutation,
     useGetTrackedTimeByDateQuery,
+    useGetTrackedTimeFromToDateQuery,
   } = timeBeeAPI;
 

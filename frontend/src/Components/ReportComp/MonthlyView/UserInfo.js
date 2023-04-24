@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment'
+import UserAvator from '../../UserAvator'
+
 
 export default function UserInfo() {
     const userData = useSelector( (state) => state.user.user)
@@ -10,7 +12,8 @@ if (userData)
     <div className='p-5 flex-col'>
       <div className='flex justify-between h-10 items-center'>
         Welcome {userData.first_name} {userData.last_name}
-        <img src={userData.avatar} alt='avatar' className='h-full w-10 rounded-full object-cover'></img>
+        <UserAvator/>
+        {/* <img src={userData.avatar} alt='avatar' className='h-full w-10 rounded-full object-cover'></img> */}
       </div>
       <div></div>
       <div>

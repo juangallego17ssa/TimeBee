@@ -71,6 +71,27 @@ const columns = [
 
     } 
   },
+  {
+    Header: 'Notes',
+    accessor: 'notes',
+    Cell: ({ value }) =>{
+      return (
+        <div>{value}</div>
+      )
+      // if(value>0){
+      // return (
+      // <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      // )
+      // }else if(value<0){
+      // return (
+      // <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      // )
+      // }else if(value === 0 | value === undefined){
+      //   return      
+      // }
+
+    } 
+  },
 ];
 
 
