@@ -203,7 +203,6 @@ function TimerBar({ task }) {
             </div>
           ) : (
             <div className="flex mx-2">
-              <p>{moment(task.start).format("DD-MMM-yyyy hh:mm")}</p>
               <Timer play={play} startDate={task.start} />
               {task.start ? (
                 <FaRegStopCircle
