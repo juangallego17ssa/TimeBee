@@ -115,8 +115,8 @@ function Header({ children }) {
 
 
   const clockID = useSelector((state) => state.clock.clockID)
-  
-  
+
+
 
   // console.log(clockID)
   const handleClockOut= async ()=> {
@@ -129,7 +129,7 @@ function Header({ children }) {
     }
     // const response = await axiosTimeBee.patch(`trackedtime/${clockID}/`, data, config)
     const response =  await updateTrackedTime({ trackedtimeId, ...data })
-  
+
     dispatch(setClockID(""))
     dispatch(setClockStart(""))
     dispatch(setClockStop(""))
@@ -164,7 +164,7 @@ function Header({ children }) {
     setLoaded(true)
   }
 
-  
+
 
   useEffect(() => {
     const getWorkload = async () => {
