@@ -36,11 +36,11 @@ function DataProject() {
   let todayPick = value[1];
   let startdayPick = value[0];
 
-    // console.log(todayPick)
-    // console.log(startdayPick)
+  // console.log(todayPick)
+  // console.log(startdayPick)
 
   //--------Filtering Data by Week, Month, Year with select--------
-  const today = new Date();
+    const today = new Date();
 
     let startday; 
 
@@ -68,7 +68,7 @@ function DataProject() {
     // console.log(startday)
     ///trackedtime/?start_date=2023-04-01&end_date=2023-04-30 endpoint to get user info an all tracked times
 
-    useEffect((todayPick,startdayPick) => {
+    useEffect(() => {
         const endDateString = moment(todayPick).format('YYYY-MM-DD');
         const startDateString = moment(startdayPick).format('YYYY-MM-DD');
         const getTrackedTime = async () => {

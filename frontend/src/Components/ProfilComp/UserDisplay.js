@@ -32,8 +32,8 @@ function UserDisplay() {
     
     return (
         <div className="flex-1 flex-col flex-grow justify-evenly items-center bg-white  md:w-1/3 h-full shadow-xl rounded-3xl p-5">
-            <div className="flex flex-col flex-grow justify-center items-center w-full h-[25%]">
-                <div className="w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <div className="flex flex-col flex-grow justify-center items-center w-full h-[20%]">
+                <div className="w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center p-5" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {user.avatar ? (
                         <div className='relative'>
                         <img
@@ -59,7 +59,7 @@ function UserDisplay() {
                     <p className='flex py-2'>{currentUser?.first_name} {currentUser?.last_name}</p>
                 </div>
             </div>
-            <div className="flex flex-row justify-between items-center w-full h-1/6 font-bold">
+            <div className="flex flex-row justify-between items-center w-full h-[10%] font-bold">
                 <p>CONTRACT</p>
                 <p>{currentUser?.workload} %</p>
             </div>
