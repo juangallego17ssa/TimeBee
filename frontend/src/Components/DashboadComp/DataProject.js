@@ -124,8 +124,9 @@ function DataProject() {
         if (acc[project]) {
             acc[project] += hours;
         } else {
-             acc[project] = hours;
+            acc[project] = hours;
         }
+          console.log(acc[project])
         return acc;
         }, {});
         dataTimeOwn[day] = projectDurations;
@@ -139,9 +140,10 @@ function DataProject() {
         const projects = dataTimeOwn[day];
         const date = day;//.toISOString(); // convert day string to ISO date format
         const projectData = Object.keys(projects).reduce((acc, project) => {
-            const duration = projects[project];
-            acc[project] = duration;
-            return acc;
+        const duration = projects[project];
+        acc[project] = Math.abs(parseFloat(duration).toFixed(2));
+          
+        return acc;
         }, {});
         return { date, ...projectData };
     });
