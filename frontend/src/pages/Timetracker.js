@@ -15,6 +15,7 @@ import {
   useCreateTrackedTimeMutation,
   useGetOwnTrackedTimeQuery,
   useGetTrackedTimeByDateQuery,
+  useGetTrackedTimeByDateWithStartNullQuery,
 } from "../api/API";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrackedTimeOwn } from "../redux/Slices/trackedTimeOwnSlice";
@@ -31,9 +32,9 @@ function Timetracker() {
     (store) => store.trackedtime.trackedtime
   );
 
-  useEffect(() => {
-    dispatch(fetchTrackedTimeOwn());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTrackedTimeOwn());
+  // }, []);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isManual, setIsManual] = useState(false);
@@ -53,7 +54,9 @@ function Timetracker() {
     isLoading,
     isSuccess,
     isError,
-  } = useGetTrackedTimeByDateQuery(moment(selectedDate).format("YYYY-MM-DD"));
+  } = useGetTrackedTimeByDateWithStartNullQuery(moment(selectedDate).format("YYYY-MM-DD"));
+  console.log(tasks)
+  
   // filter out login/logout
   const filteredTask = tasks?.filter((task) => task.type_of_input !== "0");
   const TasksOfDay = filteredTask?.filter(
@@ -61,8 +64,21 @@ function Timetracker() {
       new Date(task.start).toDateString() ===
       new Date(selectedDate).toDateString()
   );
+  
+  const filteredTaskStartNull = tasks?.filter((task) => task.type_of_input !== "0" && task.start === null);
 
-  console.log(TasksOfDay);
+
+
+
+
+  const filteredTaskClockIn = tasks?.filter((task) => task.type_of_input === "0");
+  const clockinOfDay = filteredTaskClockIn?.filter(
+    (task) =>
+      new Date(task.start).toDateString() ===
+      new Date(selectedDate).toDateString()
+  );
+
+  // console.log(TasksOfDay);
 
   const prepareTheDataForTaskTable = (reduxTrackedTime, date) => {
     const filteredOnlyTaskData = reduxTrackedTime?.filter(
@@ -161,9 +177,9 @@ function Timetracker() {
                 />
               ))}
             </div>
-            {/* <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
-              <div className="font-bold">CLOCK IN / CLOCK OUT</div>
-              {tableShowDataClock?.map((task) => (
+            <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
+              <div className="font-bold">ALL OPEN TASKS</div>
+              {filteredTaskStartNull?.map((task) => (
                 <TimerBar
                   key={task.id}
                   task={task}
@@ -171,17 +187,28 @@ function Timetracker() {
                   setSelectedProject={setSelectedProject}
                 />
               ))}
-            </div> */}
+            </div>
+            <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
+              <div className="font-bold">CLOCK IN / CLOCK OUT</div>
+              {clockinOfDay?.map((task) => (
+                <TimerBar
+                  key={task.id}
+                  task={task}
+                  selectedProject={selectedProject}
+                  setSelectedProject={setSelectedProject}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className=" h-full flex-1">
           <CalendarComponent
-            events={reduxTrackedTime}
+            events={tasks}
             views={{
               day: true,
             }}
             defaultView={Views.DAY}
-            data={selectedDate}
+            date={selectedDate}
             onDateChange={handleDateChange}
           />
         </div>
