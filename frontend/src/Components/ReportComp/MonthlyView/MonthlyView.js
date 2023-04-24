@@ -40,12 +40,14 @@ export default function MonthlyView() {
     const lastDayOfMonth = new Date(
       currentDate.getFullYear(),currentDate.getMonth() + 1,0
     );
+
+    
    const {data,isLoading,isSuccess,isError} = useGetTrackedTimeFromToDateQuery({
     start_date: moment(firstDayOfMonth).format('yyyy-MM-DD'),
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
     // type_of_input:'0'
   })
-  const clocledData = data?.filter(data=>data.type_of_input === '0') 
+  const clocledData = data?.filter(data=>data.type_of_input === '0' && data.code === '00') 
   //  console.log('clocledData for this month:',clocledData)
 
 
