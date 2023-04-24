@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTable, useEditable } from 'react-table';
 import moment from "moment";
+import * as XLSX from 'xlsx'
 
 const columns = [
   {
@@ -93,7 +94,12 @@ const columns = [
     } 
   },
 ];
-
+// const handleExportToExcel = () => {
+//   const workbook = XLSX.utils.book_new();
+//   const sheet = XLSX.utils.table_to_sheet(document.getElementById('my-table'));
+//   XLSX.utils.book_append_sheet(workbook, sheet, 'Sheet1');
+//   XLSX.writeFile(workbook, 'table-data.xlsx');
+// };
 
 
 export default function ReportTable({data, publicHolidaysOfMonth }) {
@@ -111,7 +117,10 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
 if(holidayDates)
   return (
     <div className="h-[98%] w-[98%] flex-col items-center justify-center">
+       {/* button to export table data to Excel */}
+       {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
       <table
+        id="my-table"
         className="table-auto text-[12px] text-center m-auto w-[80%]"
         {...getTableProps()}
       >

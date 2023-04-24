@@ -165,6 +165,7 @@ export default function AddTimeTracker({isManual}) {
                   id="task-name"
                   placeholder="What are you working on ?"
                   ref={taskNameRef}
+                  
                 />
               </label>
               <div className="relative flex items-center">
