@@ -18,7 +18,7 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
         //     'project3']}
         keys={keys}
         indexBy="date"
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+        margin={{ top: 70, right: 10, bottom: 50, left: 60 }}
         padding={0.3}
         layout="vertical"
         valueScale={{ type: 'linear' }}
@@ -87,15 +87,15 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
         legends={[
             {
                 dataFrom: 'keys',
-                anchor: 'bottom-right',
-                direction: 'column',
+                anchor: 'top-right',
+                direction: 'row',
                 justify: false,
-                translateX: 100,
-                translateY: 0,
+                translateX: 0,
+                translateY: -40,
                 itemsSpacing: 2,
                 itemWidth: 100,
                 itemHeight: 20,
-                itemDirection: 'left-to-right',
+                itemDirection: 'bottom-to-top',
                 itemOpacity: 0.85,
                 symbolSize: 20,
                 effects: [
@@ -111,9 +111,10 @@ const MyResponsiveBar = ({ data, keys /* see data tab */ }) => (
         
         tooltip={({ id, data }) => {
             return(
-                <div>
+                <div className='flex flex-col bg-stone-100 rounded-3xl text-zinc-600 text-sm p-2'>
                     {data.date}
-                    <div>{id}: {data[id]} hours</div>
+
+                    <div className='flex text-sm text-black'>{id}: {data[id]} hours</div>
                 </div>)
         }}
         role="application"
