@@ -49,7 +49,7 @@ export default function MonthlyView() {
     start_date: moment(firstDayOfMonth).format('yyyy-MM-DD'),
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
   })
-    const clocledData = data?.filter(data=>data.type_of_input === 0) 
+    const clocledData = data?.filter(data=>data.type_of_input === '0') 
   //  console.log('clocledData for this month:',clocledData)
 
   // console.log("data=",data)
