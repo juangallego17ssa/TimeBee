@@ -3,7 +3,7 @@ import EfficientTime from "../Components/DashboadComp/EfficientTime";
 import DataProject from "../Components/DashboadComp/DataProject";
 
 function Dashboard() {
-
+  
     return (
       <div className="flex-col bg-gradient-to-r from-cyan-500 from-10% via-sky-500 via-20% to-emerald-500 to-80% w-full h-screen">
         <div className="flex w-full h-full">

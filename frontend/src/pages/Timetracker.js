@@ -54,6 +54,8 @@ function Timetracker() {
     isSuccess,
     isError,
   } = useGetTrackedTimeByDateQuery(moment(selectedDate).format("YYYY-MM-DD"));
+
+  
   // filter out login/logout
   const filteredTask = tasks?.filter((task) => task.type_of_input !== "0");
   const TasksOfDay = filteredTask?.filter(
@@ -62,7 +64,7 @@ function Timetracker() {
       new Date(selectedDate).toDateString()
   );
 
-  console.log(TasksOfDay);
+  // console.log(TasksOfDay);
 
   const prepareTheDataForTaskTable = (reduxTrackedTime, date) => {
     const filteredOnlyTaskData = reduxTrackedTime?.filter(
@@ -176,13 +178,14 @@ function Timetracker() {
         </div>
         <div className=" h-full flex-1">
           <CalendarComponent
-            events={reduxTrackedTime}
+            events={tasks}
             views={{
               day: true,
             }}
             defaultView={Views.DAY}
-            data={selectedDate}
+            date={selectedDate}
             onDateChange={handleDateChange}
+            
           />
         </div>
       </div>
