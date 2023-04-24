@@ -30,8 +30,7 @@ function App() {
             <Route path="/dashboard" element={<RouteProtection route={<Header><Dashboard /></Header>} />}/>
             <Route path="/reports" element={<RouteProtection route={<Header><Report/></Header>}/>}/>
             <Route path="/calendar" element={<RouteProtection route={<Header><Calendar  /></Header>}  />} />
-            <Route path="/profil" element={<Profil />} />
-            <Route path="/data" element={<DataProject/>} />
+            <Route path="/profil" element={<RouteProtection route={<Header><Profil /></Header>}/>} />
           </Routes>
       </div>
     </Provider>
