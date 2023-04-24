@@ -50,13 +50,13 @@ export default function MonthlyView() {
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
     // type_of_input:'0'
   })
-  const clocledData = data?.filter(data=>data.type_of_input === '0' && data.code === '00') 
+    const clocledData = data?.filter(data=>data.type_of_input === 0) 
   //  console.log('clocledData for this month:',clocledData)
 
 
   //FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
   // const { data, isLoading, isSuccess, isError } = useGetClockedTimeQuery();
-  // console.log("data=",JSON.stringify(data))
+  console.log("data=",data[1])
 
 
   /* group the data by date */
@@ -191,7 +191,7 @@ export default function MonthlyView() {
     return;
   });
   // console.log('CLOCK_DATA=',CLOCK_DATA?.filter(data=>data.start).length)
-  console.log('CLOCK_DATA=',CLOCK_DATA)
+  // console.log('CLOCK_DATA=',CLOCK_DATA)
 
   // total work time of the month in milliseconds
   let TOTAL_WORKED_TIME = 0;
