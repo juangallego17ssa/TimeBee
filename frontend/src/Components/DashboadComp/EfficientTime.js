@@ -7,7 +7,8 @@ import {
     Bar,
     XAxis,
     YAxis,
-    Tooltip, ResponsiveContainer,
+    Tooltip,
+    ResponsiveContainer,
 } from 'recharts';
 import {axiosWithToken} from "../../api/axios";
 
@@ -67,7 +68,7 @@ const EfficientTime = () => {
     }
     const getWeekInfo = async (myDay) => {
         setIsWeek(true)
-        let day = new Date(2023,3,22);
+        let day = new Date();
         let weekNum = getISOWeek(day)
         let dayOfWeek = day.getDay()
         day.setDate(day.getDate() - dayOfWeek)
@@ -292,8 +293,6 @@ const EfficientTime = () => {
             getMonthInfo(myDate)
         }
     }
-
-    const data = []
 
     useEffect(() => {
         getWeekInfo();

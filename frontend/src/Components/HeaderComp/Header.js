@@ -102,6 +102,7 @@ function Header({ children }) {
     dispatch(setClockStop(""))
     setClock(true);
   }
+  const [updateTrackedTimeByID] = useUpdateTrackedTimeByIDMutation();
 
 
   const clockID = useSelector( (state) => state.clock.clockID)
@@ -120,7 +121,10 @@ function Header({ children }) {
     const data={
         "stop": currentTime.toISOString()
     }
-    const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
+    // const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
+    console.log(clockID)
+    const response = await updateTrackedTimeByID( { trackedtimeId: clockID, ...data});
+
     dispatch(setClockID(""))
     dispatch(setClockStart(""))
     dispatch(setClockStop(""))
