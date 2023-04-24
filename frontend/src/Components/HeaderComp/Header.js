@@ -8,10 +8,13 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import React, {useEffect, useState} from 'react';
 import UserAvator from "../UserAvator";
 import TimerCountdown from "../TimetrackerComp/TimerCountdown";
-import {useCreateTrackedTimeMutation, useUpdateTrackedTimeByIDMutation} from "../../api/API";
+import {
+  useCreateTrackedTimeMutation,
+  useUpdateTrackedTimeByIDMutation,
+} from "../../api/API";
 import {useDispatch, useSelector} from "react-redux";
 import {setClockID, setClockStart, setClockStop, setClockDuration} from "../../redux/Slices/clockSlice";
-import {axiosWithToken} from "../../api/axios";
+import {authHeaders, axiosTimeBee, axiosWithToken} from "../../api/axios";
 import Timetracker from "../../pages/Timetracker";
 import {setUser} from "../../redux/Slices/userSlice";
 
@@ -19,6 +22,7 @@ import {setUser} from "../../redux/Slices/userSlice";
 function Header({ children }) {
 //---- RTK Query ----//
   const [createTrackedTime,{isloading,error}]=useCreateTrackedTimeMutation()
+  const [updateTrackedTime ] =useUpdateTrackedTimeByIDMutation();
 
 //---- Local States ----//
   const [showMenu, setShowMenu] = useState(false);
@@ -31,6 +35,8 @@ function Header({ children }) {
 
   const [clock, setClock] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
+  const config = authHeaders()
 
 
 //---- get the current date ----//
@@ -99,39 +105,35 @@ function Header({ children }) {
         "start": currentTime
     }
     const response = await createTrackedTime(data)
-    console.log("clockin")
-    console.log(response)
+    // console.log("clockin")
+    // console.log(response)
     dispatch(setClockID(response.data.id))
     dispatch(setClockStart(response.data.start))
     dispatch(setClockStop(""))
     setClock(true);
   }
-  const [updateTrackedTimeByID] = useUpdateTrackedTimeByIDMutation();
 
 
-  const clockID = useSelector( (state) => state.clock.clockID)
+  const clockID = useSelector((state) => state.clock.clockID)
+
+
 
   // console.log(clockID)
   const handleClockOut= async ()=> {
     let currentTime = new Date();
-    // const offset = currentTime.getTimezoneOffset();
-    // currentTime.setHours(currentTime.getHours() - offset/60);
-    // const timezoneOffset = (offset > 0 ? "-" : "+") +
-    //                 Math.abs(offset / 60).toString().padStart(2, "0") + ":" +
-    //                 Math.abs(offset % 60).toString().padStart(2, "0");
-    // const isoCurrentTime = currentTime.toISOString().slice(0, -1) + timezoneOffset;
-    // currentTime = isoCurrentTime
-    // console.log(currentTime)
+    const trackedtimeId = clockID
+    console.log("trackedTimeHEaders", trackedtimeId)
+
     const data={
         "stop": currentTime.toISOString()
     }
-    // const response = await axiosWithToken.patch(`trackedtime/${clockID}/`, data)
-    console.log(clockID)
-    const response = await updateTrackedTimeByID( { trackedtimeId: clockID, ...data});
+    // const response = await axiosTimeBee.patch(`trackedtime/${clockID}/`, data, config)
+    const response =  await updateTrackedTime({ trackedtimeId, ...data })
 
     dispatch(setClockID(""))
     dispatch(setClockStart(""))
     dispatch(setClockStop(""))
+
     const startTime = new Date(response.data.start)
     const stopTime = new Date(response.data.stop)
     const newDuration = myState.clock.clockDuration+Math.round((stopTime.getTime()-startTime.getTime())/1000)
@@ -142,7 +144,7 @@ function Header({ children }) {
   const myState = useSelector( (state) => state)
 
   const getClock = async () => {
-    const response = await axiosWithToken(`trackedtime/getclockinfo/`)
+    const response = await axiosTimeBee(`trackedtime/getclockinfo/`, config)
     if (response.data.latest_time.id) {
         dispatch(setClockID(response.data.latest_time.id))
         dispatch(setClockStart(response.data.latest_time.start))
@@ -162,9 +164,11 @@ function Header({ children }) {
     setLoaded(true)
   }
 
+
+
   useEffect(() => {
     const getWorkload = async () => {
-      const response = await axiosWithToken(`me/`)
+      const response = await axiosTimeBee(`me/`, config)
       dispatch(setUser(response.data))   
     }
     getWorkload()

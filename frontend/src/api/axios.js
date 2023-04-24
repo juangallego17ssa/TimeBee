@@ -22,3 +22,16 @@ export const axiosWithToken = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+export const axiosTimeBee = axios.create({
+  baseURL: baseURL,
+});
+
+export const authHeaders = () => {
+  return {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("access")}`,
+      "Content-Type": "application/json",
+    }
+  }
+}
