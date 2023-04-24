@@ -192,9 +192,7 @@ export const timeBeeAPI = createApi({
 
     updateTrackedTimeByID: builder.mutation({
       query: ({ trackedtimeId, ...data }) => {
-        // Log the arguments before sending the request
-        console.log("Arguments:",  trackedtimeId, data );
-
+       
         return {
           url: `trackedtime/${trackedtimeId}/`,
           method: "PATCH",
@@ -215,6 +213,12 @@ export const timeBeeAPI = createApi({
     getTrackedTimeByDate: builder.query({
       query: (selectedDate) =>
         `trackedtime/?start_date=${selectedDate}&end_date=${selectedDate}`,
+      providesTags: ["Tasks"],
+    }),
+
+    getTrackedTimeByStartDateEndDate: builder.query({
+      query: ({startDate, endDate}) =>
+        `trackedtime/?start_date=${startDate}&end_date=${endDate}`,
       providesTags: ["Tasks"],
     }),
   }),
@@ -259,5 +263,6 @@ export const {
     useUpdateTrackedTimeByIDMutation,
     useDeleteTrackedTimeByIDMutation,
     useGetTrackedTimeByDateQuery,
+    useGetTrackedTimeByStartDateEndDateQuery,
   } = timeBeeAPI;
 

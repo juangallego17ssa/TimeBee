@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CalendarComponent from '../Components/CalendarComp/Calendar';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchTrackedTimeOwn } from '../redux/Slices/trackedTimeOwnSlice';
 import moment from 'moment'
-import { useGetTrackedTimeByDateQuery } from '../api/API';
+import { useGetTrackedTimeByStartDateEndDateQuery } from '../api/API';
 
 function Calendar() {
-  const reduxTrackedTime = useSelector(
-    (store) => store.trackedtime.trackedtime
-  );
-  const dispatch = useDispatch();
+ 
   const [selectedDate, setSelectedDate] = useState(new Date());
+   
+  const currentDate = moment(selectedDate)
+  const startDate = currentDate.clone().subtract(1, 'month').startOf("month").format("YYYY-MM-DD");
+  const endDate = currentDate.clone().add(1, 'month').endOf("month").format("YYYY-MM-DD");
 
-  useEffect(() => {
-    dispatch(fetchTrackedTimeOwn());
-  }, []);
-
-  const handleDateChange = (newDate) => {
-    setSelectedDate(newDate);
-  };
+  // console.log(
+  //   "First date of the month:",
+  //   startDate
+  // );
+  // console.log("Last date of the month:", endDate);
 
   // GET all tasks created by USER
   const {
@@ -26,14 +23,18 @@ function Calendar() {
     isLoading,
     isSuccess,
     isError,
-  } = useGetTrackedTimeByDateQuery(moment(selectedDate).format("YYYY-MM-DD"));
+  } = useGetTrackedTimeByStartDateEndDateQuery( {startDate, endDate});
 
-  // console.log(tasks)
+
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    console.log("newDate", newDate)
+  };
 
   return (
     <div className="h-[93vh] p-20">
       <CalendarComponent
-        events={reduxTrackedTime}
+        events={tasks}
         date={selectedDate}
         onDateChange={handleDateChange}
       />

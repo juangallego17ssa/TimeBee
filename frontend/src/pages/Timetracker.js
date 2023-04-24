@@ -31,9 +31,9 @@ function Timetracker() {
     (store) => store.trackedtime.trackedtime
   );
 
-  useEffect(() => {
-    dispatch(fetchTrackedTimeOwn());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTrackedTimeOwn());
+  // }, []);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isManual, setIsManual] = useState(false);
