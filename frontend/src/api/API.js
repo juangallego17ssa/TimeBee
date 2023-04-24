@@ -47,6 +47,7 @@ export const timeBeeAPI = createApi({
         const { access: token } = response;
         localStorage.setItem("access", token); // Store the token in local storage
         console.log("Access Token set in localstorage successfully");
+        console.log(localStorage);
         return { data: token };
       },
     }),
@@ -190,11 +191,16 @@ export const timeBeeAPI = createApi({
     }),
 
     updateTrackedTimeByID: builder.mutation({
-      query: ({ trackedtimeId, ...data }) => ({
-        url: `trackedtime/${trackedtimeId}/`,
-        method: "PATCH",
-        body: data,
-      }),
+      query: ({ trackedtimeId, ...data }) => {
+        // Log the arguments before sending the request
+        console.log("Arguments:",  trackedtimeId, data );
+
+        return {
+          url: `trackedtime/${trackedtimeId}/`,
+          method: "PATCH",
+          body: data,
+        };
+      },
       invalidatesTags: ["Tasks"],
     }),
 

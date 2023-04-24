@@ -27,7 +27,7 @@ function TimerBar({ task }) {
     isError,
   } = useGetOwnProjectsQuery();
   const projects = data?.filter(project=>project.default !== 'default')
-  console.log(projects)
+  // console.log(projects)
 
   const taskNameRef = useRef();
   const projectRef = useRef();
@@ -106,7 +106,7 @@ function TimerBar({ task }) {
       start: startTime,
     };
     updateTrackedTimeByID({ trackedtimeId, ...data }).then((result) => {
-      console.log(result);
+      // console.log(result);
     });
   };
 

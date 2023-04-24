@@ -54,11 +54,18 @@ function Timetracker() {
     isSuccess,
     isError,
   } = useGetTrackedTimeByDateQuery(moment(selectedDate).format("YYYY-MM-DD"));
-
+  // console.log(tasks)
   
   // filter out login/logout
   const filteredTask = tasks?.filter((task) => task.type_of_input !== "0");
   const TasksOfDay = filteredTask?.filter(
+    (task) =>
+      new Date(task.start).toDateString() ===
+      new Date(selectedDate).toDateString()
+  );
+
+  const filteredTaskClockIn = tasks?.filter((task) => task.type_of_input === "0");
+  const clockinOfDay = filteredTaskClockIn?.filter(
     (task) =>
       new Date(task.start).toDateString() ===
       new Date(selectedDate).toDateString()
@@ -163,9 +170,9 @@ function Timetracker() {
                 />
               ))}
             </div>
-            {/* <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
+            <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
               <div className="font-bold">CLOCK IN / CLOCK OUT</div>
-              {tableShowDataClock?.map((task) => (
+              {clockinOfDay?.map((task) => (
                 <TimerBar
                   key={task.id}
                   task={task}
@@ -173,7 +180,7 @@ function Timetracker() {
                   setSelectedProject={setSelectedProject}
                 />
               ))}
-            </div> */}
+            </div>
           </div>
         </div>
         <div className=" h-full flex-1">
