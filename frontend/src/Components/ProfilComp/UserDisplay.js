@@ -1,6 +1,8 @@
 import React from 'react';
-import {useGetUserProfileQuery} from '../../api/API'
+import { useGetUserProfileQuery } from '../../api/API';
 import { useSelector } from 'react-redux';
+import { useState, useRef, useEffect } from "react";
+import { FiEdit } from "react-icons/fi";
 
 
 function UserDisplay() {
@@ -8,25 +10,49 @@ function UserDisplay() {
     const user = useSelector((state) => state.user.user)
     const usernameFirstChar = user?.username?.charAt(0)
 
+    const [avatarEdit, setAvatarEdit] = useState();
+    const [isHovered, setIsHovered] = useState(false);
+
+    function handleMouseEnter() {
+    setIsHovered(true);
+    }
+    console.log(isHovered)
+    function handleMouseLeave() {
+    setIsHovered(false);
+    }
+
+    function handleAvatarChange() {
+        setAvatarEdit(!avatarEdit)
+    }
+
     const {data:currentUser,isLoading,isSuccess,isError} = useGetUserProfileQuery()
     console.log(currentUser)
 
   // if(isSuccess)
     
     return (
-        <div className="flex-1 flex-col flex-grow justify-evenly items-center bg-white  md:w-1/3 h-5/6 shadow-xl rounded-3xl p-5">
-            <div className="flex flex-col justify-center items-center w-full h-1/6 ">
-                <div className="relative w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center hover:opacity-70 hover:cuersor ">
+        <div className="flex-1 flex-col flex-grow justify-evenly items-center bg-white  md:w-1/3 h-full shadow-xl rounded-3xl p-5">
+            <div className="flex flex-col flex-grow justify-center items-center w-full h-[25%]">
+                <div className="w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {user.avatar ? (
-                    <img
-                    src={currentUser?.avatar}
-                    alt="avatar"
-                    className="object-cover relative w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center hover:opacity-70 hover:cursor "
-                    />
+                        <div className='relative'>
+                        <img
+                        src={currentUser?.avatar}
+                        alt="avatar"
+                        className="object-cover w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center hover:opacity-70 hover:cursor "/>
+                        <div className="relative w-5 h-5">
+                            <FiEdit className={`text-white ${isHovered ? 'opacity-100' : 'opacity-0'} group-hover:opacity-70 w-5 h-5 cursor-pointer absolute bottom-0 right-0`} onClick={handleAvatarChange} />    
+                        </div>
+                    </div>
                     ) : (
-                    <p className="uppercase text-center text-2xl font-bold text-white">
-                    {usernameFirstChar ? usernameFirstChar : "A"}
-                    </p>
+                    <div>
+                        <p className="uppercase text-center text-2xl font-bold text-white">
+                        {usernameFirstChar ? usernameFirstChar : "A"}
+                        </p>
+                        <div className="relative w-5 h-5">
+                            <FiEdit className={`text-white ${isHovered ? 'opacity-100' : 'opacity-0'} group-hover:opacity-70 w-5 h-5 cursor-pointer absolute bottom-0 right-0`} onClick={handleAvatarChange} />    
+                        </div>
+                    </div>        
                     )}
                 </div>
                 <div>
