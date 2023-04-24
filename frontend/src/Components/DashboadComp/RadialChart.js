@@ -14,15 +14,15 @@ const MyResponsiveRadialBar = ({ data /* see data tab */ }) => (
         padding={0.4}
         cornerRadius={2}
         colors={{ scheme: 'spectral' }} //'green-blue' or 'nivo'
-        margin={{ top: 40, right: 120, bottom: 40, left: 40 }}
+        margin={{ top: 40, right: 15, bottom: 40, left: 40 }}
         radialAxisStart={{ tickSize: 5, tickPadding: 5, tickRotation: 0 }}
         circularAxisOuter={{ tickSize: 5, tickPadding: 12, tickRotation: 0 }}
         legends={[
             {
-                anchor: 'right',
+                anchor: 'left-top',
                 direction: 'column',
                 justify: false,
-                translateX: 80,
+                translateX: 0,
                 translateY: 0,
                 itemsSpacing: 6,
                 itemDirection: 'left-to-right',
