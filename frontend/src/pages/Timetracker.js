@@ -15,6 +15,7 @@ import {
   useCreateTrackedTimeMutation,
   useGetOwnTrackedTimeQuery,
   useGetTrackedTimeByDateQuery,
+  useGetTrackedTimeByDateWithStartNullQuery,
 } from "../api/API";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrackedTimeOwn } from "../redux/Slices/trackedTimeOwnSlice";
@@ -53,8 +54,8 @@ function Timetracker() {
     isLoading,
     isSuccess,
     isError,
-  } = useGetTrackedTimeByDateQuery(moment(selectedDate).format("YYYY-MM-DD"));
-  // console.log(tasks)
+  } = useGetTrackedTimeByDateWithStartNullQuery(moment(selectedDate).format("YYYY-MM-DD"));
+  console.log(tasks)
   
   // filter out login/logout
   const filteredTask = tasks?.filter((task) => task.type_of_input !== "0");
@@ -63,6 +64,12 @@ function Timetracker() {
       new Date(task.start).toDateString() ===
       new Date(selectedDate).toDateString()
   );
+  
+  const filteredTaskStartNull = tasks?.filter((task) => task.type_of_input !== "0" && task.start === null);
+
+
+
+
 
   const filteredTaskClockIn = tasks?.filter((task) => task.type_of_input === "0");
   const clockinOfDay = filteredTaskClockIn?.filter(
@@ -171,6 +178,17 @@ function Timetracker() {
               ))}
             </div>
             <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
+              <div className="font-bold">ALL OPEN TASKS</div>
+              {filteredTaskStartNull?.map((task) => (
+                <TimerBar
+                  key={task.id}
+                  task={task}
+                  selectedProject={selectedProject}
+                  setSelectedProject={setSelectedProject}
+                />
+              ))}
+            </div>
+            <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
               <div className="font-bold">CLOCK IN / CLOCK OUT</div>
               {clockinOfDay?.map((task) => (
                 <TimerBar
@@ -192,7 +210,6 @@ function Timetracker() {
             defaultView={Views.DAY}
             date={selectedDate}
             onDateChange={handleDateChange}
-            
           />
         </div>
       </div>

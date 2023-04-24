@@ -29,6 +29,8 @@ function TimerBar({ task }) {
   const projects = data?.filter(project=>project.default !== 'default')
   // console.log(projects)
 
+
+
   const taskNameRef = useRef();
   const projectRef = useRef();
   const startTimeRef = useRef();
@@ -62,6 +64,8 @@ function TimerBar({ task }) {
   const handleAddChange = (event) => {
     setPlay(event.target.value);
   };
+
+  
 
   const handlePlayStop = (event) => {
     event.preventDefault();
@@ -204,8 +208,9 @@ function TimerBar({ task }) {
             </div>
           ) : (
             <div className="flex mx-2">
-              <Timer start={play} />
-              {play ? (
+              <p>{moment(task.start).format("DD-MMM-yyyy hh:mm")}</p>
+              <Timer play={play} startDate={task.start} />
+              {task.start ? (
                 <FaRegStopCircle
                   onClick={handleStop}
                   className="text-2xl text-rose-400"
