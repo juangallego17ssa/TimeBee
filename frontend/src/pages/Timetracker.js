@@ -14,6 +14,7 @@ import {
   useGetTrackedTimeQuery,
   useCreateTrackedTimeMutation,
   useGetOwnTrackedTimeQuery,
+  useGetTrackedTimeByDateQuery,
 } from "../api/API";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrackedTimeOwn } from "../redux/Slices/trackedTimeOwnSlice";
@@ -21,6 +22,7 @@ import CalendarComponent from "../Components/CalendarComp/Calendar";
 import { Views } from "react-big-calendar";
 import AddTimeTracker from "../Components/TimetrackerComp/AddTimeTracker";
 import { reactHooksModule } from "@reduxjs/toolkit/dist/query/react";
+import moment from 'moment'
 
 function Timetracker() {
   // Fetch all the TrackedItems of the actual user and store it in Redux
@@ -41,22 +43,38 @@ function Timetracker() {
   const [tableShowDataTask, setTableShowDataTask] = useState([]);
   const [tableFilterDataClock, setTableFilterDataClock] = useState([]);
   const [tableShowDataClock, setTableShowDataClock] = useState([]);
+
   
   
+
+  // GET all tasks created by USER
+  const {
+    data: tasks,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useGetTrackedTimeByDateQuery(moment(selectedDate).format("YYYY-MM-DD"));
+  // filter out login/logout
+  const filteredTask = tasks?.filter((task) => task.type_of_input !== "0");
+  const TasksOfDay = filteredTask?.filter(
+    (task) =>
+      new Date(task.start).toDateString() ===
+      new Date(selectedDate).toDateString()
+  );
+
+  console.log(TasksOfDay);
 
   const prepareTheDataForTaskTable = (reduxTrackedTime, date) => {
     const filteredOnlyTaskData = reduxTrackedTime?.filter(
       (task) => task.type_of_input !== "0"
-      );
-      
-      const dateSelectedData = filteredOnlyTaskData?.filter((task) => {
-        return new Date(task.start).toDateString() === date.toDateString();
-      });
-      
-    
+    );
+
+    const dateSelectedData = filteredOnlyTaskData?.filter((task) => {
+      return new Date(task.start).toDateString() === date.toDateString();
+    });
+
     return [filteredOnlyTaskData, dateSelectedData];
   };
-
 
   const prepareTheDataForClockTable = (reduxTrackedTime, date) => {
     const filteredOnlyClockData = reduxTrackedTime?.filter(
@@ -70,19 +88,17 @@ function Timetracker() {
     return [filteredOnlyClockData, dateSelectedDataClock];
   };
 
-   const handleDateChange = (newDate) => {
-     setSelectedDate(newDate);
-   };
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+  };
 
-   useEffect(() => {
+  useEffect(() => {
     const [filterDataTask, generatedTableDataTask] = prepareTheDataForTaskTable(
       reduxTrackedTime,
       selectedDate
-     );
-     const [filterDataClock, generatedTableDataClock] = prepareTheDataForClockTable(
-      reduxTrackedTime,
-      selectedDate
     );
+    const [filterDataClock, generatedTableDataClock] =
+      prepareTheDataForClockTable(reduxTrackedTime, selectedDate);
     setTableFilterDataTask(filterDataTask);
     setTableShowDataTask(generatedTableDataTask);
     setTableFilterDataClock(filterDataClock);
@@ -102,6 +118,11 @@ function Timetracker() {
     console.log("handelDateChanged");
   };
 
+  if (isLoading) {
+    <div>Loading...</div>;
+  } else if (isError) {
+    console.log("fetch Error");
+  }
   return (
     <div className="flex flex-col flex-grow bg-stone-100 w-full md:h-full gap-4 px-8 py-4">
       <div className="flex items-center w-full gap-2 px-4">
@@ -130,7 +151,8 @@ function Timetracker() {
           <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full h-4/6 md:h-screen">
             <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
               <div className="font-bold">TASKS / PROJECTS</div>
-              {tableShowDataTask?.map((task) => (
+              {isLoading && <div>Loading</div>}
+              {TasksOfDay?.map((task) => (
                 <TimerBar
                   key={task.id}
                   task={task}
@@ -139,7 +161,7 @@ function Timetracker() {
                 />
               ))}
             </div>
-            <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
+            {/* <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
               <div className="font-bold">CLOCK IN / CLOCK OUT</div>
               {tableShowDataClock?.map((task) => (
                 <TimerBar
@@ -149,9 +171,7 @@ function Timetracker() {
                   setSelectedProject={setSelectedProject}
                 />
               ))}
-            </div>
-
-            {/* <TimerBar addProject={addProject} /> */}
+            </div> */}
           </div>
         </div>
         <div className=" h-full flex-1">

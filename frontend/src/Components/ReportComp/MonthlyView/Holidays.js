@@ -1,6 +1,10 @@
-import React from 'react';
+import React,{userState} from 'react';
 import moment from 'moment';
 import {useGetpublicHolidayYearQuery} from '../../../api/API'
+import AddTimeTracker from '../../TimetrackerComp/AddTimeTracker';
+
+
+
 
 export default function Holidays({currentMonth,publicHolidaysOfMonth}) {
     // const currentYear = new Date().getFullYear()
@@ -21,6 +25,15 @@ export default function Holidays({currentMonth,publicHolidaysOfMonth}) {
         <p>{holiday.holiday_name}</p>
       </div>
       )}
+      
+      {/* ==== PERSONAL ==== */}
+      <div>
+        <div>
+          <button>Add Holiday</button>
+        </div>
+      </div>
+
+
     </div>
   );
 }

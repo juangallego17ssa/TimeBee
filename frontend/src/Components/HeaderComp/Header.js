@@ -71,6 +71,10 @@ function Header({ children }) {
       navigate("/calendar");
   };
 
+  const goToProfil = () => {
+    navigate("/profil");
+};
+
   const logOut = () => {
     localStorage.removeItem("access");
     console.log('Access Token removed successfully')
@@ -180,6 +184,7 @@ function Header({ children }) {
             onClick={goToHome}
             src={TimeBee}
             className=" w-auto max-h-10 object-cover "
+            alt="Logo"
           ></img>
         </div>
 
@@ -280,7 +285,7 @@ function Header({ children }) {
                 <div className="absolute flex flex-col right-2 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
                   <div className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                     <FiUser />
-                    <p>Profile</p>
+                    <p onClick={goToProfil}>Profile</p>
                   </div>
                   <div className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                     <FiLogOut />
