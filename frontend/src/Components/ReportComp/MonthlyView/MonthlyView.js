@@ -1,7 +1,11 @@
 import { useState,useRef } from "react";
 import moment from "moment";
 import {MdKeyboardArrowLeft,MdKeyboardArrowRight} from 'react-icons/md'
-import {useGetOwnTrackedTimeQuery,useGetClockedTimeQuery,useGetpublicHolidayYearQuery } from '../../../api/API'
+import {
+  useGetOwnTrackedTimeQuery,
+  useGetTrackedTimeFromToDateQuery,
+  useGetClockedTimeQuery,
+  useGetpublicHolidayYearQuery } from '../../../api/API'
 import ReportTable from "./ReportTable";
 import Holidays from "./Holidays";
 import UserInfo from "./UserInfo";
@@ -27,16 +31,31 @@ export default function MonthlyView() {
   const [startTimes, setStartTimes] = useState("");
   const [stopTimes, setStopTimes] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-
-  //FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
-  const { data, isLoading, isSuccess, isError } = useGetClockedTimeQuery();
-  // console.log("data=",JSON.stringify(data))
-
   /*  CURRENT MONTH  */
   const currentMonth = moment(currentDate).format("yyyy-MM");
+    /*  get first and last day of SELECTED MONTH  */
+    const firstDayOfMonth = new Date(
+      currentDate.getFullYear(),currentDate.getMonth(),1
+    );
+    const lastDayOfMonth = new Date(
+      currentDate.getFullYear(),currentDate.getMonth() + 1,0
+    );
+   const {data,isLoading,isSuccess,isError} = useGetTrackedTimeFromToDateQuery({
+    start_date: moment(firstDayOfMonth).format('yyyy-MM-DD'),
+    end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
+    // type_of_input:'0'
+  })
+  const clocledData = data?.filter(data=>data.type_of_input === '0') 
+  //  console.log('clocledData for this month:',clocledData)
+
+
+  //FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
+  // const { data, isLoading, isSuccess, isError } = useGetClockedTimeQuery();
+  // console.log("data=",JSON.stringify(data))
+
 
   /* group the data by date */
-  const groupedData = data?.reduce((acc, item) => {
+  const groupedData = clocledData?.reduce((acc, item) => {
     const date = item.start.substring(0, 10); // extract the date from the start timestamp
     if (!acc[date]) {
       acc[date] = { start: [], stop: [] }; // create a new object for the date if it doesn't exist
@@ -47,7 +66,7 @@ export default function MonthlyView() {
     }
     return acc;
   }, {});
-  console.log("groupedData:", groupedData);
+  // console.log("groupedData:", groupedData);
 
   /*  handel change MONTH  */
   const prevMonth = () => {
@@ -61,17 +80,6 @@ export default function MonthlyView() {
     );
   };
 
-  /*  get first and last day of SELECTED MONTH  */
-  const firstDayOfMonth = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    1
-  );
-  const lastDayOfMonth = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth() + 1,
-    0
-  );
 
   /*  get DAYS in month */
   const daysInMonth = [];
@@ -91,8 +99,9 @@ export default function MonthlyView() {
   const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(
     (holiday) => holiday.date.substring(0, 7) === currentMonth
   );
-  console.log("publicHolidaysOfMonth:", publicHolidaysOfMonth);
+  // console.log("publicHolidaysOfMonth:", publicHolidaysOfMonth);
   const holidayDates = publicHolidaysOfMonth?.map((holiday) => holiday.date);
+  
   /* WORKING DAY */
   const WORKDAYS = [];
   for (let i = 0; i < daysInMonth.length; i++) {
@@ -104,7 +113,7 @@ export default function MonthlyView() {
       WORKDAYS.push(daysInMonth[i]);
     }
   }
-  console.log("WORKDAYS:", WORKDAYS.length);
+  // console.log("WORKDAYS:", WORKDAYS.length);
 
   // console.log(holidayDates.includes('2023-04-07'))
 
@@ -122,19 +131,19 @@ export default function MonthlyView() {
   
   /*  match DAYS in month with CLOCKED DATA  */
   const CLOCK_DATA = daysInMonth?.map((date) => {
-    for (let i = 0; i < holidayDates?.length; i++) {
-      if (
-        date.includes(holidayDates[i]) &&
-        moment(date).format("ddd") !== "Sat" &&
-        moment(date).format("ddd") !== "Sun"
-        ) {
-          return {
-            date: date,
-            duration: DEFAULT_WORKINK_TIME,
-            worked_time: moment.utc(DEFAULT_WORKINK_TIME).format("HH:mm"),
-          };
-        }
-      }
+    // for (let i = 0; i < holidayDates?.length; i++) {
+    //   if (
+    //     date.includes(holidayDates[i]) &&
+    //     moment(date).format("ddd") !== "Sat" &&
+    //     moment(date).format("ddd") !== "Sun"
+    //     ) {
+    //       return {
+    //         date: date,
+    //         duration: DEFAULT_WORKINK_TIME,
+    //         worked_time: moment.utc(DEFAULT_WORKINK_TIME).format("HH:mm"),
+    //       };
+    //     }
+    //   }
       
       if (groupedData) {
         if (groupedData[date]) {
@@ -183,7 +192,7 @@ export default function MonthlyView() {
       }
     }
     // console.log("TOATL:",TOTAL_WORKED_TIME)
-    console.log("OVERTIME:", OVER_TIME);
+    // console.log("OVERTIME:", OVER_TIME);
   }
   const millisecToHr = (x) => {
     const hours = Math.floor(x / 3600000); //GET HOUR
@@ -324,7 +333,7 @@ export default function MonthlyView() {
         {/*  EXPORT EXCEL / PDF */}
         <div>
           <button className="bg-teal-500 text-white font-bold py-5 px-10 rounded-full">
-            EXPORT REPO
+            EXPORT REPORT
           </button>
         </div>
       </section>
