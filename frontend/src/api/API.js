@@ -47,6 +47,7 @@ export const timeBeeAPI = createApi({
         const { access: token } = response;
         localStorage.setItem("access", token); // Store the token in local storage
         console.log("Access Token set in localstorage successfully");
+        console.log(localStorage);
         return { data: token };
       },
     }),
@@ -190,11 +191,13 @@ export const timeBeeAPI = createApi({
     }),
 
     updateTrackedTimeByID: builder.mutation({
-      query: ({ trackedtimeId, ...data }) => ({
-        url: `trackedtime/${trackedtimeId}/`,
-        method: "PATCH",
-        body: data,
-      }),
+      query: ({ trackedtimeId, ...data }) => {
+        return {
+          url: `trackedtime/${trackedtimeId}/`,
+          method: "PATCH",
+          body: data,
+        };
+      },
       invalidatesTags: ["Tasks"],
     }),
 
@@ -213,8 +216,14 @@ export const timeBeeAPI = createApi({
     }),
 
     getTrackedTimeFromToDate: builder.query({
-      query: ({start_date,end_date}) =>
+      query: ({ start_date, end_date }) =>
         `trackedtime/?start_date=${start_date}&end_date=${end_date}`,
+      providesTags: ["Tasks"],
+    }),
+
+    getTrackedTimeByDateWithStartNull: builder.query({
+      query: (selectedDate) =>
+        `trackedtime/?start_date=${selectedDate}&end_date=${selectedDate}&with_open_tasks=1`,
       providesTags: ["Tasks"],
     }),
   }),
@@ -224,41 +233,42 @@ export const timeBeeAPI = createApi({
 
 
 export const {
-    useRegisterUserMutation,
-    useValidateRegistrationMutation,
-    useGetTokenMutation,
-    useRefreshTokenMutation,
-    useVerifyTokenMutation,
-    useResetPasswordMutation,
-    useValidatePasswordResetMutation,
+  useRegisterUserMutation,
+  useValidateRegistrationMutation,
+  useGetTokenMutation,
+  useRefreshTokenMutation,
+  useVerifyTokenMutation,
+  useResetPasswordMutation,
+  useValidatePasswordResetMutation,
 
-    //users
-    useGetUserProfileQuery,
-    useUpdateUserProfileMutation,
-    //Public Holidays
-    useGetpublicHolidayYearQuery,
-    //Category
-    useGetCategoryQuery,
-    //Projects
-    useGetProjectsQuery,
-    useGetOwnProjectsQuery,
-    useCreateProjectsMutation,
-    useGetProjectByIDQuery,
-    useUpdateProjectByIDMutation,
-    useDeleteProjectByIDMutation,
-    useCreateProjectByUsernameMutation,
+  //users
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+  //Public Holidays
+  useGetpublicHolidayYearQuery,
+  //Category
+  useGetCategoryQuery,
+  //Projects
+  useGetProjectsQuery,
+  useGetOwnProjectsQuery,
+  useCreateProjectsMutation,
+  useGetProjectByIDQuery,
+  useUpdateProjectByIDMutation,
+  useDeleteProjectByIDMutation,
+  useCreateProjectByUsernameMutation,
 
-    //ClockedTime
-    useGetClockedTimeQuery,
+  //ClockedTime
+  useGetClockedTimeQuery,
 
-    //TrackedTime
-    useGetTrackedTimeQuery,
-    useGetOwnTrackedTimeQuery,
-    useCreateTrackedTimeMutation,
-    useGetTrackedTimeByIDQuery,
-    useUpdateTrackedTimeByIDMutation,
-    useDeleteTrackedTimeByIDMutation,
-    useGetTrackedTimeByDateQuery,
-    useGetTrackedTimeFromToDateQuery,
-  } = timeBeeAPI;
+  //TrackedTime
+  useGetTrackedTimeQuery,
+  useGetOwnTrackedTimeQuery,
+  useCreateTrackedTimeMutation,
+  useGetTrackedTimeByIDQuery,
+  useUpdateTrackedTimeByIDMutation,
+  useDeleteTrackedTimeByIDMutation,
+  useGetTrackedTimeByDateQuery,
+  useGetTrackedTimeFromToDateQuery,
+  useGetTrackedTimeByDateWithStartNullQuery,
+} = timeBeeAPI;
 

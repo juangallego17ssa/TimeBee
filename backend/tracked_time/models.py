@@ -36,7 +36,7 @@ class TrackedTime(models.Model):
 
     # id
     type_of_input = models.IntegerField(choices=TYPE_INPUT)
-    start = models.DateTimeField()
+    start = models.DateTimeField(null=True, blank=True)
     stop = models.DateTimeField(null=True, blank=True)
     time_limit = models.IntegerField(null=True, blank=True)
     task_name = models.CharField(max_length=50, blank=True)

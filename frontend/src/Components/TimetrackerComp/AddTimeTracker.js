@@ -31,7 +31,7 @@ export default function AddTimeTracker({isManual}) {
       
     const data = ({
         type_of_input:"1",
-        start:new Date().toISOString(),
+        // start:new Date().toISOString(),
         task_name:taskNameRef.current.value,
         project_id:selectedProject.id,
       })

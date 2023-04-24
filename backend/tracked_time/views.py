@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -7,6 +8,7 @@ from datetime import datetime, timedelta, time
 from project.models import Project
 from tracked_time.models import TrackedTime
 from tracked_time.serializers import TrackedTimeSerializer
+
 import pytz
 
 
@@ -24,13 +26,16 @@ class ListCreateTrackedTimeView(ListCreateAPIView):
 
         start_date_str = self.request.query_params.get('start_date')
         end_date_str = self.request.query_params.get('end_date')
+        with_open_tasks = self.request.query_params.get('with_open_tasks')
 
         if start_date_str and end_date_str:
             # Assuming the date format passed through query params is YYYY-MM-DD
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
-
-            queryset = queryset.filter(start__date__gte=start_date, start__date__lte=end_date)
+            if with_open_tasks:
+                queryset = queryset.filter(Q(start=None) | Q(start__date__gte=start_date, start__date__lte=end_date))
+            else:
+                queryset = queryset.filter(start__date__gte=start_date, start__date__lte=end_date)
 
         return queryset
 
