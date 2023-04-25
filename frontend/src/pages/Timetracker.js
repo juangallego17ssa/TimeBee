@@ -98,10 +98,10 @@ function Timetracker() {
     );
     const [filterDataClock, generatedTableDataClock] =
       prepareTheDataForClockTable(reduxTrackedTime, selectedDate);
-    setTableFilterDataTask(filterDataTask);
-    setTableShowDataTask(generatedTableDataTask);
-    setTableFilterDataClock(filterDataClock);
-    setTableShowDataClock(generatedTableDataClock);
+      setTableFilterDataTask(filterDataTask);
+      setTableShowDataTask(generatedTableDataTask);
+      setTableFilterDataClock(filterDataClock);
+      setTableShowDataClock(generatedTableDataClock);
   }, [reduxTrackedTime, selectedDate]);
 
   const handelDateChanged = (e) => {

@@ -15,14 +15,27 @@
 }
 
 #projekt-clock-switch::after{
-  content: 'Clock';
-  @apply h-7 w-16 rounded-md text-justify px-1 font-bold text-white bg-black border-2 border-stone-400 absolute left-0 top-0 transform scale-110 transition duration-200;
+  content: 'CLOCK';
+  @apply h-9 w-24 rounded-full text-center px-1 flex items-center justify-center font-bold text-white bg-teal-400 border-2 border-teal-400 absolute left-0 top-0 transform scale-110 transition duration-200;
 }
 
 #projekt-clock-switch:checked::after{
-content: 'Project';
-@apply transform scale-110 translate-x-3;
+content: 'PRPJECT';
+@apply transform bg-cyan-500 border-cyan-500 scale-110 translate-x-10;
 }
+
+#report-monthly-annual-switch::after{
+  content: 'MONTHLY';
+  @apply h-9 w-28 rounded-full text-center px-1 flex items-center justify-center font-bold text-white bg-teal-400 border-2 border-teal-400 absolute left-0 top-0 transform scale-110 transition duration-200;
+}
+
+#report-monthly-annual-switch:checked::after{
+content: 'ANNUANL';
+ @apply transform bg-cyan-500 border-cyan-500 scale-110 translate-x-10;
+}
+
+
+
 
 
 

@@ -89,10 +89,10 @@ export const timeBeeAPI = createApi({
     }),
 
     updateUserProfile: builder.mutation({
-      query: (body) => ({
+      query: (data) => ({
         url: "me/",
         method: "PATCH",
-        body,
+        body: data,
       }),
     }),
 
