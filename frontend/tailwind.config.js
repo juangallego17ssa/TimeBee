@@ -11,6 +11,15 @@ module.exports = {
       xl:'1440px',
     },
     extend: {
+      keyframes:{
+        floating :{
+        ' 0%, 100%': { transform: 'translateY(0)' },
+         '50%':{ transform: 'translateY(10px)' }
+        }  
+      },
+      animation:{
+        floating:'floating 2s ease-in-out infinite'
+      }
    
     },
   },
