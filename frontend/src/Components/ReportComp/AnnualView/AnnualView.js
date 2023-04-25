@@ -4,7 +4,7 @@ import Loader from '../../Loader';
 import { useSelector } from 'react-redux';
 import moment from "moment";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { useGetTrackedTimeFromToDateQuery } from '../../../api/API';
+import { useGetTrackedTimeFromToDateQuery, useGetpublicHolidayYearQuery } from '../../../api/API';
 import AnnualTable from "./AnnualTable";
 import UserInfo from "../MonthlyView/UserInfo";
 import * as XLSX from 'xlsx';
@@ -89,6 +89,16 @@ export default function AnnualView() {
     const day = new Date(date);
     daysInMonth.push(moment(day).format("yyyy-MM-DD"));
   }
+
+    /* PUBLIC HOLIDAYS OF CURRENT MONTH*/
+    const currentYear = new Date().getFullYear();
+    const { data: PUBLIC_HOLIDAYS } = useGetpublicHolidayYearQuery(currentYear);
+    // console.log(currentMonth)
+    const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(
+      (holiday) => holiday.date.substring(0, 7) === currentMonth
+    );
+    // console.log("publicHolidaysOfMonth:", publicHolidaysOfMonth[0].holiday_name);
+    const holidayDates = publicHolidaysOfMonth?.map((holiday) => holiday.date);
   
   /* WORKING DAY */
   const WORKDAYS = [];
@@ -254,7 +264,7 @@ const handleExportToExcel = () => {
           />
         </div>
         
-        <ReportTable
+        <AnnualTable
           data={CLOCK_DATA}
           currentMonth={currentMonth}
           publicHolidaysOfMonth={publicHolidaysOfMonth}
