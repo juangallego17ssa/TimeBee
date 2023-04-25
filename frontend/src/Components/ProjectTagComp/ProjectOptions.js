@@ -50,6 +50,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
           onChange={handleFilterProject}
           onClick={()=>setIsSearch(!isSearch)}
           placeholder='Find project...'
+          required
           />
           
         </label>

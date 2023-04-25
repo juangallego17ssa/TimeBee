@@ -7,7 +7,7 @@ from tracked_time.models import TrackedTime
 
 class TrackedTimeSerializer(serializers.ModelSerializer):
     type_of_input = serializers.CharField(required=True)
-    start = serializers.DateTimeField(required=True)
+    start = serializers.DateTimeField(required=False)
     stop = serializers.DateTimeField(required=False)
     time_limit = serializers.IntegerField(required=False)
     task_name = serializers.CharField(required=False)
