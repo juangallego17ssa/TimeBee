@@ -1,14 +1,17 @@
 import { useState,useRef } from "react";
+import { useSelector } from 'react-redux';
+import Loader from "../../Loader";
 import moment from "moment";
 import {MdKeyboardArrowLeft,MdKeyboardArrowRight} from 'react-icons/md'
 import {
-  useGetOwnTrackedTimeQuery,
   useGetTrackedTimeFromToDateQuery,
-  useGetClockedTimeQuery,
-  useGetpublicHolidayYearQuery } from '../../../api/API'
+  useGetpublicHolidayYearQuery
+       } from '../../../api/API'
 import ReportTable from "./ReportTable";
 import Holidays from "./Holidays";
 import UserInfo from "./UserInfo";
+import * as XLSX from 'xlsx'
+import ErrorPage from "../../ErrorPage";
 
 export default function MonthlyView() {
   const DEFAULT_CLOCK_IN = "09:00";
@@ -26,6 +29,7 @@ export default function MonthlyView() {
     { code: "07", value: "Dienstreise" },
     { code: "08", value: "Ausbildung" },
   ];
+  const userData = useSelector( (state) => state.user.user)
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [startTimes, setStartTimes] = useState("");
@@ -41,19 +45,15 @@ export default function MonthlyView() {
       currentDate.getFullYear(),currentDate.getMonth() + 1,0
     );
 
-    
+
    const {data,isLoading,isSuccess,isError} = useGetTrackedTimeFromToDateQuery({
     start_date: moment(firstDayOfMonth).format('yyyy-MM-DD'),
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
-    // type_of_input:'0'
   })
-  const clocledData = data?.filter(data=>data.type_of_input === '0' && data.code === '00') 
+    const clocledData = data?.filter(data=>data.type_of_input === '0') 
   //  console.log('clocledData for this month:',clocledData)
 
-
-  //FETCH CLOCK IN/OUT DATA  /* filter:type_of_input === "0" */
-  // const { data, isLoading, isSuccess, isError } = useGetClockedTimeQuery();
-  // console.log("data=",JSON.stringify(data))
+  // console.log("data=",data)
 
 
   /* group the data by date */
@@ -188,7 +188,7 @@ export default function MonthlyView() {
     return;
   });
   // console.log('CLOCK_DATA=',CLOCK_DATA?.filter(data=>data.start).length)
-  console.log('CLOCK_DATA=',CLOCK_DATA)
+  // console.log('CLOCK_DATA=',CLOCK_DATA)
 
   // total work time of the month in milliseconds
   let TOTAL_WORKED_TIME = 0;
@@ -216,27 +216,36 @@ export default function MonthlyView() {
   const hours = Math.floor(TOTAL_WORKED_TIME / 3600000); //GET HOUR
   const minutes = Math.floor((TOTAL_WORKED_TIME % 3600000) / 60000); //GET MINUTES
 
-  const handleChangeStartTime = (event) => {
-    const date = event.target.name;
-    const value = event.target.value;
-    setStartTimes((prevState) => ({ ...prevState, [date]: value }));
-    console.log(startTimes[date]);
-  };
-  const handleChangeStopTime = (event) => {
-    const date = event.target.name;
-    const value = event.target.value;
-    setStopTimes((prevState) => ({ ...prevState, [date]: value }));
-    console.log(stopTimes[date]);
-  };
+
+
+/*    EXPORT TO EXCEL    */
+const handleExportToExcel = () => {
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.table_to_sheet(document.getElementById('my-table'));
+  
+  // const title = [
+  //   ['Company',`${moment(currentMonth).format("MMM_yyyy")}`],
+  //   ['EMPLOEE NAME',`${userData.first_name}${userData.last_name}`]
+  // ];
+  
+  // const titleSheet = XLSX.utils.aoa_to_sheet(title); // create worksheet from title
+  
+  // XLSX.utils.book_append_sheet(workbook, titleSheet, 'Title'); // append title sheet
+  XLSX.utils.book_append_sheet(workbook, sheet, `${moment(currentMonth).format("MMM_yyyy")}`); // append data sheet
+  XLSX.writeFile(workbook, `${userData.username}_${moment(currentMonth).format("MMM_yyyy")}.xlsx`);
+};
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+    <div className=" h-screen w-screen flex justify-center items-center">
+      <Loader />
+      </div>
+    );
   } else if (isError) {
     console.log(Error);
     return (
-      <div className="flex flex-col">
-        <h2>Oops!</h2>
-        <p>something is wrong here</p>
+      <div className=" h-screen w-screen flex justify-center items-center">     
+        <ErrorPage />   
       </div>
     );
   }
@@ -343,7 +352,11 @@ export default function MonthlyView() {
         </div>
         {/*  EXPORT EXCEL / PDF */}
         <div>
-          <button className="bg-teal-500 text-white font-bold py-5 px-10 rounded-full">
+          <button
+           onClick={handleExportToExcel}
+           className="py-5 px-10 rounded-full  text-white text-md font-bold 
+                    bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
+           >
             EXPORT REPORT
           </button>
         </div>
