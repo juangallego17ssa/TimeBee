@@ -104,6 +104,17 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
             data = request.data
             data["duration"] = round(duration.total_seconds())
             # stop = request.data.stop
+            # stop = request.data.stop
+
+        if request.data.get('start'):
+            stop = datetime.strptime(request.data["start"], "%Y-%m-%dT%H:%M:%S.%fZ")
+            current_user = request.user
+            current_object = instance.id
+            object_to_stop = TrackedTime.objects.filter(start__isnull=False, stop__isnull=True,
+                                                        project__created_by=current_user).exclude(
+                id=current_object)
+            if object_to_stop.exists():
+                object_to_stop.update(stop=stop)
 
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
@@ -366,7 +377,8 @@ class ListOwnFromToClockView(generics.ListAPIView):
                 flag = True
 
                 for response_month_obj in response_month_arr:
-                    if response_month_obj["year"] == day["date"].year and response_month_obj["month"] == day["date"].month:
+                    if response_month_obj["year"] == day["date"].year and response_month_obj["month"] == day[
+                        "date"].month:
                         response_month_obj["amount_days"] += 1
                         response_month_obj["duration_total"] += day["duration"]
                         response_month_obj["duration_average"] = round(
