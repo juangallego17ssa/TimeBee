@@ -21,8 +21,9 @@ if (userData)
 
       <div className="grid grid-cols-2 p-5">
         <p>Username: {userData?.username}</p>
-        <p> Holidays: 23 / {userData.holidays?userData.holidays:ANNUAL_LEAVES}</p>
+        <p> Holidays: 25 / {userData.holidays?userData.holidays:ANNUAL_LEAVES}</p>
         <p> Workload: {userData?.workload}%</p>
+        <p></p>
         <p> First Login: {moment(userData?.date_joined).format("DD-MM-YYYY")}</p>
         <p> Last Login: {moment(userData?.last_login).format("DD-MM-YYYY")}</p>
 
