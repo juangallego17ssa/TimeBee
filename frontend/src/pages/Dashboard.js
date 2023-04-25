@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import MyComposedChart from "../Components/DashboadComp/composedChart";
+import MyComposedChart from "../Components/DashboadComp/Overhours";
 import DataProject from "../Components/DashboadComp/DataProject";
 import EfficientTime from "../Components/DashboadComp/EfficientTime";
-import Overhours from "../Components/DashboadComp/composedChart";
+import Overhours from "../Components/DashboadComp/Overhours";
 
 function Dashboard() {
 
@@ -35,15 +35,15 @@ function Dashboard() {
 
               :
               <div className="flex-col w-full pl-5 pb-12 h-full">
-                <div className="bg-stone-100 h-full w-full rounded-3xl border-2 shadow-xl">
-                    {/*<Overhours></Overhours>*/}
+                <div className="bg-white h-full w-full rounded-xl shadow-md">
+                    <Overhours></Overhours>
                 </div>
               </div>
             }
           </div>
           <div className="flex-col w-4/12 h-full pt-12 px-5">
-            <div className="bg-stone-100 h-full w-full py-4 px-9 rounded-3xl border-2 shadow-xl">
-              {/*<EfficientTime></EfficientTime>*/}
+            <div className="bg-white h-full w-full rounded-xl shadow-md">
+              <EfficientTime></EfficientTime>
             </div>
           </div>
         </div>
