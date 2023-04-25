@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// const baseUrl = 'https://timebee.propulsion-learn.ch/backend/api/'
+const baseUrl = 'https://timebee.propulsion-learn.ch/backend/api/'
 // const baseUrl = process.env.NODE_ENV === 'production'
 //   ? process.env.REACT_APP_API_BASE_URL_PROD
 //   : process.env.REACT_APP_API_BASE_URL_DEV;
-const baseUrl = 'http://localhost:8000/backend/api/'
+// const baseUrl = 'http://localhost:8000/backend/api/'
 
 export const timeBeeAPI = createApi({
   reducerPath: "timeBeeAPI",
