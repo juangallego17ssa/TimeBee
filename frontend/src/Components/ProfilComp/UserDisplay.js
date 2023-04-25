@@ -77,7 +77,7 @@ function UserDisplay() {
 
          try {
              const response = await fetch(
-               "https://timebee.propulsion-home.ch/backend/api/me/",
+               "https://timebee.propulsion-learn.ch/backend/api/me/",
                {
                 method: "PATCH",
                 headers: myHeaders,
