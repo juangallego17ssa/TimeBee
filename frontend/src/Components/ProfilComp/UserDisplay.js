@@ -16,7 +16,7 @@ function UserDisplay() {
     const [isHovered, setIsHovered] = useState(false);
     const [images, setImages] = useState([]);
     const [preview, setPreview] = useState([]);
-    const Token = localStorage.getItem("access");
+    const Token = localStorage.getItem("myToken");
 
 
     
@@ -72,22 +72,26 @@ function UserDisplay() {
 
         console.log(images)
 
-        try {
-              const response = await fetch(
-                "https://timebee.propulsion-learn.ch/backend/api/me/",
-                {
-                 method: "PATCH",
-                 headers: myHeaders,
-                 body: formData,
+        // const data= {
+        //     avatar: formData
+        // }
+
+         try {
+             const response = await fetch(
+               "https://timebee.propulsion-learn.ch/backend/api/me/",
+               {
+                method: "PATCH",
+                headers: myHeaders,
+                body: formData,
                 redirect: "follow",
-                }
-              );
+               }
+             );
       
-             console.log("File upload response:", response);
-             } catch (error) {
-             console.error("Error uploading file:", error);
+            console.log("File upload response:", response);
+            } catch (error) {
+            console.error("Error uploading file:", error);
         }
-        
+        // updateProfile(data)
         setAvatarEdit(!avatarEdit)
         };
 
@@ -105,7 +109,7 @@ function UserDisplay() {
   // if(isSuccess)
     
     return (
-        <div className="flex-1 flex-col justify-evenly items-center bg-white  md:w-1/4 h-full shadow-xl rounded-3xl p-5">
+        <div className="flex-1 flex-col flex-grow justify-evenly items-center bg-white  md:w-1/3 h-full shadow-xl rounded-3xl p-5">
             <div className="flex flex-col flex-grow justify-center items-center w-full h-[30%]">
                 <div className="relative w-20 h-20 bg-teal-400 rounded-full flex justify-center items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     {user.avatar ? (
@@ -168,12 +172,12 @@ function UserDisplay() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row justify-between items-center w-full h-[5%] font-bold">
+            <div className="flex flex-row justify-between items-center w-full h-[10%] font-bold">
                 <p>CONTRACT</p>
                 <p>{currentUser?.workload} %</p>
             </div>
             <div className="flex flex-col justify-evenly items-center w-full h-4/6">
-                <p className="flex flex-col justify-evenly items-start w-full h-[5%] font-bold">WORKING HOUR</p>
+                <p className="flex flex-col justify-evenly items-start w-full h-1/6 font-bold">WORKING HOUR</p>
                 <div className="Container Days flex flex-col justify-evenly items-center w-full h-5/6 gap-2 pl-3">
                     <div className="Container Day flex flex-row justify-evenly items-center w-full h-1/6">
                         <div className="flex justify-evenly items-center w-1/5 h-full rounded-2xl p-1 bg-teal-400 text-white hover:opacity-70">MON</div>

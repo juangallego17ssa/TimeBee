@@ -8,8 +8,6 @@ import Calendar from "react-calendar";
 import "../ReportComp/Calendar_styles.css";
 import { FaRegCalendarAlt } from "react-icons/fa";
 
-
-
 function DataProject() {
 
 
@@ -139,9 +137,8 @@ function DataProject() {
         return { date, ...projectData };
     });
     //Sorting the dates for Chart from the PAST to FUTURE
-  // newdata.sort((a, b) => new Date(a.date) - new Date(b.date)).reverse();
-    newdata.sort((a, b) => a.date.localeCompare(b.date));
-    console.log(newdata);
+    newdata.sort((a, b) => new Date(a.date) - new Date(b.date)).reverse();
+    // console.log(newdata);
 
     //Getting the keys to pass to BAR CHarts
     const projects = Object.values(dataTimeOwn).reduce((acc, item) => {

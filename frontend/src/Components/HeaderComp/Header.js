@@ -3,9 +3,7 @@ import TimeBee from "../../assets/TimeBeeNav.png";
 import { FaClock, FaChartArea, FaFileAlt,FaCalendarAlt } from "react-icons/fa";
 import { HiMenu }from 'react-icons/hi';
 import { RxCross2 }from 'react-icons/rx';
-import { FiLogOut, FiUser } from "react-icons/fi";
-import { RiLogoutBoxLine } from "react-icons/ri";
-import { CgProfile } from "react-icons/cg";
+import { FiLogOut,FiUser } from "react-icons/fi";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import React, {useEffect, useState} from 'react';
 import UserAvator from "../UserAvator";
@@ -342,20 +340,6 @@ function Header({ children }) {
                 >
                   <FaCalendarAlt className="text-zinc-500" />
                   <p>Calendar</p>
-                </div>
-                <div
-                  onClick={goToProfil}
-                  className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
-                >
-                  <CgProfile className="text-zinc-500" />
-                  <p>Profil</p>
-                </div>
-                <div
-                  onClick={logOut}
-                  className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
-                >
-                  <RiLogoutBoxLine className="text-zinc-500" />
-                  <p>Logout</p>
                 </div>
               </div>
             )}
