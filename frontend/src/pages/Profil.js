@@ -13,7 +13,7 @@ function Profil() {
 
   const [value, onChange] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [dayAdd, setdayAdd] = useState(true);
+  const [dayAdd, setdayAdd] = useState(false);
 
   //Getting all own Tasks
   const { data: codeTask, isLoadingCode, isSuccessCode, isErrorCode } = useGetOwnTrackedTimeQuery();
