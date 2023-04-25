@@ -137,7 +137,7 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
         # duration = datetime.fromisoformat(request.data["stop"])-instance.start
         if request.data.get('stop'):
             # "%Y-%m-%dT%H:%M:%S.%fZ" old from Juan
-            stop = datetime.strptime(request.data["stop"], "%Y-%m-%dT%H:%M:%SZ")
+            stop = datetime.strptime(request.data["stop"], "%Y-%m-%dT%H:%M:%S.%fZ")
             start = instance.start.astimezone(pytz.utc).replace(tzinfo=None)
             duration = stop - start
             data = request.data
