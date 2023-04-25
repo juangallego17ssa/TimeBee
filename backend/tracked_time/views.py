@@ -416,8 +416,7 @@ class ListOwnFromToClockView(generics.ListAPIView):
                 flag = True
 
                 for response_month_obj in response_month_arr:
-                    if response_month_obj["year"] == day["date"].year and response_month_obj["month"] == day[
-                        "date"].month:
+                    if response_month_obj["year"] == day["date"].year and response_month_obj["month"] == day["date"].month:
                         response_month_obj["amount_days"] += 1
                         response_month_obj["duration_total"] += day["duration"]
                         response_month_obj["duration_average"] = round(
