@@ -239,46 +239,65 @@ function DataProject() {
 
   return (
     // Create Barchart
-      <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-full px-8 py-4 gap-4 rounded-3xl">
-        <div className='flex flex-rows justify-start items-start'>
-            <label htmlFor='toggle-switch'>
-                <input type="checkbox" checked={inputChange} onChange={handleInputChange} id="toggle-switch" className="cursor-pointer h-5 w-8 rounded-full appearance-none border-teal-400 bg-opacity-10 border-2 checked:bg-teal-400 transition duration-200 relative"/>
-            </label>
-              {inputChange ?
-                <div className='flex px-2'>
-                  <FaRegCalendarAlt onClick={handleDatePickerChange} />
-                  {datePicker &&
-                      <div>
-                          <Calendar onChange={setValue} value={value} showWeekNumbers={true}
-                              selectRange={true}
-                              defaultValue={value} />
-                      </div>}
-                </div>
-                  :
-                  <div className='flex px-2'>
-                      <select value={selectedOption} onChange={handleOptionChange} className='bg-teal-400 text-white rounded-2xl px-2'>
-                          <option value="week">Week</option>
-                          <option value="month">Month</option>
-                          <option value="year">Year</option>
-                      </select>
-                      {/* <p>You selected {selectedOption}</p> */}
-                      <p className='text-sm px-2'>Start date: {moment(startday).format('YYYY-MM-DD')}</p>
-                      <p className='text-sm px-2'>End date: {moment(today).format('YYYY-MM-DD')}</p>
-                  </div>
-              }
-            </div>
-            <div className="Container flex w-full md:h-1/2 border-2 shadow-xl rounded-3xl">
-              <BarChart data={newdata} keys={projects}/>  
-            </div >
-            <div className="Container flex flow-col md:flex-row w-full md:h-2/3 gap-4 overflow-scroll">
-              <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
-                <PieChart data={dataPie}/>
+    <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-full px-8 py-4 gap-4 rounded-3xl">
+      <div className="flex flex-rows justify-start items-start">
+        <label htmlFor="toggle-switch">
+          <input
+            type="checkbox"
+            checked={inputChange}
+            onChange={handleInputChange}
+            id="toggle-switch"
+            className="cursor-pointer h-5 w-8 rounded-full appearance-none border-teal-400 bg-opacity-10 border-2 checked:bg-teal-400 transition duration-200 relative"
+          />
+        </label>
+        {inputChange ? (
+          <div className="flex px-2">
+            <FaRegCalendarAlt onClick={handleDatePickerChange} />
+            {datePicker && (
+              <div>
+                <Calendar
+                  onChange={setValue}
+                  value={value}
+                  showWeekNumbers={true}
+                  selectRange={true}
+                  defaultValue={value}
+                />
               </div>
-              <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
-                <RadialChart data={dataRadial} />
-              </div>
-            </div>  
+            )}
+          </div>
+        ) : (
+          <div className="flex px-2">
+            <select
+              value={selectedOption}
+              onChange={handleOptionChange}
+              className="bg-teal-400 text-white rounded-2xl px-2"
+            >
+              <option value="week">Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </select>
+            {/* <p>You selected {selectedOption}</p> */}
+            <p className="text-sm px-2">
+              Start date: {moment(startday).format("YYYY-MM-DD")}
+            </p>
+            <p className="text-sm px-2">
+              End date: {moment(today).format("YYYY-MM-DD")}
+            </p>
+          </div>
+        )}
       </div>
+      <div className="Container flex w-full md:h-1/2 border-2 shadow-xl rounded-3xl">
+        <BarChart data={newdata} keys={projects} />
+      </div>
+      <div className="Container flex flow-col md:flex-row w-full md:h-2/3 gap-4 overflow-scroll">
+        <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
+          <PieChart data={dataPie}/>
+        </div>
+        <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
+          <RadialChart data={dataRadial} />
+        </div>
+      </div>
+    </div>
   );
 }
 
