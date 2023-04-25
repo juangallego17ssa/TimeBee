@@ -11,6 +11,7 @@ import ReportTable from "./ReportTable";
 import Holidays from "./Holidays";
 import UserInfo from "./UserInfo";
 import * as XLSX from 'xlsx'
+import ErrorPage from "../../ErrorPage";
 
 export default function MonthlyView() {
   const DEFAULT_CLOCK_IN = "09:00";
@@ -243,9 +244,8 @@ const handleExportToExcel = () => {
   } else if (isError) {
     console.log(Error);
     return (
-      <div className="flex flex-col">
-        <h2>Oops!</h2>
-        <p>something is wrong here</p>
+      <div className=" h-screen w-screen flex justify-center items-center">     
+        <ErrorPage />   
       </div>
     );
   }

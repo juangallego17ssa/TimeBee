@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorPage from '../../ErrorPage';
 import Loader from '../../Loader';
 
 export default function AnnualView() {
@@ -7,6 +8,7 @@ export default function AnnualView() {
       
       AnnualView
       <Loader />
+      <ErrorPage />
     </div>
   );
 }

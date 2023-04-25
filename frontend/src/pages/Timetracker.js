@@ -12,6 +12,8 @@ import CalendarComponent from "../Components/CalendarComp/Calendar";
 import { Views } from "react-big-calendar";
 import AddTimeTracker from "../Components/TimetrackerComp/AddTimeTracker";
 import moment from 'moment'
+import Loader from "../Components/Loader";
+import ErrorPage from "../Components/ErrorPage";
 
 function Timetracker() {
   // Fetch all the TrackedItems of the actual user and store it in Redux
@@ -108,9 +110,10 @@ function Timetracker() {
   };
 
   if (isLoading) {
-    <div>Loading...</div>;
+    return <Loader />
   } else if (isError) {
-    console.log("fetch Error");
+    console.log("fetch Error")
+    return <ErrorPage />
   }
   return (
     <div className="flex flex-col flex-grow bg-stone-100 w-full md:h-full gap-4 px-8 py-4">
