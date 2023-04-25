@@ -17,12 +17,7 @@ import {
 
 function TimerBar({ task }) {
   //List all projects created by user
-  const {
-    data,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetOwnProjectsQuery();
+  const {data, isLoading, isSuccess, isError} = useGetOwnProjectsQuery();
   const projects = data?.filter(project=>project.default !== 'default')
   // console.log(projects)
 
