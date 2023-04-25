@@ -79,16 +79,16 @@ function UserDisplay() {
              const response = await fetch(
                "https://timebee.propulsion-home.ch/backend/api/me/",
                {
-                method: "POST",
+                method: "PATCH",
                 headers: myHeaders,
                 body: formData,
                 redirect: "follow",
                }
              );
       
-             console.log("File upload response:", response);
-           } catch (error) {
-             console.error("Error uploading file:", error);
+            console.log("File upload response:", response);
+            } catch (error) {
+            console.error("Error uploading file:", error);
         }
         // updateProfile(data)
         setAvatarEdit(!avatarEdit)
