@@ -50,10 +50,32 @@ export default function MonthlyView() {
     start_date: moment(firstDayOfMonth).format('yyyy-MM-DD'),
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
   })
-    const clocledData = data?.filter(data=>data.type_of_input === '0') 
+    const clocledData = data?.filter(data=>data.type_of_input === '0' && data.code === '00') 
+    const otherData = data?.filter(data=>data.type_of_input === '0' && data.code !== '00') 
   //  console.log('clocledData for this month:',clocledData)
+  //  console.log('otherData for this month:',JSON.stringify(otherData))
+   const OTHER_DATA = otherData?.map(data => {
+    const start = moment(data.start);
+    const stop = moment(data.stop);
+    const duration = moment.duration(stop.diff(start));
+    const days = [];
+    const currentDate = moment(start);
+    while(currentDate.isSameOrBefore(stop, 'day')) {
+      days.push(currentDate.format('YYYY-MM-DD'));
+      currentDate.add(1, 'day');
+    }
+    return {
+      id: data.id,
+      code: data.code,
+      start: data.start,
+      stop: data.stop,
+      days: days,
+      duration: duration
+    };
+  });
 
-  // console.log("data=",data)
+
+  // console.log(" OTHER_DATA=", OTHER_DATA)
 
 
   /* group the data by date */
@@ -68,7 +90,7 @@ export default function MonthlyView() {
     }
     return acc;
   }, {});
-  console.log("groupedData:", groupedData);
+  // console.log("groupedData:", groupedData);
 
   /*  handel change MONTH  */
   const prevMonth = () => {
@@ -133,20 +155,15 @@ export default function MonthlyView() {
   
   /*  match DAYS in month with CLOCKED DATA  */
   const CLOCK_DATA = daysInMonth?.map((date) => {
-    // for (let i = 0; i < holidayDates?.length; i++) {
-    //   if (
-    //     date.includes(holidayDates[i]) &&
-    //     moment(date).format("ddd") !== "Sat" &&
-    //     moment(date).format("ddd") !== "Sun"
-    //     ) {
-    //       return {
-    //         date: date,
-    //         duration: DEFAULT_WORKINK_TIME,
-    //         worked_time: moment.utc(DEFAULT_WORKINK_TIME).format("HH:mm"),
-    //       };
-    //     }
-    //   }
     let notes = ''
+    for (let i = 0; i < OTHER_DATA?.length; i++) { // Loop through each date in OTHER_DATA.days
+      for (let j = 0; j < OTHER_DATA[i].days.length; j++) {
+        const event_date = OTHER_DATA[i].days[j];
+        if(date === event_date){
+          notes = CODE.find((item) => item.code === OTHER_DATA[i].code).value
+        }
+      }
+    }
     for (let i=0 ; i < publicHolidaysOfMonth?.length; i++){
       if(date.includes(publicHolidaysOfMonth[i].date)){
         notes = (publicHolidaysOfMonth[i].holiday_name)
@@ -187,7 +204,6 @@ export default function MonthlyView() {
     }
     return;
   });
-  // console.log('CLOCK_DATA=',CLOCK_DATA?.filter(data=>data.start).length)
   // console.log('CLOCK_DATA=',CLOCK_DATA)
 
   // total work time of the month in milliseconds

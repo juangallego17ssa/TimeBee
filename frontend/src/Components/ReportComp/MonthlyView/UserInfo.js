@@ -5,8 +5,9 @@ import UserAvator from '../../UserAvator'
 
 
 export default function UserInfo() {
+  const ANNUAL_LEAVES = 25
     const userData = useSelector( (state) => state.user.user)
-    console.log(userData)
+    // console.log(userData)
 if (userData)
   return (
     <div className='p-5 flex-col'>
@@ -20,9 +21,8 @@ if (userData)
 
       <div className="grid grid-cols-2 p-5">
         <p>Username: {userData?.username}</p>
-        <p> Holidays this year: 25 Days</p>
+        <p> Holidays: 23 / {userData.holidays?userData.holidays:ANNUAL_LEAVES}</p>
         <p> Workload: {userData?.workload}%</p>
-        <p> Holidays left over: 5 Days</p>
         <p> First Login: {moment(userData?.date_joined).format("DD-MM-YYYY")}</p>
         <p> Last Login: {moment(userData?.last_login).format("DD-MM-YYYY")}</p>
 

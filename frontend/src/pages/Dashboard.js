@@ -17,7 +17,12 @@ function Dashboard() {
         <div className="flex w-full h-full">
           <div className="flex-col w-8/12 h-full">
           <label htmlFor='projekt-clock-switch' className="flex pl-5 py-2">
-                <input type="checkbox" checked={displayChange} onChange={handleDisplayChange} id="projekt-clock-switch" className="cursor-pointer h-8 w-20 rounded-md appearance-none border-zinc-400 bg-opacity-10 border-2 checked:bg-zinc-400 transition duration-200 relative"/>
+                <input 
+                type="checkbox" 
+                checked={displayChange} 
+                onChange={handleDisplayChange} 
+                id="projekt-clock-switch" 
+                className="cursor-pointer h-10 w-32 rounded-full appearance-none border-zinc-300 bg-opacity-10 border-2 checked:bg-zinc-300 transition duration-200 relative"/>
             </label>
 
             {displayChange ?

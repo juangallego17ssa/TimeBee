@@ -13,19 +13,16 @@ function Report() {
   return(
     <section className="mx-6 inline-block h-[88%]">
     <div className="switch-view-btn flex gap-3">
-     
-      <button
-      className="bg-black text-white font-bold px-4 py-2 rounded-lg"
-      onClick={()=>setShowAnnualReport(false)}
-      >
-        MONTHLY
-      </button>
-      <button
-      className="bg-black text-white font-bold px-4 py-2 rounded-lg"
-      onClick={()=>setShowAnnualReport(true)}
-      >
-        ANNUAL
-      </button>
+
+    <label htmlFor='report-monthly-annual-switch' className="flex pl-5 py-2">
+                <input 
+                type="checkbox" 
+                checked={showAnnualReport} 
+                onChange={()=>setShowAnnualReport(!showAnnualReport)} 
+                id="report-monthly-annual-switch" 
+                className="cursor-pointer h-10 w-40 rounded-full appearance-none border-zinc-300 bg-opacity-10 border-2 checked:bg-zinc-300 transition duration-200 relative"/>
+            </label>
+
 
     </div>
     {showAnnualReport?
