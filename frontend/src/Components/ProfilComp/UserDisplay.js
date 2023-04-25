@@ -16,7 +16,8 @@ function UserDisplay() {
     const [isHovered, setIsHovered] = useState(false);
     const [images, setImages] = useState([]);
     const [preview, setPreview] = useState([]);
-    const Token = localStorage.getItem("Token");
+    const Token = localStorage.getItem("myToken");
+
 
     
     
