@@ -62,7 +62,7 @@ function Profil() {
           </div>
             <div className="boder-2 flex-grow bg-white h-full md:h-1/2 w-full rounded-xl shadow-xl py-2">
               <div className='flex items-center justify-center font-bold'>SPECIAL LEAVE</div>
-              <div className='flex flex-col justify-center items-center gap-1 pt-1'>
+              <div className='flex flex-col justify-center items-center gap-1 pt-1'> {/* Display Coded Task */}
               {filteredTask?.map((task) => (
                 <CodeTask
                   key={task.id}
