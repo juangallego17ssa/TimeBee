@@ -1,44 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
-import { GiBee } from "react-icons/gi";
+import React, { useState, useEffect } from "react";
 import {
-  AiFillTag,
   AiOutlineClockCircle,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import TimerBar from "../Components/TimetrackerComp/TimerBar";
-import Timer from "../Components/TimetrackerComp/Timer";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import ProjectOptions from "../Components/ProjectTagComp/ProjectOptions";
-
 import {
-  useGetTrackedTimeQuery,
-  useCreateTrackedTimeMutation,
-  useGetOwnTrackedTimeQuery,
-  useGetTrackedTimeByDateQuery,
   useGetTrackedTimeByDateWithStartNullQuery,
 } from "../api/API";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTrackedTimeOwn } from "../redux/Slices/trackedTimeOwnSlice";
 import CalendarComponent from "../Components/CalendarComp/Calendar";
 import { Views } from "react-big-calendar";
 import AddTimeTracker from "../Components/TimetrackerComp/AddTimeTracker";
-import { reactHooksModule } from "@reduxjs/toolkit/dist/query/react";
 import moment from 'moment'
+import Loader from "../Components/Loader";
+import ErrorPage from "../Components/ErrorPage";
 
 function Timetracker() {
   // Fetch all the TrackedItems of the actual user and store it in Redux
-  const dispatch = useDispatch();
   const reduxTrackedTime = useSelector(
     (store) => store.trackedtime.trackedtime
   );
 
-  // useEffect(() => {
-  //   dispatch(fetchTrackedTimeOwn());
-  // }, []);
-
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isManual, setIsManual] = useState(false);
-  const [showProjectTags, setShowProjectTags] = useState(false);
   const [selectedProject, setSelectedProject] = useState({});
   const [tableFilterDataTask, setTableFilterDataTask] = useState([]);
   const [tableShowDataTask, setTableShowDataTask] = useState([]);
@@ -52,7 +36,6 @@ function Timetracker() {
   const {
     data: tasks,
     isLoading,
-    isSuccess,
     isError,
   } = useGetTrackedTimeByDateWithStartNullQuery(moment(selectedDate).format("YYYY-MM-DD"));
   console.log(tasks)
@@ -121,23 +104,16 @@ function Timetracker() {
     setTableShowDataClock(generatedTableDataClock);
   }, [reduxTrackedTime, selectedDate]);
 
-  // console.log(selectedDate);
-  // console.log(tableFilterDataTask);
-  // console.log(tableShowDataTask);
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-  };
-
   const handelDateChanged = (e) => {
     e.preventDefault();
     console.log("handelDateChanged");
   };
 
   if (isLoading) {
-    <div>Loading...</div>;
+    return <Loader />
   } else if (isError) {
-    console.log("fetch Error");
+    console.log("fetch Error")
+    return <ErrorPage />
   }
   return (
     <div className="flex flex-col flex-grow bg-stone-100 w-full md:h-full gap-4 px-8 py-4">

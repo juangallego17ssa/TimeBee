@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import {
   FaPlayCircle,
-  FaRegPauseCircle,
   FaRegStopCircle,
   FaTrashAlt,
 } from "react-icons/fa";
@@ -9,23 +8,16 @@ import { AiFillTag } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { useGetOwnProjectsQuery } from "../../api/API";
 import Timer from "./Timer";
-import axios from "axios";
 import moment from "moment";
 
 import {
   useUpdateTrackedTimeByIDMutation,
   useDeleteTrackedTimeByIDMutation,
 } from "../../api/API";
-import ProjectOptions from "../ProjectTagComp/ProjectOptions";
 
 function TimerBar({ task }) {
   //List all projects created by user
-  const {
-    data,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetOwnProjectsQuery();
+  const {data, isLoading, isSuccess, isError} = useGetOwnProjectsQuery();
   const projects = data?.filter(project=>project.default !== 'default')
   // console.log(projects)
 
@@ -45,10 +37,7 @@ function TimerBar({ task }) {
   const [editProject, setEditProject] = useState(false);
   const [taskName, setTaskname ]= useState(task.task_name);
   const [project, setProject ]= useState(task.project.id);
-  const [BusyBee, setBusyBee] = useState('');
-  const [updated, setUpdated] = useState('');
 
-  // const [showProject, setShowProject] = useState(false)
 
   const handleChangeTaskName = (event) => {
     event.preventDefault();
@@ -58,29 +47,31 @@ function TimerBar({ task }) {
     }
   };
   const handleChangeProject = () => {
+    
+    setProject(projectRef.current.value);
     console.log(projectRef.current.value);
   };
 
-  const handleAddChange = (event) => {
-    setPlay(event.target.value);
-  };
+  // const handleAddChange = (event) => {
+  //   setPlay(event.target.value);
+  // };
 
   
 
-  const handlePlayStop = (event) => {
-    event.preventDefault();
-    setPlay(!play);
-    // refetch();
-    // perform the search operation here
-  };
+  // const handlePlayStop = (event) => {
+  //   event.preventDefault();
+  //   setPlay(!play);
+  //   // refetch();
+  //   // perform the search operation here
+  // };
 
-  const handleEdit = (event) => {
-    event.preventDefault();
-    setEdit(!edit);
-    // console.log(edit)
-    // refetch();
-    // perform the search operation here
-  };
+  // const handleEdit = (event) => {
+  //   event.preventDefault();
+  //   setEdit(!edit);
+  //   // console.log(edit)
+  //   // refetch();
+  //   // perform the search operation here
+  // };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -136,6 +127,13 @@ function TimerBar({ task }) {
     deleteTrackedTimeByID(trackedtimeId);
   };
 
+  if(isLoading){
+    return <div>Loading...</div>
+
+  }else if(isError){
+    return <div>Oops! something is wrong</div>
+
+  }
   return (
     <div className="bg-white flex items-center py-2 px-4 rounded-full w-full shadow-md">
       <div className="flex flex-col lg:flex-row items-end w-full">
@@ -184,7 +182,6 @@ function TimerBar({ task }) {
               )}
             </div>
           </div>
-          {/* <FaTrashAlt onClick={handelDeleteTask}className="text-md text-zinc-300 hover:text-red-500 mx-3"/> */}
         </div>
 
         <div className="relative  flex items-center">
