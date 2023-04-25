@@ -283,14 +283,12 @@ const handleExportToExcel = () => {
             onClick={prevMonth}
           />
         </div>
-        
+
         <ReportTable
           data={CLOCK_DATA}
           currentMonth={currentMonth}
           publicHolidaysOfMonth={publicHolidaysOfMonth}
-          
         />
-      
       </section>
 
       {/* ================// SUMMARY SECTIION //================ */}
@@ -302,7 +300,9 @@ const handleExportToExcel = () => {
         </div>
         {/*  PUBLIC HOLIDAYS FOR THIS MONTH  */}
         <div className="boder-2 bg-white h-1/4 w-full rounded-xl shadow-md py-2">
-          <h2 className="felx text-center text font-bold my-3">HOLIDAYS</h2>
+          <h2 className="felx text-center text font-bold my-3">
+            PUBLIC HOLIDAYS THIS MONTH
+          </h2>
           <Holidays
             currentMonth={currentMonth}
             publicHolidaysOfMonth={publicHolidaysOfMonth}
@@ -369,10 +369,10 @@ const handleExportToExcel = () => {
         {/*  EXPORT EXCEL / PDF */}
         <div>
           <button
-           onClick={handleExportToExcel}
-           className="py-5 px-10 rounded-full  text-white text-md font-bold 
+            onClick={handleExportToExcel}
+            className="py-5 px-10 rounded-full  text-white text-md font-bold 
                     bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
-           >
+          >
             EXPORT REPORT
           </button>
         </div>

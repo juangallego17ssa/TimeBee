@@ -61,7 +61,7 @@ const CalendarComponent = ({ events, views, defaultView, selectedDate, onDateCha
         views={views}
         defaultView={defaultView}
         showMultiDayTimes={true}
-        dayLayoutAlgorithm={"no-overlap"}
+        // dayLayoutAlgorithm={"no-overlap"}
         step={60}
         popup
         date={selectedDate}
