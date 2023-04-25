@@ -83,18 +83,22 @@ class ListTrackedTimeByCodeView(ListCreateAPIView):
         elif code:
             queryset = queryset.filter(code=self.request.query_params.get('code'))
 
-
         if start_date_str and end_date_str:
             # Assuming the date format passed through query params is YYYY-MM-DD
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
 
             if type_of_input:
-                queryset = queryset.filter(Q(type_of_input=self.request.query_params.get('type_of_input')) & Q(start__date__gte=start_date, start__date__lte=end_date))
+                queryset = queryset.filter(
+                    Q(type_of_input=self.request.query_params.get('type_of_input')) & Q(start__date__gte=start_date,
+                                                                                        start__date__lte=end_date))
             else:
-                queryset = queryset.filter(Q(code=self.request.query_params.get('code')) & Q(start__date__gte=start_date, start__date__lte=end_date))
+                queryset = queryset.filter(
+                    Q(code=self.request.query_params.get('code')) & Q(start__date__gte=start_date,
+                                                                      start__date__lte=end_date))
 
         return queryset
+
 
 class ListOwnTrackedTimeView(generics.ListAPIView):
     """
@@ -132,7 +136,7 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         # duration = datetime.fromisoformat(request.data["stop"])-instance.start
         if request.data.get('stop'):
-            #"%Y-%m-%dT%H:%M:%S.%fZ" old from Juan
+            # "%Y-%m-%dT%H:%M:%S.%fZ" old from Juan
             stop = datetime.strptime(request.data["stop"], "%Y-%m-%dT%H:%M:%SZ")
             start = instance.start.astimezone(pytz.utc).replace(tzinfo=None)
             duration = stop - start
