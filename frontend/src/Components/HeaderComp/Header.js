@@ -259,7 +259,7 @@ function Header({ children }) {
               )}
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className=" flex items-center gap-2">
             <div className="p-0.5 text-zinc-600 text-md hidden md:block h-full">
               {today.toLocaleDateString("en-GB", options)}
             </div>
@@ -288,7 +288,7 @@ function Header({ children }) {
             <div className="relative" onClick={handleShowSettings}>
               <UserAvator />
               {showSettings && (
-                <div className="absolute flex flex-col right-2 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
+                <div className="animate-dropdown origin-top absolute flex flex-col right-2 top-12 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
                   <div className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer">
                     <FiUser />
                     <p onClick={goToProfil}>Profile</p>
@@ -314,7 +314,7 @@ function Header({ children }) {
               />
             )}
             {showMenu && (
-              <div className="absolute flex flex-col right-4 top-14 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
+              <div className="animate-dropdown origin-top absolute flex flex-col right-4 top-14 gap-2 bg-white shadow-md py-2 z-20 rounded-md">
                 <div
                   onClick={goToTimetracker}
                   className="flex items-center gap-2 px-4 hover:bg-stone-100 hover:cursor-pointer"
