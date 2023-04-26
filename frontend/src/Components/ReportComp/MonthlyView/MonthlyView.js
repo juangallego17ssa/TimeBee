@@ -270,16 +270,16 @@ const handleExportToExcel = () => {
       {/* ================// REPORT SECTIION //================ */}
 
       <section className="items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
-        <div className=" flex justify-center items-center mb-3">
+        <div className=" flex justify-center items-center   ">
           <MdKeyboardArrowLeft
-            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={nextMonth}
           />
-          <h2 className=" w-60 text-center text-2xl">
+          <h2 className="w-60 text-center text-xl">
             {moment(currentMonth).format("yyyy MMMM")}
           </h2>
           <MdKeyboardArrowRight
-            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={prevMonth}
           />
         </div>

@@ -244,9 +244,9 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
   } = tableInstance;
 if(holidayDates)
   return (
-    <div className="h-[98%] w-[98%] flex-col items-center justify-center">
-       {/* button to export table data to Excel */}
-       {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
+    <div className="h-[98%] w-[98%] flex-col items-center justify-center overflow-auto">
+      {/* button to export table data to Excel */}
+      {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
       <table
         id="my-table"
         className="table-auto text-[12px] text-center m-auto w-[80%]"
