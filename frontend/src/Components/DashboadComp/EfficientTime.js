@@ -10,7 +10,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from 'recharts';
-import {axiosWithToken} from "../../api/axios";
+import {axiosTimeBee, axiosWithToken} from "../../api/axios";
 import CreateDataBackend from "./createDataBackend";
 
 const EfficientTime = () => {
@@ -91,13 +91,17 @@ const EfficientTime = () => {
         }
 
         const config = {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access")}`,
+              "Content-Type": "application/json",
+            },
             params: {
                 from: firstDate,
                 to: lastDate
             }
         }
         try {
-            const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
+            const response = await axiosTimeBee(`trackedtime/listownfromtoclock/`, config)
 
             setWeekNum(`WEEK ${myWeekNum} - ${myWeekDate.getFullYear()}`)
 
@@ -176,13 +180,17 @@ const EfficientTime = () => {
         }
 
         const config = {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access")}`,
+              "Content-Type": "application/json",
+            },
             params: {
                 from: firstDate,
                 to: lastDate
             }
         }
         try {
-            const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
+            const response = await axiosTimeBee(`trackedtime/listownfromtoclock/`, config)
 
             setWeekNum(`${getMonthName(monthNum).toString()} - ${weekDate.getFullYear()}`)
 

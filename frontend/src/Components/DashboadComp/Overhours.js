@@ -12,7 +12,7 @@ import {
   Scatter,
   ResponsiveContainer,
 } from 'recharts';
-import {axiosWithToken} from "../../api/axios";
+import {axiosTimeBee, axiosWithToken} from "../../api/axios";
 import { ResponsiveTimeRange } from '@nivo/calendar'
 
 
@@ -60,6 +60,10 @@ const Overhours = () => {
         setMyLastDate(lastDate)
 
         const config = {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access")}`,
+              "Content-Type": "application/json",
+            },
             params: {
                 from: firstDate,
                 to: lastDate
@@ -67,7 +71,7 @@ const Overhours = () => {
         }
 
         try {
-            const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
+            const response = await axiosTimeBee(`trackedtime/listownfromtoclock/`, config)
             // setWeekNum(`Week ${weekNum}`)
 
             const dataArray = []
@@ -123,6 +127,10 @@ const Overhours = () => {
 
 
         const config = {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access")}`,
+              "Content-Type": "application/json",
+            },
             params: {
                 from: firstDate,
                 to: lastDate
@@ -130,7 +138,7 @@ const Overhours = () => {
         }
 
         try {
-            const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
+            const response = await axiosTimeBee(`trackedtime/listownfromtoclock/`, config)
 
             setWeekNum(`Week ${weekNum}`)
             // setWeekDuration(week.first_clock_average.slice(0,5))
@@ -228,8 +236,8 @@ const Overhours = () => {
                         <div className="flex justify-center align-center">
                             <div className="h-40 w-40 p-3 text-7xl border border-solid text-zinc-500 border-zinc-300 flex justify-center items-center">
                                 <div className="flex flex-row items-end">
-                                    <p>{overtimeTotal.split(".")[0]}</p>
-                                    <p className="text-3xl">,{overtimeTotal.split(".")[1]} </p>
+                                    <p>{overtimeTotal?overtimeTotal.split(".")[0]:0}</p>
+                                    <p className="text-3xl">,{overtimeTotal?overtimeTotal.split(".")[1]:0} </p>
                                     <p className="text-lg">h</p></div>
                                 </div>
                         </div>

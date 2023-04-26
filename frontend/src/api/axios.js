@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const baseURL =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_BASE_URL_PROD
-    : process.env.REACT_APP_API_BASE_URL_DEV;
+// const baseURL =
+//   process.env.NODE_ENV === "production"
+//     ? process.env.REACT_APP_API_BASE_URL_PROD
+//     : process.env.REACT_APP_API_BASE_URL_DEV;
 // const baseURL = 'http://localhost:8000/backend/api/'
+const baseURL = 'https://timebee.propulsion-learn.ch/backend/api/'
+
 
 export const axiosWithoutToken = axios.create({
   baseURL: baseURL,
