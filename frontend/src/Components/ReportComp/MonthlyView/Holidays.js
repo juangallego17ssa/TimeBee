@@ -38,8 +38,8 @@ export default function Holidays({currentMonth,publicHolidaysOfMonth}) {
       {/* <div>
         <div>
           {/* <button>Add Holiday</button> */}
-        </div>
-      </div> */}
+        {/* </div> */}
+      {/* </div> */} 
     </div>
   );
 }
