@@ -144,7 +144,7 @@ const EfficientTime = () => {
 
             }
         } catch (error) {
-            setWeekNum(`WEEK ${weekNum} - ${weekDate.getFullYear()}`)
+            setWeekNum(`WEEK ${myWeekNum} - ${myWeekDate.getFullYear()}`)
             setWeekClockIn("08:00")
             setWeekClockOut("18:00")
             setWeekBreakTime("02:00")
@@ -387,7 +387,7 @@ const EfficientTime = () => {
                               <Bar dataKey="Time at work"  fill="#777777" />
                             </BarChart>
                         </ResponsiveContainer>
-                        <div>{CreateDataBackend()}</div>
+                        {/*<div>{CreateDataBackend()}</div>*/}
                     </div>
                 </div>
     );
