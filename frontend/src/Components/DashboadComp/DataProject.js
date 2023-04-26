@@ -90,7 +90,7 @@ function DataProject() {
  //--------FOR BAR CHART-------------------------------------------------    
 // Filter all Task by project and by Day and not Clock in/out
     const dataTimeOwn = trackedTimerange.reduce((acc, item) => {
-        if (item.stop !== null && item.type_of_input !== "0") {
+        if (item.stop !== null && item.type_of_input !== "0" && item.project.name !== "unassigned") {
           const project = item.project.name;
           const day = moment(item.stop).format('MMM DD');
           const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
@@ -156,7 +156,7 @@ function DataProject() {
     //------------------Start Pie Chart--------------------------------------------
     // Group by Project and calculate duration from start stop by day and not Clock in/out
     const dataTimeOwnSum = trackedTimerange.reduce((acc, item) => {
-        if (item.stop !== null && item.type_of_input !== "0") {
+        if (item.stop !== null && item.type_of_input !== "0" && item.project.name !== "unassigned") {
             const project = item.project.name;
             const day = moment(item.stop).format('MMM DD');
             const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
@@ -201,7 +201,7 @@ function DataProject() {
 
     // Group by Project every task and duration and not Clock in/out
     const dataTimeOwnProject = trackedTimerange.reduce((acc, item) => {
-        if (item.stop !== null && item.type_of_input !== "0") {
+        if (item.stop !== null && item.type_of_input !== "0" && item.project.name !== "unassigned") {
              const project = item.project.name;
              const task_name = item.task_name;
              const duration = moment.duration(moment(item.stop).diff(moment(item.start)));
@@ -294,7 +294,8 @@ function DataProject() {
       </div>
       <div className="Container flex flow-col md:flex-row w-full md:h-2/3 gap-4 overflow-scroll">
         <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
-          <PieChart data={dataPie}/>
+          <PieChart data={dataPie}
+          />
         </div>
         <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
           <RadialChart data={dataRadial} />
