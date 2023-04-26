@@ -9,10 +9,12 @@ function CodeTask(props) {
     const [deleteTrackedTimeByID] = useDeleteTrackedTimeByIDMutation();
 
     const handelDeleteTask = () => {
-        const trackedtimeId = props.id;
+        const trackedtimeId = props.task.id;
         console.log(props);
         deleteTrackedTimeByID(trackedtimeId);
     };
+
+    console.log(props.task)
     
     let codename = '';
 
@@ -43,9 +45,9 @@ function CodeTask(props) {
             <div className="flex flex-row items-center bg-white md:h-10  w-full px-2">
                 <div className="flex text-s text-zinc-400 w-20 hover:text-teal-600">{codename}</div>
                 <div className="flex text-xs w-30 text-zinc-400 gap-5 ">
-                    <p className="flex text-xs w-fit text-zinc-400 ">{moment(props.start).format("DD-MMM-yyyy hh:mm")}</p>
+                    <p className="flex text-xs w-fit text-zinc-400 ">{moment(props.task.start).format("DD-MMM-yyyy hh:mm")}</p>
                     <span>-</span>
-                    <p className="flex text-xs w-fit text-zinc-400">{moment(props.stop).format("DD-MMM-yyyy hh:mm")}</p>
+                    <p className="flex text-xs w-fit text-zinc-400">{moment(props.task.stop).format("DD-MMM-yyyy hh:mm")}</p>
                 </div>
                 <FaTrashAlt onClick={handelDeleteTask} className="text-md text-zinc-200 hover:text-red-500 "/>
             </div>

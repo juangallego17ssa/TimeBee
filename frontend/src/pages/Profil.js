@@ -66,7 +66,8 @@ function Profil() {
               {filteredTask?.map((task) => (
                 <CodeTask
                   key={task.id}
-                  code={task.code} />))}
+                  code={task.code}
+                  task={task} />))}
               {dayAdd ?
                 <div className="flex flex-rows justify-end items-center bg-white md:h-full  w-full p-2">
                   <p className='font-semibold px-2'>CLOSE</p>
