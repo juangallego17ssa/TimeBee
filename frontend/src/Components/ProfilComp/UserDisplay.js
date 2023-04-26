@@ -113,7 +113,7 @@ function UserDisplay() {
                         <img
                         src={currentUser?.avatar}
                         alt="avatar"
-                        className="object-cover  bg-teal-400 rounded-full flex justify-center items-center hover:opacity-70 hover:cursor "/>
+                        className="object-cover rounded-full flex justify-center items-center hover:cursor "/>
                     </div>
                     ) : (
                     <div>

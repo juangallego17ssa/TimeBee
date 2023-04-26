@@ -20,7 +20,7 @@
 }
 
 #projekt-clock-switch:checked::after{
-content: 'PRPJECT';
+content: 'PROJECT';
 @apply transform  bg-cyan-500 border-cyan-500  translate-x-7;
 }
 

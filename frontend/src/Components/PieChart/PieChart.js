@@ -26,6 +26,7 @@ const MyResponsivePie = ({ data } /* see data tab */ ) => {
                     ]
                 }}
                 arcLinkLabelsSkipAngle={10}
+                arcLinkLabel={d => `${d.id}: ${d.value} hours`}
                 arcLinkLabelsTextColor="#333333"
                 arcLinkLabelsThickness={2}
                 arcLinkLabelsColor={{ from: 'color' }}
@@ -39,6 +40,7 @@ const MyResponsivePie = ({ data } /* see data tab */ ) => {
                         ]
                     ]
                 }}
+                enableArcLabels={false}
                 defs={[
                     {
                         id: 'dots',

@@ -181,13 +181,16 @@ function DataProject() {
             } else {
                 projectDurations[project] = hours;
             }
+            projectDurations[project]= Math.abs(parseFloat((hours).toFixed(2)))
         });
     }
     
     // Convert project durations object to array of objects and sort by duration
     const sortedProjects = Object.entries(projectDurations)
         .map(([project, duration]) => ({ project, duration }))
-        .sort((a, b) => b.duration - a.duration);
+    .sort((a, b) => b.duration - a.duration);
+  
+  console.log(sortedProjects)
     
     // console.log(sortedProjects);
     // Transfer data into Chart data
@@ -294,7 +297,8 @@ function DataProject() {
       </div>
       <div className="Container flex flow-col md:flex-row w-full md:h-2/3 gap-4 overflow-scroll">
         <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
-          <PieChart data={dataPie}/>
+          <PieChart data={dataPie}
+          />
         </div>
         <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
           <RadialChart data={dataRadial} />

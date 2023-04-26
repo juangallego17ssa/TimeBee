@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx'
 
 const columns = [
   {
-    Header: 'Date',
+    Header: 'January',
     accessor: 'date',
     Cell: ({ value }) => (
       <div className="grid grid-cols-2 ">
@@ -15,7 +15,7 @@ const columns = [
     ),
   },
   {
-    Header: 'Start',
+    Header: 'February',
     accessor: 'start',
     Cell: ({ value }) => {
       if(value){
@@ -33,7 +33,7 @@ const columns = [
   },
   },
   {
-    Header: 'Stop',
+    Header: 'March',
     accessor: 'stop',
     Cell: ({ value }) => {
       if(value){
@@ -50,14 +50,14 @@ const columns = [
   },
   },
   {
-    Header: 'Worked Time',
+    Header: 'April',
     accessor: 'worked_time',
     Cell:({value})=>(
       <p className={`bg-transparent text-center`}>{value}</p>
       )
   },
   {
-    Header: '',
+    Header: 'May',
     accessor: 'over_time',
     Cell: ({ value }) =>{
       if(value>0){
@@ -75,7 +75,7 @@ const columns = [
     } 
   },
   {
-    Header: 'Notes',
+    Header: 'June',
     accessor: 'notes',
     Cell: ({ value }) =>{
       return (
@@ -92,6 +92,132 @@ const columns = [
       // }else if(value === 0 | value === undefined){
       //   return      
       // }
+
+    } 
+  },
+  {
+    Header: 'July',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
+
+    } 
+  },
+  {
+    Header: 'August',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
+
+    } 
+  },
+  {
+    Header: 'September',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
+
+    } 
+  },
+  {
+    Header: 'October',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
+
+    } 
+  },
+  {
+    Header: 'November',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
+
+    } 
+  },
+  {
+    Header: 'December',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
+
+    } 
+  },
+  {
+    Header: 'Total',
+    accessor: '',
+    Cell: ({ value }) =>{
+      if(value>0){
+      return (
+      <p className="text-red-500">-{moment.utc(value).format('HH:mm')}</p> //under time
+      )
+      }else if(value<0){
+      return (
+      <p className="text-teal-500">+{moment.utc(value*-1).format('HH:mm')}</p> //over time
+      )
+      }else if(value === 0 | value === undefined){
+        return      
+      }
 
     } 
   },
