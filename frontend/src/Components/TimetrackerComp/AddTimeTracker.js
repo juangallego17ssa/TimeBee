@@ -49,7 +49,7 @@ export default function AddTimeTracker({isManual}) {
         
       // Clean up input
       taskNameRef.current.value = '';
-      setSelectedProject('');
+      setSelectedProject({tag_color:"#a1a1aa"});
     }
     
       
@@ -96,11 +96,9 @@ export default function AddTimeTracker({isManual}) {
       
     //   Clean up input
       taskNameRef.current.value = '';
-      // startTimeRef.current.value = '';
-      // endTimeRef.current.value='';
       setTaskStart(new Date());
       setTaskStop(new Date())
-      setSelectedProject('');
+      setSelectedProject({tag_color:"#a1a1aa"});
     }
 
     if (isManual){
