@@ -149,9 +149,14 @@ class RetrieveUpdateDeleteTrackedTimeView(RetrieveUpdateDestroyAPIView):
             stop = datetime.strptime(request.data["start"], "%Y-%m-%dT%H:%M:%S.%fZ")
             current_user = request.user
             current_object = instance.id
-            object_to_stop = TrackedTime.objects.filter(start__isnull=False, stop__isnull=True,
-                                                        project__created_by=current_user).exclude(
-                id=current_object)
+            object_to_stop = TrackedTime.objects.filter(
+                start__isnull=False,
+                stop__isnull=True,
+                project__created_by=current_user
+            ).exclude(
+                Q(id=current_object) | Q(type_of_input=0)
+            )
+
             if object_to_stop.exists():
                 object_to_stop.update(stop=stop)
 
