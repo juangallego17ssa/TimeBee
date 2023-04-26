@@ -17,7 +17,8 @@ export default function AddTimeTracker({isManual}) {
     const [showProjectTags, setShowProjectTags] = useState(false);
     const [selectedProject,setSelectedProject] = useState({});
     const [taskStart, setTaskStart] = useState(new Date());
-    const [taskStop, setTaskStop] = useState(new Date());
+  const [taskStop, setTaskStop] = useState(new Date());
+  const [showSelectProjectMessage, setShowSelectProjectMessage] = useState(true)
     
 
     const taskNameRef=useRef()
@@ -49,7 +50,9 @@ export default function AddTimeTracker({isManual}) {
         
       // Clean up input
       taskNameRef.current.value = '';
-      setSelectedProject('');
+    setSelectedProject('');
+    setShowSelectProjectMessage(true)
+    
     }
     
       
@@ -101,59 +104,73 @@ export default function AddTimeTracker({isManual}) {
       setTaskStart(new Date());
       setTaskStop(new Date())
       setSelectedProject('');
+      setShowSelectProjectMessage(true)
+      
     }
 
+    console.log(showSelectProjectMessage)
+  
     if (isManual){
-        return(
-            <div className='flex items-center flex-grow gap-2'>
-            <div className='flex flex-col lg:flex-row md:items-center items-start bg-white py-2 px-6 rounded-3xl md:rounded-full shadow-md flex-grow '>
-                <div className=' w-full grid grid-cols-[2fr_1fr]'>
-                    <label htmlFor='task-name'>
-                        <input 
-                        className=' py-1 w-full shadow-inner rounded-full px-4 focus:outline-none'
-                        id='task-name' 
-                        placeholder='What are you working on ?'
-                        ref={taskNameRef}/>
-                    </label>
-                    <div className="relative flex items-center">
+        return (
+          <div className="flex items-center flex-grow gap-2">
+            <div className="flex flex-col lg:flex-row md:items-center items-start bg-white py-2 px-6 rounded-3xl md:rounded-full shadow-md flex-grow ">
+              <div className=" w-full grid grid-cols-[2fr_1fr]">
+                <label htmlFor="task-name">
+                  <input
+                    className=" py-1 w-full shadow-inner rounded-full px-4 focus:outline-none"
+                    id="task-name"
+                    placeholder="What are you working on ?"
+                    ref={taskNameRef}
+                  />
+                </label>
+                <div className="relative flex items-center justify-end">
+                  {showSelectProjectMessage && <p>select a project</p>}
+
+                  <p>{selectedProject ? selectedProject.name : ""}</p>
                   <AiFillTag
-                    style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'zinc'}`}}
-                        className="m-1 text-xl"
-                        onClick={() => {
-                        setShowProjectTags(!showProjectTags);
-                        }}
+                    style={{
+                      color: `${
+                        selectedProject.tag_color
+                          ? selectedProject.tag_color
+                          : "zinc"
+                      }`,
+                    }}
+                    className="m-1 text-xl"
+                    onClick={() => {
+                      setShowProjectTags(!showProjectTags);
+                    }}
+                  />
+
+                  {showProjectTags && (
+                    <ProjectOptions
+                      selectedProject={selectedProject}
+                      setSelectedProject={setSelectedProject}
+                      setShowProjectTags={setShowProjectTags}
+                      setShowSelectProjectMessage={setShowSelectProjectMessage}
                     />
-                    <p>{selectedProject ? selectedProject.name : ""}</p>
-        
-                    {showProjectTags && (
-                        <ProjectOptions
-                        selectedProject={selectedProject}
-                        setSelectedProject={setSelectedProject}
-                        setShowProjectTags={setShowProjectTags}
-                        />
-                    )}
-                    </div>    
+                  )}
                 </div>
-             {/*---- start time and finish time ----*/}
-                <div className=' flex items-center justify-end gap-2 w-full text-zinc-600'> 
-                    <div className='relative flex items-center '>
-                          <DatePicker
-                          selected={taskStart}
-                          onChange={handelTaskStartDate}
-                          showTimeSelect
-                          timeIntervals={15}
-                          dateFormat="MMMM d, yyyy h:mm aa"
-                          className="mx-4"
-                        />
-                        <DatePicker
-                          selected={taskStop}
-                          onChange={handelTaskStopDate}
-                          showTimeSelect
-                          timeIntervals={15}
-                          dateFormat="MMMM d, yyyy h:mm aa"
-                          className="mx-4"
-                        />
-                        {/* <label htmlFor='startTime'>
+              </div>
+              {/*---- start time and finish time ----*/}
+              <div className=" flex items-center justify-end gap-2 w-full text-zinc-600">
+                <div className="relative flex items-center ">
+                  <DatePicker
+                    selected={taskStart}
+                    onChange={handelTaskStartDate}
+                    showTimeSelect
+                    timeIntervals={15}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    className="mx-4"
+                  />
+                  <DatePicker
+                    selected={taskStop}
+                    onChange={handelTaskStopDate}
+                    showTimeSelect
+                    timeIntervals={15}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    className="mx-4"
+                  />
+                  {/* <label htmlFor='startTime'>
                             <input 
                             id='startTime' 
                             className="w-fit text-center focus:outline-none"
@@ -172,16 +189,17 @@ export default function AddTimeTracker({isManual}) {
                             ref={endTimeRef}
                             />
                         </label> */}
-                    </div>  
                 </div>
+              </div>
             </div>
-            <div 
-            onClick={handleCreateMaually}
-            className='border-[2.5px] border-teal-400 text-teal-400 w-8 h-8 flex items-center justify-center rounded-full hover:bg-teal-400  hover:text-white'>
-                <FiPlus className='text-xl font-extrabold'/>
+            <div
+              onClick={handleCreateMaually}
+              className="border-[2.5px] border-teal-400 text-teal-400 w-8 h-8 flex items-center justify-center rounded-full hover:bg-teal-400  hover:text-white"
+            >
+              <FiPlus className="text-xl font-extrabold" />
             </div>
-            </div>
-    )
+          </div>
+        );
 
     }else{
         return (
@@ -193,10 +211,12 @@ export default function AddTimeTracker({isManual}) {
                   id="task-name"
                   placeholder="What are you working on ?"
                   ref={taskNameRef}
-                  
                 />
               </label>
-              <div className="relative flex items-center">
+              <div className="relative flex items-center justify-end">
+                {showSelectProjectMessage &&(<p>select a project</p>)}
+               
+                <p>{selectedProject ? selectedProject.name : ""}</p>
                 <AiFillTag
                   style={{
                     color: `${
@@ -210,13 +230,13 @@ export default function AddTimeTracker({isManual}) {
                     setShowProjectTags(!showProjectTags);
                   }}
                 />
-                <p>{selectedProject ? selectedProject.name : ""}</p>
 
                 {showProjectTags && (
                   <ProjectOptions
                     selectedProject={selectedProject}
                     setSelectedProject={setSelectedProject}
                     setShowProjectTags={setShowProjectTags}
+                    setShowSelectProjectMessage={setShowSelectProjectMessage}
                   />
                 )}
               </div>
