@@ -15,7 +15,7 @@ import Calendar from 'react-calendar';
 export default function AddTimeTracker({isManual}) {
 
     const [showProjectTags, setShowProjectTags] = useState(false);
-    const [selectedProject,setSelectedProject] = useState({});
+    const [selectedProject,setSelectedProject] = useState({tag_color:"#a1a1aa"});
     const [taskStart, setTaskStart] = useState(new Date());
     const [taskStop, setTaskStop] = useState(new Date());
     
@@ -49,7 +49,7 @@ export default function AddTimeTracker({isManual}) {
         
       // Clean up input
       taskNameRef.current.value = '';
-      setSelectedProject('');
+      setSelectedProject({tag_color:"#a1a1aa"});
     }
     
       
@@ -96,11 +96,9 @@ export default function AddTimeTracker({isManual}) {
       
     //   Clean up input
       taskNameRef.current.value = '';
-      // startTimeRef.current.value = '';
-      // endTimeRef.current.value='';
       setTaskStart(new Date());
       setTaskStop(new Date())
-      setSelectedProject('');
+      setSelectedProject({tag_color:"#a1a1aa"});
     }
 
     if (isManual){
@@ -117,7 +115,7 @@ export default function AddTimeTracker({isManual}) {
                     </label>
                     <div className="relative flex items-center">
                   <AiFillTag
-                    style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'zinc'}`}}
+                    style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'#a1a1aa'}`}}
                         className="m-1 text-xl"
                         onClick={() => {
                         setShowProjectTags(!showProjectTags);
