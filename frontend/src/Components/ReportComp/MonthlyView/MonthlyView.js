@@ -51,7 +51,7 @@ export default function MonthlyView() {
     end_date: moment(lastDayOfMonth).format('yyyy-MM-DD'),
   })
     const clocledData = data?.filter(data=>data.type_of_input === '0' && data.code === '00') 
-    const otherData = data?.filter(data=>data.type_of_input === '0' && data.code !== '00') 
+    const otherData = data?.filter(data=>data.type_of_input === '2' && data.code !== '00') 
   //  console.log('clocledData for this month:',clocledData)
   //  console.log('otherData for this month:',JSON.stringify(otherData))
    const OTHER_DATA = otherData?.map(data => {

@@ -117,7 +117,7 @@ export default function AddTimeTracker({isManual}) {
                     </label>
                     <div className="relative flex items-center">
                   <AiFillTag
-                    style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'zinc'}`}}
+                    style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'#a1a1aa'}`}}
                         className="m-1 text-xl"
                         onClick={() => {
                         setShowProjectTags(!showProjectTags);
