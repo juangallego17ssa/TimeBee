@@ -61,43 +61,43 @@ export default function AddNewProject({setShowCreateTag, projects, setProjects})
         <fieldset className='flex flex-row gap-1' >
             <div className='relative'>
                 <label htmlFor='red'/>
-                <input name='color' type='radio' id='red' value="red" 
+                <input name='color' type='radio' id='red' value="#ef4444" 
                        className='appearance-none w-6 h-6 bg-red-400 hover:bg-red-500 checked:bg-red-500 rounded' 
                        checked={tagColor==="red"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="red" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
+                {tagColor==="#ef4444" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='yellow'/>
-                <input name='color' type='radio' id='yellow' value="yellow" 
+                <input name='color' type='radio' id='yellow' value="#facc15" 
                        className='appearance-none w-6 h-6 bg-yellow-400 hover:bg-yellow-500 checked:bg-yellow-500 rounded' 
                        checked={tagColor==="yellow"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="yellow" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
+                {tagColor==="#facc15" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='green'/>
-                <input name='color' type='radio' id='green' value="green" 
+                <input name='color' type='radio' id='green' value="#22c55e" 
                        className='appearance-none w-6 h-6 bg-green-400 hover:bg-green-500 checked:bg-green-500 rounded' 
                        checked={tagColor==="green"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="green" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
+                {tagColor==="#22c55e" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='blue'/>
-                <input name='color' type='radio' id='blue' value="blue" 
+                <input name='color' type='radio' id='blue' value="#0ea5e9" 
                        className='appearance-none w-6 h-6 bg-blue-400 hover:bg-blue-500 checked:bg-blue-500 rounded' 
                        checked={tagColor==="blue"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="blue" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
+                {tagColor==="#0ea5e9" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
             <div className='relative'>
                 <label htmlFor='purple'/>
-                <input name='color' type='radio' id='purple' value="purple" 
+                <input name='color' type='radio' id='purple' value="#a855f7" 
                        className='appearance-none w-6 h-6 bg-purple-400 hover:bg-purple-500 checked:bg-purple-500 rounded' 
                        checked={tagColor==="purple"} 
                        onClick={handleOptionChange}/>
-                {tagColor==="purple" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
+                {tagColor==="#a855f7" && <BsCheck className='absolute top-0.5 right-0.5 text-xl font-bold text-white' />}
             </div>
            
         
