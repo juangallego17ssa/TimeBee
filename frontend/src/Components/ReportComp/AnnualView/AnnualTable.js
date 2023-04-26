@@ -5,6 +5,16 @@ import * as XLSX from 'xlsx'
 
 const columns = [
   {
+    Header: '',
+    accessor: '',
+    Cell: ({ value }) => (
+      <div className="grid grid-cols-2 ">
+        <p className="mx-auto"> {moment(value).format('DD')}</p>
+        <p> {moment(value).format('ddd')}</p>
+      </div>
+    ),
+  },
+  {
     Header: 'January',
     accessor: 'date',
     Cell: ({ value }) => (
