@@ -11,6 +11,7 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 import {axiosWithToken} from "../../api/axios";
+import CreateDataBackend from "./createDataBackend";
 
 const EfficientTime = () => {
 
@@ -69,20 +70,21 @@ const EfficientTime = () => {
     const getWeekInfo = async (myDay) => {
         setIsWeek(true)
         let day = new Date();
-        let weekNum = getISOWeek(day)
+        let myWeekNum = getISOWeek(day)
         let dayOfWeek = day.getDay()
         day.setDate(day.getDate() - dayOfWeek)
         setWeekDate(day)
+        let myWeekDate = day
         let firstDate = getDateString(day);
         day.setDate(day.getDate() + 6)
         let lastDate = getDateString(day)
         if (myDay) {
-            console.log(myDay)
             day = myDay;
-            weekNum = getISOWeek(day)
+            myWeekNum = getISOWeek(day)
             dayOfWeek = day.getDay()
             day.setDate(day.getDate() - dayOfWeek)
             setWeekDate(day)
+            myWeekDate = day
             firstDate = getDateString(day);
             day.setDate(day.getDate() + 6)
             lastDate = getDateString(day)
@@ -97,13 +99,12 @@ const EfficientTime = () => {
         try {
             const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
 
-            console.log(response)
-            setWeekNum(`WEEK ${weekNum} - ${weekDate.getFullYear()}`)
+            setWeekNum(`WEEK ${myWeekNum} - ${myWeekDate.getFullYear()}`)
 
 
             //get clock in and out
             for (let week of response.data.detail_weekly) {
-                if (week.week === weekNum) {
+                if (week.week === myWeekNum) {
 
                     setWeekClockIn(week.first_clock_average.slice(0,5))
                     setWeekClockOut(week.last_clock_average.slice(0,5))
@@ -114,7 +115,7 @@ const EfficientTime = () => {
                     const dataArray = []
                     for (let day of response.data.detail) {
                         const dayDate = new Date(parseInt(day.date.slice(0,4)),parseInt(day.date.slice(5,7))-1,parseInt(day.date.slice(8,10)))
-                        if (getISOWeek(dayDate) === weekNum) {
+                        if (getISOWeek(dayDate) === myWeekNum) {
                             const inHours = parseInt(day.first_clock.slice(11,13))
                             const inMinutes = parseInt(day.first_clock.slice(14,16))/60
                             const inSeconds = parseInt(day.first_clock.slice(17,19))/3600
@@ -131,7 +132,7 @@ const EfficientTime = () => {
                             dataArray.push(dataEntry)
                         }
                     }
-                    console.log(dataArray)
+
                     setWeekDataChart(dataArray)
 
 
@@ -378,6 +379,7 @@ const EfficientTime = () => {
                               <Bar dataKey="Time at work"  fill="#777777" />
                             </BarChart>
                         </ResponsiveContainer>
+                        <div>{CreateDataBackend()}</div>
                     </div>
                 </div>
     );
