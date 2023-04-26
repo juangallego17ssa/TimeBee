@@ -19,7 +19,7 @@ if (userData)
       <div></div>
       <div>
 
-      <div className="grid grid-cols-2 p-5">
+      <div className="grid grid-cols-2">
         <p>Username: {userData?.username}</p>
         <p> Holidays: 25 / {userData.holidays?userData.holidays:ANNUAL_LEAVES}</p>
         <p> Workload: {userData?.workload}%</p>

@@ -300,16 +300,13 @@ const handleExportToExcel = () => {
         </div>
         {/*  PUBLIC HOLIDAYS FOR THIS MONTH  */}
         <div className="boder-2 bg-white h-1/4 w-full rounded-xl shadow-md py-2">
-          <h2 className="felx text-center text font-bold my-3">
-            PUBLIC HOLIDAYS THIS MONTH
-          </h2>
           <Holidays
             currentMonth={currentMonth}
             publicHolidaysOfMonth={publicHolidaysOfMonth}
           />
         </div>
         {/* SUMARY OF THIS MONTH  */}
-        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md">
+        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md p-5">
           <h2 className="felx text-center text font-bold my-3">SUMMARY</h2>
 
           <div className="grid grid-cols-2">
@@ -331,7 +328,7 @@ const handleExportToExcel = () => {
           {TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME > 0 ? (
             <div className="grid grid-cols-2 text-teal-500">
               <p className="uppercase">OVER TIME</p>
-              <div className="flex">
+              <div className="flex gap-1">
                 <p>
                   {millisecToHr(
                     TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME
