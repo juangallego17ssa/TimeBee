@@ -44,6 +44,7 @@ const Overhours = () => {
     const [overtimeChart, setOvertimeChart] = useState([])
     const [myFirstDate, setMyFirstDate] = useState("")
     const [myLastDate, setMyLastDate] = useState("")
+    const [overtimeTotal, setOvertimeTotal] = useState(0)
 
     const getWeekInfo = async () => {
 
@@ -67,7 +68,6 @@ const Overhours = () => {
 
         try {
             const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
-
             // setWeekNum(`Week ${weekNum}`)
 
             const dataArray = []
@@ -83,7 +83,7 @@ const Overhours = () => {
                     overtimeArray.push({"value": (myDay.duration / 3600).toFixed(1), "day": myDay.date})
                 }
             }
-            for (let week of response.data.detail_weekly) {
+            for (let week of response.data.detail_weekly.sort((a, b) => a.week - b.week)) {
                 if ((week.week >= weekNum -6) && (week.week < weekNum)){
                     accOvertime += week.duration_total/3600 - week.amount_days * 8.5
                     accYearOvertime += week.duration_total/3600 - week.amount_days * 8.5
@@ -101,6 +101,7 @@ const Overhours = () => {
             }
             setWeekDataChart(dataArray)
             setOvertimeChart(overtimeArray)
+            setOvertimeTotal(dataArray[dataArray.length-1]["Saldo Year"])
 
         } catch (error) {
             setWeekNum(`Week ${weekNum}`)
@@ -149,7 +150,7 @@ const Overhours = () => {
                 }
             }
 
-            for (let month of response.data.detail_monthly) {
+            for (let month of response.data.detail_monthly.sort((a, b) => a.month - b.month)) {
 
                 accOvertime += month.duration_total/3600 - month.amount_days * 8.5
                 accYearOvertime += month.duration_total/3600 - month.amount_days * 8.5
@@ -166,6 +167,9 @@ const Overhours = () => {
             }
             setWeekDataChart(dataArray)
             setOvertimeChart(overtimeArray)
+            console.log(overtimeArray[overtimeArray.length()-1])
+            setOvertimeTotal(overtimeArray[overtimeArray.length()-1]["Saldo Year"])
+
 
         } catch (error) {
             setWeekNum(`Week ${weekNum}`)
@@ -224,8 +228,8 @@ const Overhours = () => {
                         <div className="flex justify-center align-center">
                             <div className="h-40 w-40 p-3 text-7xl border border-solid text-zinc-500 border-zinc-300 flex justify-center items-center">
                                 <div className="flex flex-row items-end">
-                                    <p>17</p>
-                                    <p className="text-3xl">,6 </p>
+                                    <p>{overtimeTotal.split(".")[0]}</p>
+                                    <p className="text-3xl">,{overtimeTotal.split(".")[1]} </p>
                                     <p className="text-lg">h</p></div>
                                 </div>
                         </div>
