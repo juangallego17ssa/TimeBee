@@ -15,7 +15,7 @@ import Calendar from 'react-calendar';
 export default function AddTimeTracker({isManual}) {
 
     const [showProjectTags, setShowProjectTags] = useState(false);
-    const [selectedProject,setSelectedProject] = useState({});
+    const [selectedProject,setSelectedProject] = useState({tag_color:"#a1a1aa"});
     const [taskStart, setTaskStart] = useState(new Date());
     const [taskStop, setTaskStop] = useState(new Date());
     
