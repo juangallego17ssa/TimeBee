@@ -5,6 +5,8 @@ import {FaCalendarAlt} from 'react-icons/fa'
 import ProjectOptions from '../ProjectTagComp/ProjectOptions';
 import {useCreateTrackedTimeMutation} from '../../api/API'
 import moment from 'moment';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import Calendar from 'react-calendar';
 
@@ -14,16 +16,22 @@ export default function AddTimeTracker({isManual}) {
 
     const [showProjectTags, setShowProjectTags] = useState(false);
     const [selectedProject,setSelectedProject] = useState({});
-
+    const [taskStart, setTaskStart] = useState(new Date());
+    const [taskStop, setTaskStop] = useState(new Date());
     
 
     const taskNameRef=useRef()
-    const startTimeRef=useRef()
-    const endTimeRef=useRef()
+    // const startTimeRef=useRef()
+    // const endTimeRef=useRef()
 
 // Timer Create
     const [createTrackedTime] = useCreateTrackedTimeMutation()
-    
+    const handelTaskStartDate = (newDate) => {
+      setTaskStart(newDate);
+    };
+    const handelTaskStopDate = (newDate) => {
+      setTaskStop(newDate);
+    };
   const handleCreateTimer = (e) => {
     e.preventDefault();
 
@@ -75,8 +83,10 @@ export default function AddTimeTracker({isManual}) {
       e.preventDefault();   
       const data = ({
         type_of_input:"2",
-        start:startTimeRef.current.value,
-        stop:endTimeRef.current.value,
+        start:taskStart,
+        stop:taskStop,
+        // start:startTimeRef.current.value,
+        // stop:endTimeRef.current.value,
         task_name:taskNameRef.current.value,
         project_id:selectedProject.id,
       })
@@ -86,8 +96,10 @@ export default function AddTimeTracker({isManual}) {
       
     //   Clean up input
       taskNameRef.current.value = '';
-      startTimeRef.current.value = '';
-      endTimeRef.current.value='';
+      // startTimeRef.current.value = '';
+      // endTimeRef.current.value='';
+      setTaskStart(new Date());
+      setTaskStop(new Date())
       setSelectedProject('');
     }
 
@@ -125,7 +137,23 @@ export default function AddTimeTracker({isManual}) {
              {/*---- start time and finish time ----*/}
                 <div className=' flex items-center justify-end gap-2 w-full text-zinc-600'> 
                     <div className='relative flex items-center '>
-                        <label htmlFor='startTime'>
+                          <DatePicker
+                          selected={taskStart}
+                          onChange={handelTaskStartDate}
+                          showTimeSelect
+                          timeIntervals={15}
+                          dateFormat="MMMM d, yyyy h:mm aa"
+                          className="mx-4"
+                        />
+                        <DatePicker
+                          selected={taskStop}
+                          onChange={handelTaskStopDate}
+                          showTimeSelect
+                          timeIntervals={15}
+                          dateFormat="MMMM d, yyyy h:mm aa"
+                          className="mx-4"
+                        />
+                        {/* <label htmlFor='startTime'>
                             <input 
                             id='startTime' 
                             className="w-fit text-center focus:outline-none"
@@ -143,7 +171,7 @@ export default function AddTimeTracker({isManual}) {
                             type={'datetime-local'}
                             ref={endTimeRef}
                             />
-                        </label>
+                        </label> */}
                     </div>  
                 </div>
             </div>
