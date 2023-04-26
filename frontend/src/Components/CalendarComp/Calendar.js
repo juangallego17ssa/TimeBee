@@ -6,6 +6,12 @@ import "./react-big-calendar_own.css";
 
 const localizer = momentLocalizer(moment);
 
+moment.locale("ko", {
+  week: {
+    dow: 1,
+    doy: 1,
+  },
+});
 
 const CalendarComponent = ({ events, views, defaultView, selectedDate, onDateChange }) => {
   const [foregroundEvents, setForegroundEvents] = useState([])
@@ -38,6 +44,7 @@ const CalendarComponent = ({ events, views, defaultView, selectedDate, onDateCha
   }
 
   
+  
 
 
   const handelDateChange = (newDate) => {
@@ -58,6 +65,8 @@ const CalendarComponent = ({ events, views, defaultView, selectedDate, onDateCha
         localizer={localizer}
         events={foregroundEvents}
         backgroundEvents={backgroundEvents}
+        startAccessor={"start"}
+        endAccessor={"end"}
         views={views}
         defaultView={defaultView}
         showMultiDayTimes={true}
@@ -66,7 +75,6 @@ const CalendarComponent = ({ events, views, defaultView, selectedDate, onDateCha
         popup
         date={selectedDate}
         onNavigate={handelDateChange}
-        
       />
     </div>
   );
