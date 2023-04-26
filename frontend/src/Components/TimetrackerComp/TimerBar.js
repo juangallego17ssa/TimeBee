@@ -48,39 +48,22 @@ function TimerBar({ task }) {
     console.log(projectRef.current.value);
   };
 
-  // const handleAddChange = (event) => {
-  //   setPlay(event.target.value);
-  // };
-
-  // const handlePlayStop = (event) => {
-  //   event.preventDefault();
-  //   setPlay(!play);
-  //   // refetch();
-  //   // perform the search operation here
-  // };
-
-  // const handleEdit = (event) => {
-  //   event.preventDefault();
-  //   setEdit(!edit);
-  //   // console.log(edit)
-  //   // refetch();
-  //   // perform the search operation here
-  // };
-
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       const trackedtimeId = task.id;
+      const start = new Date(task.start).toISOString()
+      const stop = new Date(task.stop).toISOString()
       const newStartTime = new Date(taskStart).toISOString()
       const newStopTime = new Date(taskStop).toISOString()
 
       let data = {
         task_name: taskName,
         project_id: editProject ? projectRef.current.value : task.project.id,
-        start: editTime ? newStartTime : task.start,
+        start: editTime ? newStartTime : start,
       };
       
       if (task.stop) {
-        data.stop = editTime ? newStopTime : task.stop;
+        data.stop = editTime ? newStopTime : stop;
       }
 
       console.log("blue", task, trackedtimeId, data);
