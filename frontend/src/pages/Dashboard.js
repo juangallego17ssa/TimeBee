@@ -32,7 +32,7 @@ function Dashboard() {
               </div>
             </div>
           ) : (
-            <div className="items-center justify-center bg-white ml-4 shadow-md rounded-xl p-4 flex-col h-[85%] ">
+            <div className="items-center justify-center bg-white ml-4 shadow-md rounded-xl p-4 flex-col h-[90%] ">
               <Overhours></Overhours>
             </div>
           )}
@@ -40,7 +40,7 @@ function Dashboard() {
 
         {/* Right wrapper */}
         <div className="flex-col w-4/12 h-full pt-12 px-5">
-          <div className="bg-white  w-full rounded-xl shadow-md h-[90.5%]">
+          <div className="bg-white  w-full rounded-xl shadow-md h-[96.25%]">
             <EfficientTime></EfficientTime>
           </div>
         </div>
