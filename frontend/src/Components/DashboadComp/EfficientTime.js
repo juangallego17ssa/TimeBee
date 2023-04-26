@@ -79,7 +79,6 @@ const EfficientTime = () => {
         day.setDate(day.getDate() + 6)
         let lastDate = getDateString(day)
         if (myDay) {
-            console.log(myDay)
             day = myDay;
             myWeekNum = getISOWeek(day)
             dayOfWeek = day.getDay()
@@ -100,9 +99,6 @@ const EfficientTime = () => {
         try {
             const response = await axiosWithToken(`trackedtime/listownfromtoclock/`, config)
 
-            console.log(response)
-            console.log(myWeekNum)
-            console.log(myWeekDate)
             setWeekNum(`WEEK ${myWeekNum} - ${myWeekDate.getFullYear()}`)
 
 
@@ -136,7 +132,7 @@ const EfficientTime = () => {
                             dataArray.push(dataEntry)
                         }
                     }
-                    console.log(dataArray)
+
                     setWeekDataChart(dataArray)
 
 
