@@ -37,7 +37,7 @@ export default function Holidays({currentMonth,publicHolidaysOfMonth}) {
       {/* ==== PERSONAL ==== */}
       {/* <div>
         <div>
-          <button>Add Holiday</button>
+          {/* <button>Add Holiday</button> */}
         </div>
       </div> */}
     </div>

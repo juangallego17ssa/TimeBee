@@ -15,7 +15,7 @@ import Calendar from 'react-calendar';
 export default function AddTimeTracker({isManual}) {
 
     const [showProjectTags, setShowProjectTags] = useState(false);
-    const [selectedProject,setSelectedProject] = useState({});
+    const [selectedProject,setSelectedProject] = useState({tag_color:"#a1a1aa"});
     const [taskStart, setTaskStart] = useState(new Date());
   const [taskStop, setTaskStop] = useState(new Date());
   const [showSelectProjectMessage, setShowSelectProjectMessage] = useState(true)
@@ -50,7 +50,7 @@ export default function AddTimeTracker({isManual}) {
         
       // Clean up input
       taskNameRef.current.value = '';
-    setSelectedProject('');
+    setSelectedProject({tag_color:"#a1a1aa"});
     setShowSelectProjectMessage(true)
     
     }
@@ -99,11 +99,9 @@ export default function AddTimeTracker({isManual}) {
       
     //   Clean up input
       taskNameRef.current.value = '';
-      // startTimeRef.current.value = '';
-      // endTimeRef.current.value='';
       setTaskStart(new Date());
       setTaskStop(new Date())
-      setSelectedProject('');
+      setSelectedProject({tag_color:"#a1a1aa"});
       setShowSelectProjectMessage(true)
       
     }
@@ -128,49 +126,43 @@ export default function AddTimeTracker({isManual}) {
 
                   <p>{selectedProject ? selectedProject.name : ""}</p>
                   <AiFillTag
-                    style={{
-                      color: `${
-                        selectedProject.tag_color
-                          ? selectedProject.tag_color
-                          : "zinc"
-                      }`,
-                    }}
-                    className="m-1 text-xl"
-                    onClick={() => {
-                      setShowProjectTags(!showProjectTags);
-                    }}
-                  />
-
-                  {showProjectTags && (
-                    <ProjectOptions
-                      selectedProject={selectedProject}
-                      setSelectedProject={setSelectedProject}
-                      setShowProjectTags={setShowProjectTags}
-                      setShowSelectProjectMessage={setShowSelectProjectMessage}
+                    style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'#a1a1aa'}`}}
+                        className="m-1 text-xl"
+                        onClick={() => {
+                        setShowProjectTags(!showProjectTags);
+                        }}
                     />
-                  )}
+                    <p>{selectedProject ? selectedProject.name : ""}</p>
+        
+                    {showProjectTags && (
+                        <ProjectOptions
+                        selectedProject={selectedProject}
+                        setSelectedProject={setSelectedProject}
+                        setShowProjectTags={setShowProjectTags}
+                        />
+                    )}
+                    </div>    
                 </div>
-              </div>
-              {/*---- start time and finish time ----*/}
-              <div className=" flex items-center justify-end gap-2 w-full text-zinc-600">
-                <div className="relative flex items-center ">
-                  <DatePicker
-                    selected={taskStart}
-                    onChange={handelTaskStartDate}
-                    showTimeSelect
-                    timeIntervals={15}
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                    className="mx-4"
-                  />
-                  <DatePicker
-                    selected={taskStop}
-                    onChange={handelTaskStopDate}
-                    showTimeSelect
-                    timeIntervals={15}
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                    className="mx-4"
-                  />
-                  {/* <label htmlFor='startTime'>
+             {/*---- start time and finish time ----*/}
+                <div className=' flex items-center justify-end gap-2 w-full text-zinc-600'> 
+                    <div className='relative flex items-center '>
+                          <DatePicker
+                          selected={taskStart}
+                          onChange={handelTaskStartDate}
+                          showTimeSelect
+                          timeIntervals={15}
+                          dateFormat="MMMM d, yyyy h:mm aa"
+                          className="mx-4"
+                        />
+                        <DatePicker
+                          selected={taskStop}
+                          onChange={handelTaskStopDate}
+                          showTimeSelect
+                          timeIntervals={15}
+                          dateFormat="MMMM d, yyyy h:mm aa"
+                          className="mx-4"
+                        />
+                        {/* <label htmlFor='startTime'>
                             <input 
                             id='startTime' 
                             className="w-fit text-center focus:outline-none"
