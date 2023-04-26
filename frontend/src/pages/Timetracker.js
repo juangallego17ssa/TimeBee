@@ -38,7 +38,7 @@ function Timetracker() {
     isLoading,
     isError,
   } = useGetTrackedTimeByDateWithStartNullQuery(moment(selectedDate).format("YYYY-MM-DD"));
-  // console.log(tasks)
+  console.log(tasks)
   
   // filter out login/logout
   const filteredTask = tasks?.filter((task) => task.type_of_input !== "0");
