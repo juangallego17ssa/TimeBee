@@ -6,7 +6,6 @@ const baseURL =
     : process.env.REACT_APP_API_BASE_URL_DEV;
 // const baseURL = 'http://localhost:8000/backend/api/'
 
-
 export const axiosWithoutToken = axios.create({
   baseURL: baseURL,
   headers: {
