@@ -22,7 +22,7 @@ function Dashboard() {
                 checked={displayChange} 
                 onChange={handleDisplayChange} 
                 id="projekt-clock-switch" 
-                className="cursor-pointer h-10 w-32 rounded-full appearance-none border-zinc-300 bg-opacity-10 border-2 checked:bg-zinc-300 transition duration-200 relative"/>
+                className="cursor-pointer h-8 w-32 rounded-full appearance-none border-zinc-300 bg-opacity-10 border-2 checked:bg-zinc-300 transition duration-200 relative"/>
             </label>
 
             {displayChange ?
