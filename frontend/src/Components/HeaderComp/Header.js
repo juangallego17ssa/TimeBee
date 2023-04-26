@@ -194,9 +194,9 @@ function Header({ children }) {
           ></img>
         </div>
 
-        <div className="flex justify-end md:flex-row md:items-center flex-grow ">
+        <div className="flex justify-end md:flex-row md:items-center flex-grow">
           {/* ------- navigation icons ------ */}
-          <div className="hidden md:w-1/4 justify-evenly gap-10 mr-10 md:flex md:flex-row">
+          <div className="hidden md:w-2/6 justify-around mr-8 md:flex md:flex-row">
             {/*---- to Timetracker ----*/}
             <div
               id="timetracker"

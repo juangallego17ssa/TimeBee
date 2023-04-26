@@ -259,7 +259,7 @@ function DataProject() {
 
   return (
     // Create Barchart
-    <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-full px-8 py-4 gap-4 rounded-3xl">
+    <div className=" Container flex flex-col flex-grow w-full md:h-full p-5 gap-3">
       <div className="flex flex-rows justify-start items-start">
         <label htmlFor="toggle-switch">
           <input
@@ -306,14 +306,14 @@ function DataProject() {
           </div>
         )}
       </div>
-      <div className="Container flex w-full md:h-1/2 border-2 shadow-xl rounded-3xl">
+      <div className="Container flex w-full md:h-[40%] border-2 shadow-xl rounded-3xl">
         <BarChart data={newdata} keys={projects} />
       </div>
-      <div className="Container flex flow-col md:flex-row w-full md:h-2/3 gap-4 overflow-scroll">
-        <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
+      <div className="Container flex flow-col md:flex-row w-full md:h-1/2 gap-4 ">
+        <div className="Container flex w-[60%] md:h-full border-2 shadow-xl rounded-3xl overflow-hidden">
           <PieChart data={dataPie} />
         </div>
-        <div className="Container flex w-1/2 md:h-5/6 border-2 shadow-xl rounded-3xl overflow-hidden">
+        <div className="Container flex w-[60%] md:h-full border-2 shadow-xl rounded-3xl overflow-hidden">
           <RadialChart data={dataRadial} />
         </div>
       </div>

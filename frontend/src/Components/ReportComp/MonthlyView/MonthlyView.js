@@ -270,16 +270,16 @@ const handleExportToExcel = () => {
       {/* ================// REPORT SECTIION //================ */}
 
       <section className="items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
-        <div className=" flex justify-center items-center mb-3">
+        <div className=" flex justify-center items-center   ">
           <MdKeyboardArrowLeft
-            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={nextMonth}
           />
-          <h2 className=" w-60 text-center text-2xl">
+          <h2 className="w-60 text-center text-xl">
             {moment(currentMonth).format("yyyy MMMM")}
           </h2>
           <MdKeyboardArrowRight
-            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={prevMonth}
           />
         </div>
@@ -300,16 +300,13 @@ const handleExportToExcel = () => {
         </div>
         {/*  PUBLIC HOLIDAYS FOR THIS MONTH  */}
         <div className="boder-2 bg-white h-1/4 w-full rounded-xl shadow-md py-2">
-          <h2 className="felx text-center text font-bold my-3">
-            PUBLIC HOLIDAYS THIS MONTH
-          </h2>
           <Holidays
             currentMonth={currentMonth}
             publicHolidaysOfMonth={publicHolidaysOfMonth}
           />
         </div>
         {/* SUMARY OF THIS MONTH  */}
-        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md">
+        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md p-5">
           <h2 className="felx text-center text font-bold my-3">SUMMARY</h2>
 
           <div className="grid grid-cols-2">
@@ -331,7 +328,7 @@ const handleExportToExcel = () => {
           {TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME > 0 ? (
             <div className="grid grid-cols-2 text-teal-500">
               <p className="uppercase">OVER TIME</p>
-              <div className="flex">
+              <div className="flex gap-1">
                 <p>
                   {millisecToHr(
                     TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME

@@ -14,26 +14,32 @@ export default function Holidays({currentMonth,publicHolidaysOfMonth}) {
     // // console.log('publicHolidaysOfMonth:',publicHolidaysOfMonth)
 
   return (
-    <div className='box-border mx-4 my-2'>
+    <div className="box-border mx-5 my-2">
       {/* ==== PUBLIC ==== */}
-      {publicHolidaysOfMonth?.map(holiday=>
-      <div 
-      className='grid grid-cols-[auto_auto_1fr] gap-4 w-3/4 mx-auto'
-      key={holiday.date}>
-        <input type={'checkbox'} checked={moment(`${holiday.date}`)-moment()<=0} disabled />
-        <p>{moment(holiday.date).format('DD MMM')}</p>
-        <p>{holiday.holiday_name}</p>
-      </div>
-      )}
-      
+      <h2 className="felx text-center text font-bold my-3 ">
+        PUBLIC HOLIDAYS THIS MONTH
+      </h2>
+      {publicHolidaysOfMonth?.map((holiday) => (
+        <div
+          className="grid grid-cols-[auto_auto_1fr] gap-4 w-3/4 "
+          key={holiday.date}
+        >
+          <input
+            type={"checkbox"}
+            checked={moment(`${holiday.date}`) - moment() <= 0}
+            disabled
+          />
+          <p>{moment(holiday.date).format("DD MMM")}</p>
+          <p>{holiday.holiday_name}</p>
+        </div>
+      ))}
+
       {/* ==== PERSONAL ==== */}
-      <div>
+      {/* <div>
         <div>
           {/* <button>Add Holiday</button> */}
-        </div>
-      </div>
-
-
+        {/* </div> */}
+      {/* </div> */} 
     </div>
   );
 }

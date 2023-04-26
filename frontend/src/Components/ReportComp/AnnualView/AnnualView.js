@@ -250,27 +250,25 @@ const handleExportToExcel = () => {
       {/* ================// REPORT SECTIION //================ */}
 
       <section className="items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
-        <div className=" flex justify-center items-center mb-3">
+        <div className=" flex justify-center items-center   ">
           <MdKeyboardArrowLeft
-            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={nextMonth}
           />
-          <h2 className=" w-60 text-center text-2xl">
+          <h2 className="w-60 text-center text-xl">
             {moment(currentMonth).format("yyyy MMMM")}
           </h2>
           <MdKeyboardArrowRight
-            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={prevMonth}
           />
         </div>
-        
+
         <AnnualTable
           data={CLOCK_DATA}
           currentMonth={currentMonth}
           publicHolidaysOfMonth={publicHolidaysOfMonth}
-          
         />
-      
       </section>
 
       {/* ================// SUMMARY SECTIION //================ */}
@@ -281,10 +279,10 @@ const handleExportToExcel = () => {
           <UserInfo />
         </div>
         {/* SUMARY OF THIS MONTH  */}
-        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md">
-          <h2 className="felx text-center text font-bold my-3">SUMMARY</h2>
+        <div className="boder-2 bg-white h-3/4 w-full rounded-xl shadow-md p-5">
+          <h2 className="felx text-center text font-bold ">SUMMARY</h2>
 
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 mt-3">
             <p className="uppercase">Working day</p>
             <p>
               {CLOCK_DATA.filter((data) => data.start).length} /{" "}
@@ -341,10 +339,10 @@ const handleExportToExcel = () => {
         {/*  EXPORT EXCEL / PDF */}
         <div>
           <button
-           onClick={handleExportToExcel}
-           className="py-5 px-10 rounded-full  text-white text-md font-bold 
+            onClick={handleExportToExcel}
+            className="py-5 px-10 rounded-full  text-white text-md font-bold 
                     bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
-           >
+          >
             EXPORT REPORT
           </button>
         </div>
