@@ -245,7 +245,7 @@ function DataProject() {
 
   return (
     // Create Barchart
-    <div className=" Container flex flex-col flex-grow bg-stone-100 w-full md:h-full px-8 py-4 gap-4 rounded-3xl">
+    <div className=" Container flex flex-col flex-grow bg-white w-full md:h-full px-8 py-4 gap-4 rounded-3xl">
       <div className="flex flex-rows justify-start items-start">
         <label htmlFor="toggle-switch">
           <input

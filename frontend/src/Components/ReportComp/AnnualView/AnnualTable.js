@@ -5,8 +5,8 @@ import * as XLSX from 'xlsx'
 
 const columns = [
   {
-    Header: '',
-    accessor: '',
+    Header: 'Year',
+    accessor: 'year',
     Cell: ({ value }) => (
       <div className="grid grid-cols-2 ">
         <p className="mx-auto"> {moment(value).format('DD')}</p>
@@ -16,7 +16,7 @@ const columns = [
   },
   {
     Header: 'January',
-    accessor: 'date',
+    accessor: 'january',
     Cell: ({ value }) => (
       <div className="grid grid-cols-2 ">
         <p className="mx-auto"> {moment(value).format('DD')}</p>
@@ -26,7 +26,7 @@ const columns = [
   },
   {
     Header: 'February',
-    accessor: 'start',
+    accessor: 'february',
     Cell: ({ value }) => {
       if(value){
         return (
@@ -44,7 +44,7 @@ const columns = [
   },
   {
     Header: 'March',
-    accessor: 'stop',
+    accessor: 'march',
     Cell: ({ value }) => {
       if(value){
         return(
@@ -61,14 +61,14 @@ const columns = [
   },
   {
     Header: 'April',
-    accessor: 'worked_time',
+    accessor: 'april',
     Cell:({value})=>(
       <p className={`bg-transparent text-center`}>{value}</p>
       )
   },
   {
     Header: 'May',
-    accessor: 'over_time',
+    accessor: 'may',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -86,7 +86,7 @@ const columns = [
   },
   {
     Header: 'June',
-    accessor: 'notes',
+    accessor: 'june',
     Cell: ({ value }) =>{
       return (
         <div>{value}</div>
@@ -107,7 +107,7 @@ const columns = [
   },
   {
     Header: 'July',
-    accessor: '',
+    accessor: 'july',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -125,7 +125,7 @@ const columns = [
   },
   {
     Header: 'August',
-    accessor: '',
+    accessor: 'august',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -143,7 +143,7 @@ const columns = [
   },
   {
     Header: 'September',
-    accessor: '',
+    accessor: 'september',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -161,7 +161,7 @@ const columns = [
   },
   {
     Header: 'October',
-    accessor: '',
+    accessor: 'october',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -179,7 +179,7 @@ const columns = [
   },
   {
     Header: 'November',
-    accessor: '',
+    accessor: 'november',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -197,7 +197,7 @@ const columns = [
   },
   {
     Header: 'December',
-    accessor: '',
+    accessor: 'december',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -214,8 +214,8 @@ const columns = [
     } 
   },
   {
-    Header: 'Total',
-    accessor: '',
+    Header: 'Total Special Leaves',
+    accessor: 'total_special_leaves',
     Cell: ({ value }) =>{
       if(value>0){
       return (
@@ -239,10 +239,12 @@ const columns = [
 //   XLSX.writeFile(workbook, 'table-data.xlsx');
 // };
 
+//-------------------------------------------MAIN TABLE------------------------------------------------------------------------------------------------//
+
 
 export default function ReportTable({data, publicHolidaysOfMonth }) {
   const tableInstance = useTable({ columns, data });
- const holidayDates = publicHolidaysOfMonth?.map(item=>item.date)
+  const holidayDates = publicHolidaysOfMonth?.map(item=>item.date)
 //  console.log(holidayDates.includes('2023-04-11'))
 
   const {
