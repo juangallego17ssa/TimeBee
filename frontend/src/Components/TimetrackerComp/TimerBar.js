@@ -80,6 +80,7 @@ function TimerBar({ task }) {
     }
   };
 
+  
   const handlePlay = () => {
     setPlay(true);
     const trackedtimeId = task.id;
@@ -121,6 +122,10 @@ function TimerBar({ task }) {
   const handelTaskStopDate = (newDate) => {
     setTaskStop(newDate);
   };
+  
+  const duration = task.project.duration
+
+  console.log(projects)
   
 
   if (isLoading) {
@@ -176,6 +181,9 @@ function TimerBar({ task }) {
               )}
             </div>
           </div>
+        </div>
+        <div>
+          <p>{task.project.duration}</p>
         </div>
 
         <div className="relative flex items-center w-[70%] justify-end">
