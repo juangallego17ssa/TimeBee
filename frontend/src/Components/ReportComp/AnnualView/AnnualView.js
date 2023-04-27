@@ -253,7 +253,7 @@ const handleExportToExcel = () => {
     );
   }
   return (
-    <div className="flex flex-col lg:flex-row item-center  bg-stone-100  h-[98%]">
+    <div className="flex flex-col relative lg:flex-row item-center  bg-stone-100  h-[98%]">
       {/* ================// REPORT SECTIION //================ */}
 
       <section className="items-center justify-center  bg-white  m-4 lg:w-full shadow-md rounded-xl py-4 flex-col h-[85%] ">

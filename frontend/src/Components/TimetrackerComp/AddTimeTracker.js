@@ -132,17 +132,17 @@ export default function AddTimeTracker({isManual}) {
                     ref={taskNameRef}
                   />
                 </label>
-                <div className="relative flex items-center justify-end">
-                  {showSelectProjectMessage && <p>select a project</p>}
+                <div className="relative flex items-center ">
 
-                  <p>{selectedProject ? selectedProject.name : ""}</p>
+                  {/* <p>{selectedProject ? selectedProject.name : ""}</p> */}
                   <AiFillTag
                     style={{color: `${selectedProject.tag_color?selectedProject.tag_color:'#a1a1aa'}`}}
-                        className="m-1 text-xl"
-                        onClick={() => {
-                        setShowProjectTags(!showProjectTags);
-                        }}
+                    className="m-1 text-xl"
+                    onClick={() => {
+                      setShowProjectTags(!showProjectTags);
+                    }}
                     />
+                    {showSelectProjectMessage && <p>select a project</p>}
                     <p>{selectedProject ? selectedProject.name : ""}</p>
         
                     {showProjectTags && (
@@ -165,6 +165,7 @@ export default function AddTimeTracker({isManual}) {
                           dateFormat="MMMM d, yyyy h:mm aa"
                           className="mx-4"
                         />
+                        <span>-</span>
                         <DatePicker
                           selected={taskStop}
                           onChange={handelTaskStopDate}
@@ -216,23 +217,23 @@ export default function AddTimeTracker({isManual}) {
                   ref={taskNameRef}
                 />
               </label>
-              <div className="relative flex items-center justify-end">
-                {showSelectProjectMessage &&(<p>select a project</p>)}
-               
-                <p>{selectedProject ? selectedProject.name : ""}</p>
+              <div className="relative flex items-center">
                 <AiFillTag
                   style={{
                     color: `${
                       selectedProject.tag_color
-                        ? selectedProject.tag_color
-                        : "zinc"
+                      ? selectedProject.tag_color
+                      : "zinc"
                     }`,
                   }}
                   className="m-1 text-xl"
                   onClick={() => {
                     setShowProjectTags(!showProjectTags);
                   }}
-                />
+                  />
+                  {showSelectProjectMessage &&(<p>select a project</p>)}
+                 
+                  <p>{selectedProject ? selectedProject.name : ""}</p>
 
                 {showProjectTags && (
                   <ProjectOptions
@@ -246,7 +247,7 @@ export default function AddTimeTracker({isManual}) {
             </div>
             <div
               onClick={handleCreateTimer}
-              className="border-[2.5px] border-teal-400 text-teal-400 w-8 h-8 flex items-center justify-center rounded-full hover:bg-teal-400  hover:text-white"
+              className="border-[2.5px] border-teal-400 text-teal-400 w-8 h-8 flex items-center justify-center rounded-full hover:bg-teal-400  hover:text-white hover:cursor-pointer"
             >
               <FiPlus className="text-xl font-extrabold" />
             </div>
