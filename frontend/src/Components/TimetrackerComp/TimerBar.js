@@ -17,6 +17,7 @@ function TimerBar({ task }) {
   //List all projects created by user
   const { data, isLoading, isSuccess, isError } = useGetOwnProjectsQuery();
   const projects = data?.filter((project) => project.default !== "default");
+
   // console.log(projects)
 
   const taskNameRef = useRef();
@@ -26,7 +27,7 @@ function TimerBar({ task }) {
 
   const [updateTrackedTimeByID] = useUpdateTrackedTimeByIDMutation();
   const [deleteTrackedTimeByID] = useDeleteTrackedTimeByIDMutation();
-
+  
   const [play, setPlay] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editTime, setEditTime] = useState(false);
@@ -123,9 +124,12 @@ function TimerBar({ task }) {
     setTaskStop(newDate);
   };
   
-  const duration = task.project.duration
+  const durationInSeconds = task.duration;
+  const hours = Math.floor(durationInSeconds / 3600);
+  const minutes = Math.floor((durationInSeconds % 3600) / 60);
+  const duration = `${hours}h ${minutes}m`;
 
-  console.log(projects)
+  console.log(task.duration)
   
 
   if (isLoading) {
@@ -182,10 +186,9 @@ function TimerBar({ task }) {
             </div>
           </div>
         </div>
-        <div>
-          <p>{task.project.duration}</p>
+        <div className="flex relative w-[20%]">
+          <p className="text-sm text-zinc-400">{duration}</p>
         </div>
-
         <div className="relative flex items-center w-[70%] justify-end">
           {task?.stop ? (
             <div className="mx-1">
