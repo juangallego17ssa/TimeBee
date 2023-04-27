@@ -12,20 +12,20 @@ if (userData)
   return (
     <div className='p-5 flex-col'>
       <div className='flex justify-between h-10 items-center'>
-        Welcome {userData.first_name} {userData.last_name}
+        Welcome <b>{userData.first_name} {userData.last_name}</b>
         <UserAvator/>
         {/* <img src={userData.avatar} alt='avatar' className='h-full w-10 rounded-full object-cover'></img> */}
       </div>
       <div></div>
       <div>
 
-      <div className="grid grid-cols-2">
-        <p>Username: {userData?.username}</p>
-        <p> Holidays: 25 / {userData.holidays?userData.holidays:ANNUAL_LEAVES}</p>
+      <div className="flex flex-col">
+        {/* <p>Username: {userData?.username}</p> */}
         <p> Workload: {userData?.workload}%</p>
+        <p> Holidays: 25 / {userData.holidays?userData.holidays:ANNUAL_LEAVES}</p>
         <p></p>
-        <p> First Login: {moment(userData?.date_joined).format("DD-MM-YYYY")}</p>
-        <p> Last Login: {moment(userData?.last_login).format("DD-MM-YYYY")}</p>
+        {/* <p> First Login: {moment(userData?.date_joined).format("DD-MM-YYYY")}</p>
+        <p> Last Login: {moment(userData?.last_login).format("DD-MM-YYYY")}</p> */}
 
       </div>
       </div>

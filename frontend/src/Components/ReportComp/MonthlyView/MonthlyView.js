@@ -231,8 +231,11 @@ export default function MonthlyView() {
   };
   const hours = Math.floor(TOTAL_WORKED_TIME / 3600000); //GET HOUR
   const minutes = Math.floor((TOTAL_WORKED_TIME % 3600000) / 60000); //GET MINUTES
-
-
+  const NUM_WORKED_DAY = CLOCK_DATA.filter((data) => data?.start).length
+  const WORKD_PERCENTAGE= Math.floor(NUM_WORKED_DAY /WORKDAYS.length*100)
+  const EXPECTED_WORK_TIME = WORKDAYS.length*DEFAULT_WORKINK_TIME
+  const WORKED_TIME_PERCENTAGE= Math.floor(TOTAL_WORKED_TIME/EXPECTED_WORK_TIME*100)
+  // console.log("WORKED_TIME_PERCENTAGE:",WORKED_TIME_PERCENTAGE)
 
 /*    EXPORT TO EXCEL    */
 const handleExportToExcel = () => {
@@ -270,7 +273,7 @@ const handleExportToExcel = () => {
       {/* ================// REPORT SECTIION //================ */}
 
       <section className="items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
-        <div className=" flex justify-center items-center   ">
+        <div className=" flex justify-center items-center ">
           <MdKeyboardArrowLeft
             className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
             onClick={nextMonth}
@@ -306,27 +309,60 @@ const handleExportToExcel = () => {
           />
         </div>
         {/* SUMARY OF THIS MONTH  */}
-        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md p-5">
+        <div className="boder-2 bg-white h-2/4 w-full rounded-xl shadow-md p-5 ">
           <h2 className="felx text-center text font-bold my-3">SUMMARY</h2>
 
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-[1fr_2fr] mb-2">
             <p className="uppercase">Working day</p>
+
+            {/* FROM HERE NEW */}
+            <div className="percentage-bar flex items-center">
+              <div className="relative w-36 h-5 bg-stone-200 shadow-inner rounded-full flex items-center">
+                <div style={WORKD_PERCENTAGE>=100?{width:'100%',backgroundColor:'#22d3ee'}:{width:`${WORKD_PERCENTAGE}%`}}
+                className={`absolute flex justify-end items-center h-5  bg-teal-400 rounded-full overflow-hidden`}>
+                  <p className="px-2 rounded-full text-white text-sm font-semibold">{NUM_WORKED_DAY}</p>
+                </div>
+              </div>
+                  <p className="inline-block text-zinc-500 text-xs">/{WORKDAYS.length}days</p>
+            </div>
+            {/* END */}
+
+            {/* ORIGIN FROM HRER----------->
             <p>
               {CLOCK_DATA.filter((data) => data.start).length} /{" "}
               {WORKDAYS.length} days
             </p>
+            <------------------------END */}
           </div>
 
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-[1fr_2fr] mb-2">
             <p className="uppercase">Worked Time</p>
-            <p>
+            {/*===> NEW <===*/}
+            <div className="percentage-bar flex items-center">
+              <div className="relative w-36 h-5 bg-stone-200 shadow-inner rounded-full flex items-center">
+                <div 
+                style={WORKED_TIME_PERCENTAGE>=100?{width:'100%',backgroundColor:'#22d3ee'}:{width:`${WORKED_TIME_PERCENTAGE}%`}}
+                className={`absolute flex justify-end items-center h-5 bg-teal-400 rounded-full overflow-hidden`}>
+                  <p className="px-2 rounded-full text-white text-sm font-semibold inline-block">       
+                    {millisecToHr(TOTAL_WORKED_TIME)} hr{" "}
+                    {millisecTomin(TOTAL_WORKED_TIME)} min
+                  </p>
+                </div>
+              </div>
+                  <p className="inline-block text-zinc-500 text-xs">
+                     /{millisecToHr(EXPECTED_WORK_TIME)}hr{" "}
+                     {millisecTomin(EXPECTED_WORK_TIME)}min
+                  </p>
+            </div>
+            {/*===> END <===*/}
+            {/* <p>
               {millisecToHr(TOTAL_WORKED_TIME)} hr{" "}
               {millisecTomin(TOTAL_WORKED_TIME)} min
-            </p>
+            </p> */}
           </div>
 
           {TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME > 0 ? (
-            <div className="grid grid-cols-2 text-teal-500">
+            <div className="grid grid-cols-[1fr_2fr] mb-2 text-teal-500">
               <p className="uppercase">OVER TIME</p>
               <div className="flex gap-1">
                 <p>
