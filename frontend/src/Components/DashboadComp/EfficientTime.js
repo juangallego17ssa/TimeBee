@@ -74,34 +74,48 @@ const EfficientTime = () => {
   const [weekDataChart, setWeekDataChart] = useState([]);
   const [isWeek, setIsWeek] = useState(true);
 
-  const getDateString = (date) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-  const getWeekInfo = async (myDay) => {
-    setIsWeek(true);
-    let day = new Date();
-    let myWeekNum = getISOWeek(day);
-    let dayOfWeek = day.getDay();
-    day.setDate(day.getDate() - dayOfWeek);
-    setWeekDate(day);
-    let myWeekDate = day;
-    let firstDate = getDateString(day);
-    day.setDate(day.getDate() + 6);
-    let lastDate = getDateString(day);
-    if (myDay) {
-      day = myDay;
-      myWeekNum = getISOWeek(day);
-      dayOfWeek = day.getDay();
-      day.setDate(day.getDate() - dayOfWeek);
-      setWeekDate(day);
-      myWeekDate = day;
-      firstDate = getDateString(day);
-      day.setDate(day.getDate() + 6);
-      lastDate = getDateString(day);
+    const getDateString = (date) => {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
+    const getWeekInfo = async (myDay) => {
+        setIsWeek(true)
+        let day = new Date();
+        let myWeekNum = getISOWeek(day)
+        let dayOfWeek = day.getDay()
+        day.setDate(day.getDate() - dayOfWeek)
+        setWeekDate(day)
+        let myWeekDate = day
+        let firstDate = getDateString(day);
+        day.setDate(day.getDate() + 6)
+        let lastDate = getDateString(day)
+        if (day < new Date()){
+            lastDate = getDateString(day)
+            } else {
+                lastDate = new Date()
+                lastDate.setDate(lastDate.getDate() - 1)
+                lastDate = getDateString(lastDate)
+            }
+        if (myDay) {
+            day = myDay;
+            myWeekNum = getISOWeek(day)
+            dayOfWeek = day.getDay()
+            day.setDate(day.getDate() - dayOfWeek)
+            setWeekDate(day)
+            myWeekDate = day
+            firstDate = getDateString(day);
+            day.setDate(day.getDate() + 6)
+            if (day < new Date()){
+                lastDate = getDateString(day)
+            } else {
+                lastDate = new Date()
+                lastDate.setDate(lastDate.getDate() - 1)
+                lastDate = getDateString(lastDate)
+            }
+
+        }
 
     const config = {
       headers: {
@@ -121,53 +135,32 @@ const EfficientTime = () => {
 
       setWeekNum(`WEEK ${myWeekNum} - ${myWeekDate.getFullYear()}`);
 
-      //get clock in and out
-      for (let week of response.data.detail_weekly) {
-        if (week.week === myWeekNum) {
-          setWeekClockIn(week.first_clock_average.slice(0, 5));
-          setWeekClockOut(week.last_clock_average.slice(0, 5));
-          setWeekBreakTime(
-            formatTimeFromMinutes(
-              Math.round((week.time_span_average - week.duration_average) / 60)
-            )
-          );
-          setWeekWorkTime(
-            formatTimeFromMinutes(Math.round(week.duration_average / 60))
-          );
-          setWeekBreakNum(week.breaks_average.toFixed(1));
-          setWeekBreakTimePerBreak(
-            formatTimeFromMinutes2(
-              Math.round(
-                (week.time_span_average - week.duration_average) /
-                  60 /
-                  week.breaks_average
-              )
-            )
-          );
-          const dataArray = [];
-          for (let day of response.data.detail) {
-            const dayDate = new Date(
-              parseInt(day.date.slice(0, 4)),
-              parseInt(day.date.slice(5, 7)) - 1,
-              parseInt(day.date.slice(8, 10))
-            );
-            if (getISOWeek(dayDate) === myWeekNum) {
-              const inHours = parseInt(day.first_clock.slice(11, 13));
-              const inMinutes = parseInt(day.first_clock.slice(14, 16)) / 60;
-              const inSeconds = parseInt(day.first_clock.slice(17, 19)) / 3600;
-              const inClock = Math.round(
-                inHours + inMinutes + inSeconds
-              ).toFixed(1);
-              const outHours = parseInt(day.last_clock.slice(11, 13));
-              const outMinutes = parseInt(day.last_clock.slice(14, 16)) / 60;
-              const outSeconds = parseInt(day.last_clock.slice(17, 19)) / 3600;
-              const outClock = (outHours + outMinutes + outSeconds).toFixed(1);
-              const dataEntry = {
-                Day: `${dayDate.getFullYear()}.${
-                  dayDate.getMonth() + 1
-                }.${dayDate.getDate()}`,
-                "Time at work": [inClock, outClock],
-              };
+            //get clock in and out
+            for (let week of response.data.detail_weekly) {
+                if (week.week === myWeekNum) {
+
+                    setWeekClockIn(week.first_clock_average.slice(0,5))
+                    setWeekClockOut(week.last_clock_average.slice(0,5))
+                    setWeekBreakTime(formatTimeFromMinutes(Math.round((week.time_span_average-week.duration_average)/60)))
+                    setWeekWorkTime(formatTimeFromMinutes(Math.round(week.duration_average/60)))
+                    setWeekBreakNum(week.breaks_average.toFixed(1))
+                    setWeekBreakTimePerBreak(formatTimeFromMinutes2(Math.round((week.time_span_average-week.duration_average)/60/week.breaks_average)))
+                    const dataArray = []
+                    for (let day of response.data.detail) {
+                        const dayDate = new Date(parseInt(day.date.slice(0,4)),parseInt(day.date.slice(5,7))-1,parseInt(day.date.slice(8,10)))
+                        if (getISOWeek(dayDate) === myWeekNum) {
+                            const inHours = parseInt(day.first_clock.slice(11,13))
+                            const inMinutes = parseInt(day.first_clock.slice(14,16))/60
+                            const inSeconds = parseInt(day.first_clock.slice(17,19))/3600
+                            const inClock = Math.round(inHours + inMinutes + inSeconds).toFixed(1)
+                            const outHours = parseInt(day.last_clock.slice(11,13))
+                            const outMinutes = parseInt(day.last_clock.slice(14,16))/60
+                            const outSeconds = parseInt(day.last_clock.slice(17,19))/3600
+                            const outClock = (outHours + outMinutes + outSeconds).toFixed(1)
+                            const dataEntry = {
+                                "Day": `${dayDate.getFullYear()}.${dayDate.getMonth()+1}.${dayDate.getDate()}`,
+                                "Time at work" : [inClock, outClock]
+                            }
 
               dataArray.push(dataEntry);
             }
@@ -191,22 +184,32 @@ const EfficientTime = () => {
   const getMonthInfo = async (myDay) => {
     setIsWeek(false);
 
-    let day = new Date();
-    let monthNum = day.getMonth();
-    let monthYear = day.getFullYear();
-    setWeekDate(day);
-    let firstDate = getDateString(new Date(monthYear, monthNum, 1));
-    let lastDate = getDateString(new Date(monthYear, monthNum + 1, 1));
-    if (myDay) {
-      console.log(myDay);
-      day = myDay;
-      monthNum = day.getMonth();
-      monthYear = day.getFullYear();
-      setWeekDate(day);
-      firstDate = getDateString(new Date(monthYear, monthNum, 1));
-      lastDate = getDateString(new Date(monthYear, monthNum + 1, 1));
-      console.log("finish");
-    }
+        let day = new Date();
+        let monthNum = day.getMonth()
+        let monthYear = day.getFullYear()
+        setWeekDate(day)
+        let firstDate = getDateString(new Date(monthYear,monthNum,1));
+        let lastDate = getDateString(new Date(monthYear,monthNum+1,1))
+        if (new Date(monthYear,monthNum+1,1) > new Date()){
+            lastDate = new Date()
+            lastDate.setDate(lastDate.getDate() - 1)
+            lastDate = getDateString(lastDate)
+        }
+        ;
+
+
+
+
+        if (myDay) {
+            console.log(myDay)
+            day = myDay;
+            monthNum = day.getMonth()
+            monthYear = day.getFullYear()
+            setWeekDate(day)
+            firstDate = getDateString(new Date(monthYear,monthNum,1));
+            lastDate = getDateString(new Date(monthYear,monthNum+1,1));
+            console.log("finish")
+        }
 
     const config = {
       headers: {
