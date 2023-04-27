@@ -246,34 +246,33 @@ const handleExportToExcel = () => {
     );
   }
   return (
-    <div className="flex flex-col lg:flex-row item-center  bg-stone-100  h-[98%]">
+    <div className="flex flex-col relative lg:flex-row item-center  bg-stone-100  h-[98%]">
       {/* ================// REPORT SECTIION //================ */}
-
-      <section className="items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
+      <p className='absolute z-20 top-[30%] left-[40%] uppercase text-lg bg-teal-400 text-white font-extrabold p-20 rounded-lg shadow-lg'>Coming soon</p>
+      <section className="blur-sm items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
         <div className=" flex justify-center items-center   ">
           <MdKeyboardArrowLeft
             className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
-            onClick={nextMonth}
+            // onClick={nextMonth}
           />
           <h2 className="w-60 text-center text-xl">
-            {moment(currentMonth).format("yyyy MMMM")}
+            {currentYear}
           </h2>
           <MdKeyboardArrowRight
             className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
-            onClick={prevMonth}
+            // onClick={prevMonth}
           />
         </div>
-
-        <AnnualTable
-          data={CLOCK_DATA}
-          currentMonth={currentMonth}
-          publicHolidaysOfMonth={publicHolidaysOfMonth}
-        />
+          <AnnualTable
+            data={CLOCK_DATA}
+            currentMonth={currentMonth}
+            publicHolidaysOfMonth={publicHolidaysOfMonth}
+          />
       </section>
 
       {/* ================// SUMMARY SECTIION //================ */}
 
-      <section className="calendar m-4 flex flex-col items-center md:w-2/5 gap-3">
+      <section className="calendar blur-sm m-4 flex flex-col items-center md:w-2/5 gap-3">
         {/*  USER INFO  */}
         <div className="boder-2 bg-white h-1/4 w-full rounded-xl shadow-md">
           <UserInfo />
