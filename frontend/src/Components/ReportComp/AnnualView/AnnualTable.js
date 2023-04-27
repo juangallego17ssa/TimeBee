@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx'
 
 const columns = [
   {
-    Header: 'January',
+    Header: 'Jan',
     accessor: 'date',
     Cell: ({ value }) => (
       <div className="grid grid-cols-2 ">
@@ -15,7 +15,7 @@ const columns = [
     ),
   },
   {
-    Header: 'February',
+    Header: 'Feb',
     accessor: 'start',
     Cell: ({ value }) => {
       if(value){
@@ -29,11 +29,11 @@ const columns = [
         // />
         )
       }else return <div className={`bg-transparent text-center`}>-</div>
-
+  
   },
   },
   {
-    Header: 'March',
+    Header: 'Mar',
     accessor: 'stop',
     Cell: ({ value }) => {
       if(value){
@@ -50,7 +50,7 @@ const columns = [
   },
   },
   {
-    Header: 'April',
+    Header: 'Apr',
     accessor: 'worked_time',
     Cell:({value})=>(
       <p className={`bg-transparent text-center`}>{value}</p>
@@ -75,7 +75,7 @@ const columns = [
     } 
   },
   {
-    Header: 'June',
+    Header: 'Jun',
     accessor: 'notes',
     Cell: ({ value }) =>{
       return (
@@ -96,7 +96,7 @@ const columns = [
     } 
   },
   {
-    Header: 'July',
+    Header: 'Jul',
     accessor: '',
     Cell: ({ value }) =>{
       if(value>0){
@@ -114,7 +114,7 @@ const columns = [
     } 
   },
   {
-    Header: 'August',
+    Header: 'Aug',
     accessor: '',
     Cell: ({ value }) =>{
       if(value>0){
@@ -132,7 +132,7 @@ const columns = [
     } 
   },
   {
-    Header: 'September',
+    Header: 'Sep',
     accessor: '',
     Cell: ({ value }) =>{
       if(value>0){
@@ -150,7 +150,7 @@ const columns = [
     } 
   },
   {
-    Header: 'October',
+    Header: 'Oct',
     accessor: '',
     Cell: ({ value }) =>{
       if(value>0){
@@ -168,7 +168,7 @@ const columns = [
     } 
   },
   {
-    Header: 'November',
+    Header: 'Nov',
     accessor: '',
     Cell: ({ value }) =>{
       if(value>0){
@@ -186,7 +186,7 @@ const columns = [
     } 
   },
   {
-    Header: 'December',
+    Header: 'Dec',
     accessor: '',
     Cell: ({ value }) =>{
       if(value>0){
@@ -244,9 +244,9 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
   } = tableInstance;
 if(holidayDates)
   return (
-    <div className="h-[98%] w-[98%] flex-col items-center justify-center">
-       {/* button to export table data to Excel */}
-       {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
+    <div className="h-[95%] w-[98%] flex-col items-center justify-center overflow-auto scrollbar-thin scrollbar-thumb-teal-400 scrollbar-track-white overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full ">
+      {/* button to export table data to Excel */}
+      {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
       <table
         id="my-table"
         className="table-auto text-[12px] text-center m-auto w-[80%]"

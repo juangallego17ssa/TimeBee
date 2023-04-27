@@ -7,7 +7,7 @@ import { RxCross2 } from 'react-icons/rx'
 import { useGetOwnProjectsQuery, useDeleteProjectByIDMutation} from '../../api/API';
 
 
-function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
+function ProjectOptions({setTag, setSelectedProject,setShowProjectTags, setShowSelectProjectMessage}) {
   const { 
     data, 
     isLoading,
@@ -34,6 +34,7 @@ function ProjectOptions({setTag, setSelectedProject,setShowProjectTags}) {
     setSelectedProject(project)
     setShowProjectTags(false)
     console.log(project.tag_color)
+    setShowSelectProjectMessage(false)
   }
   const handleDeteleProject = (project)=>{
     // console.log(project.id)
