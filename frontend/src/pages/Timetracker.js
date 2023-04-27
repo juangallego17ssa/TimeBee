@@ -164,7 +164,9 @@ function Timetracker() {
                 />
               ))}
             </div>
-            <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
+            {/* -----This Section is for correcting clockin and clockout time */}
+            
+            {/* <div className="flex flex-col justify-start items-center gap-4 bg-stone-100 w-full max-h-1/2">
               <div className="font-bold">CLOCK IN / CLOCK OUT</div>
               {clockinOfDay?.map((task) => (
                 <TimerBar
@@ -174,7 +176,9 @@ function Timetracker() {
                   setSelectedProject={setSelectedProject}
                 />
               ))}
-            </div>
+            </div> */}
+
+            {/* --------- till here----------- */}
           </div>
         </div>
         <div className=" h-full flex-1">
