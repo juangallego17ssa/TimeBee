@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CalendarComponent from '../Components/CalendarComp/Calendar';
 import moment from 'moment'
 import { useGetTrackedTimeFromToDateQuery } from "../api/API";
+import { Views } from "react-big-calendar";
 
 function Calendar() {
  
@@ -36,6 +37,7 @@ function Calendar() {
       <CalendarComponent
         events={tasks}
         date={selectedDate}
+        defaultView={Views.WEEK}
         onDateChange={handleDateChange}
       />
     </div>
