@@ -54,3 +54,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.nav-link-inactive{
+  color: #525252;
+}
+.nav-link-inactive:hover{
+  color: #2dd4bf;
+  /* font-weight: 700; */
+}
+
+.nav-link-timetracker, .nav-link-dashboard, .nav-link-report, .nav-link-calendar {
+  color: #2dd4bf;
+  font-weight: 700;
+}

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import TimeBee from "../../assets/TimeBeeNav.png";
 import { FaClock, FaChartArea, FaFileAlt,FaCalendarAlt } from "react-icons/fa";
 import { HiMenu }from 'react-icons/hi';
@@ -196,9 +196,25 @@ function Header({ children }) {
 
         <div className="flex justify-end md:flex-row md:items-center flex-grow">
           {/* ------- navigation icons ------ */}
-          <div className="hidden md:w-2/6 justify-around mr-8 md:flex md:flex-row">
+          <div className="hidden md:w-2/6 justify-around mr-8 md:flex md:flex-row md:gap-4">
+            <NavLink 
+            to={"/"} 
+            className={({isActive})=>isActive ?"nav-link-timetracker":"nav-link-inactive"}
+            >Timetracker</NavLink>
+            <NavLink 
+            to={"/dashboard"} 
+            className={({isActive})=>isActive ?"nav-link-dashboard":"nav-link-inactive"}
+            >Dashborad</NavLink>
+            <NavLink 
+            to={"/reports"} 
+            className={({isActive})=>isActive ?"nav-link-report":"nav-link-inactive"}
+            >Report</NavLink>
+            <NavLink 
+            to={"/calendar"} 
+            className={({isActive})=>isActive ?"nav-link-calendar":"nav-link-inactive"}
+            >Calendar</NavLink>
             {/*---- to Timetracker ----*/}
-            <div
+            {/* <div
               id="timetracker"
               className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
               onClick={goToTimetracker}
@@ -212,9 +228,9 @@ function Header({ children }) {
               ) : (
                 <FaClock className=" text-zinc-500 " />
               )}
-            </div>
+            </div> */}
             {/*----  to Dashborad  ----*/}
-            <div
+            {/* <div
               className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
               onClick={goToDashboard}
               onMouseEnter={() => setIsHoverDashboard(true)}
@@ -227,9 +243,9 @@ function Header({ children }) {
               ) : (
                 <FaChartArea className=" text-zinc-500 " />
               )}
-            </div>
+            </div> */}
             {/*----  to Report  ----*/}
-            <div
+            {/* <div
               className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
               onClick={goToReports}
               onMouseEnter={() => setIsHoverReport(true)}
@@ -242,9 +258,9 @@ function Header({ children }) {
               ) : (
                 <FaFileAlt className=" text-zinc-500 " />
               )}
-            </div>
+            </div> */}
             {/*----  to Calendar  ----*/}
-            <div
+            {/* <div
               className="relative flex justify-center items-center p-2 box-border w-10 h-10 "
               onClick={goToCalendar}
               onMouseEnter={() => setIsHoverCalendar(true)}
@@ -257,7 +273,8 @@ function Header({ children }) {
               ) : (
                 <FaCalendarAlt className=" text-zinc-500 " />
               )}
-            </div>
+            </div> */}
+      {/*-------  NAV END  ------*/}
           </div>
           <div className=" flex items-center gap-2">
             <div className="p-0.5 text-zinc-600 text-md hidden md:block h-full">
