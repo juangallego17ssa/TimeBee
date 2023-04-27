@@ -11,10 +11,10 @@ function Report() {
 
 
   return(
-    <section className="mx-6 inline-block h-[88%]">
+    <section className="mx-6 inline-block  h-[88%]">
     <div className="switch-view-btn flex gap-3">
 
-    <label htmlFor='report-monthly-annual-switch' className="flex pl-5 py-2">
+    <label htmlFor='report-monthly-annual-switch' className="flex pl-5 pt-2">
                 <input 
                 type="checkbox" 
                 checked={showAnnualReport} 

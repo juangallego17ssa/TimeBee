@@ -274,14 +274,13 @@ const handleExportToExcel = () => {
           data={CLOCK_DATA}
           currentMonth={currentMonth}
           publicHolidaysOfMonth={publicHolidaysOfMonth}
-          
         />
         <div className='flex justify-end '>
           <button
-           onClick={handleExportToExcel}
-           className="py-5 px-10 rounded-full  text-white text-md font-bold 
+            onClick={handleExportToExcel}
+            className="py-5 px-10 rounded-full  text-white text-md font-bold 
                     bg-gradient-to-r from-emerald-400 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 to-80% "
-           >
+          >
             EXPORT REPORT
           </button>
         </div>

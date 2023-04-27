@@ -30,7 +30,7 @@ content: 'PROJECT';
 }
 
 #report-monthly-annual-switch:checked::after{
-content: 'ANNUANL';
+content: 'ANNUAL';
  @apply transform bg-cyan-500 border-cyan-500 translate-x-7;
 }
 

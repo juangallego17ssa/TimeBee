@@ -39,7 +39,7 @@ const columns = [
         // />
         )
       }else return <div className={`bg-transparent text-center`}>-</div>
-
+  
   },
   },
   {
@@ -256,9 +256,9 @@ export default function ReportTable({data, publicHolidaysOfMonth }) {
   } = tableInstance;
 if(holidayDates)
   return (
-    <div className="h-[98%] w-[98%] flex-col items-center justify-center">
-       {/* button to export table data to Excel */}
-       {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
+    <div className="h-[95%] w-[98%] flex-col items-center justify-center overflow-auto scrollbar-thin scrollbar-thumb-teal-400 scrollbar-track-white overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full ">
+      {/* button to export table data to Excel */}
+      {/* <button onClick={handleExportToExcel}>Export to Excel</button> */}
       <table
         id="my-table"
         className="table-auto text-[12px] text-center m-auto w-[80%]"

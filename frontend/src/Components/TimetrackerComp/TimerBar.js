@@ -59,8 +59,10 @@ function TimerBar({ task }) {
       let data = {
         task_name: taskName,
         project_id: editProject ? projectRef.current.value : task.project.id,
-        start: editTime ? newStartTime : start,
       };
+      if(task.start) {
+        data.start= editTime ? newStartTime : start;
+      }
       
       if (task.stop) {
         data.stop = editTime ? newStopTime : stop;
