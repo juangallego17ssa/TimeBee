@@ -20,7 +20,7 @@ const CreateDataBackend = () => {
 
         const generateData = () => {
 
-            const startDate = new Date(2022,10,2)
+            const startDate = new Date(2022,5,1)
             const endDate = new Date(2023,3,28)
             let loopDate = startDate
             let start = new Date()
@@ -52,6 +52,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration,
@@ -68,6 +69,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration,
@@ -88,6 +90,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration,
@@ -104,6 +107,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -120,6 +124,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -140,6 +145,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -156,6 +162,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -172,6 +179,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -188,6 +196,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -208,6 +217,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -224,6 +234,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -240,6 +251,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -256,6 +268,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -272,6 +285,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -292,6 +306,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -308,6 +323,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -324,6 +340,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -340,6 +357,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -356,6 +374,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration
@@ -372,6 +391,7 @@ const CreateDataBackend = () => {
                             duration = Math.round((stop.getTime() - start.getTime())/1000)
                             trackedTimeArray.push({
                                 "type_of_input":0,
+                                "task_name":"work",
                                 "start":start,
                                 "stop":stop,
                                 "duration":duration

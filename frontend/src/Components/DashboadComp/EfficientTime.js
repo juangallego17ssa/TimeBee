@@ -78,6 +78,13 @@ const EfficientTime = () => {
         let firstDate = getDateString(day);
         day.setDate(day.getDate() + 6)
         let lastDate = getDateString(day)
+        if (day < new Date()){
+            lastDate = getDateString(day)
+            } else {
+                lastDate = new Date()
+                lastDate.setDate(lastDate.getDate() - 1)
+                lastDate = getDateString(lastDate)
+            }
         if (myDay) {
             day = myDay;
             myWeekNum = getISOWeek(day)
@@ -87,7 +94,14 @@ const EfficientTime = () => {
             myWeekDate = day
             firstDate = getDateString(day);
             day.setDate(day.getDate() + 6)
-            lastDate = getDateString(day)
+            if (day < new Date()){
+                lastDate = getDateString(day)
+            } else {
+                lastDate = new Date()
+                lastDate.setDate(lastDate.getDate() - 1)
+                lastDate = getDateString(lastDate)
+            }
+
         }
 
         const config = {
@@ -101,8 +115,10 @@ const EfficientTime = () => {
             }
         }
         try {
+            console.log(firstDate)
+            console.log(lastDate)
             const response = await axiosTimeBee(`trackedtime/listownfromtoclock/`, config)
-
+            console.log(response)
             setWeekNum(`WEEK ${myWeekNum} - ${myWeekDate.getFullYear()}`)
 
 
@@ -167,7 +183,17 @@ const EfficientTime = () => {
         let monthYear = day.getFullYear()
         setWeekDate(day)
         let firstDate = getDateString(new Date(monthYear,monthNum,1));
-        let lastDate = getDateString(new Date(monthYear,monthNum+1,1));
+        let lastDate = getDateString(new Date(monthYear,monthNum+1,1))
+        if (new Date(monthYear,monthNum+1,1) > new Date()){
+            lastDate = new Date()
+            lastDate.setDate(lastDate.getDate() - 1)
+            lastDate = getDateString(lastDate)
+        }
+        ;
+
+
+
+
         if (myDay) {
             console.log(myDay)
             day = myDay;
