@@ -38,45 +38,56 @@ export default function AddTimeTracker({isManual}) {
 
     //---- FROM HERE IS THE REAL CODE ----//
       
-    const data = ({
-        type_of_input:"1",
-        // start:new Date().toISOString(),
-        task_name:taskNameRef.current.value,
-        project_id:selectedProject.id,
-      })
-      console.log(data)
-      createTrackedTime(data)
-      .then(result=>console.log(result))
+      const data = ({
+          type_of_input:"1",
+           // start:new Date().toISOString(),
+          task_name:taskNameRef.current.value,
+          project_id:selectedProject.id,
+        })
+        console.log(data)
+        createTrackedTime(data)
+        .then(result=>console.log(result))
         
-      // Clean up input
-      taskNameRef.current.value = '';
-    setSelectedProject({tag_color:"#a1a1aa"});
-    setShowSelectProjectMessage(true)
+       // Clean up input
+       taskNameRef.current.value = '';
+     setSelectedProject({tag_color:"#a1a1aa"});
+     setShowSelectProjectMessage(true)
     
-    }
-    
+    }    
       
     // ------------END-------------//
 
     // ---- Create FAKE CLOCK-IN/OUT data ----// !!! comment out when after use
-  //   const month = 4
-  //   const start_date = 10
-  //   const end_date = 19
-  //   for (let i = start_date; i <= end_date; i++) { // !!! careful with the weekeds and holidays
-  //     const date = i
-  //     const start = new Date(`2023-${month}-${date} 09:${Math.floor(Math.random() * 60)}`).toISOString()
-  //     const stop = new Date(`2023-${month}-${date} 18:${Math.floor(Math.random() * 60)}`).toISOString()
-  //     const new_data = {
-  //       "type_of_input": "1",
-  //       "task_name": "generated automatically",
-  //       "start": start,
-  //       "stop": stop,
-  //       "project_id": 47
-  //     }
-  //     createTrackedTime(new_data)
-  //       .then(result => console.log(result)).catch(err => console.log(err))
-  //   }
-  // }
+    //    const month = 4
+    //    const start_date = 24
+    //    const end_date = 26
+    //    const taskname = ["research", "clean up documents", "writing emails", "making phonecalls", "testing", "coding","creating dashboard", "cleaning beehive", "workbee meeting", "Queenbee presenting", "filtering honey", "taxes"]
+    //    const projectid = [81,80,79,78,77]
+  
+    //    for (let i = start_date; i <= end_date; i++) { // !!! careful with the weekeds and holidays
+    //        const date = i
+
+    //        for (let j = 0; j < 3; j++) {
+    //          let startHour = j * 4 + 8; // Set start hour based on loop index
+    //          let taskDuration = Math.floor(Math.random() * 3) + 2; // Generate random duration between 2 and 4 hours
+    //          let stopHour = startHour + taskDuration;
+          
+    //          const start = new Date(`2023-${month}-${date} ${startHour}:${Math.floor(Math.random() * 60)}`).toISOString()
+    //          const stop = new Date(`2023-${month}-${date} ${stopHour}:${Math.floor(Math.random() * 60)}`).toISOString()
+    //          const randomTaskIndex = Math.floor(Math.random() * taskname.length);
+    //          const randomprojectIndex = Math.floor(Math.random() * projectid.length)
+    //          const new_data = {
+    //            "type_of_input": "1",
+    //            "task_name": taskname[randomTaskIndex],
+    //            "start": start,
+    //            "stop": stop,
+    //            "project_id": projectid[randomprojectIndex]
+    //          }
+    //          createTrackedTime(new_data)
+    //          .then(result => console.log(result)).catch(err => console.log(err))
+    //       }
+    //    }
+    //  }
       // ------------END-------------//
 
     

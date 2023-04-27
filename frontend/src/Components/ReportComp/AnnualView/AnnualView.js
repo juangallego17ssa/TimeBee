@@ -67,14 +67,27 @@ export default function AnnualView() {
   console.log("groupedData:", groupedData);
 
   /*  handel change MONTH  */
-  const prevMonth = () => {
+  // const prevMonth = () => {
+  //   setCurrentDate(
+  //     new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+  //   );
+  // };
+  // const nextMonth = () => {
+  //   setCurrentDate(
+  //     new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+  //   );
+  // };
+  
+// handel change Year
+  const nextYear = () => {
     setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+      new Date(currentDate.getFullYear() - 1, 1)
     );
   };
-  const nextMonth = () => {
+
+  const prevYear = () => {
     setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+      new Date(currentDate.getFullYear() + 1, 1)
     );
   };
 
@@ -91,7 +104,8 @@ export default function AnnualView() {
   }
 
     /* PUBLIC HOLIDAYS OF CURRENT MONTH*/
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
+  console.log(currentYear)
     const { data: PUBLIC_HOLIDAYS } = useGetpublicHolidayYearQuery(currentYear);
     // console.log(currentMonth)
     const publicHolidaysOfMonth = PUBLIC_HOLIDAYS?.filter(
@@ -111,19 +125,18 @@ export default function AnnualView() {
       WORKDAYS.push(daysInMonth[i]);
     }
   }
-  // console.log("WORKDAYS:", WORKDAYS.length);
 
-  // console.log(holidayDates.includes('2023-04-07'))
-
-  // sorting the start and stop array
-  // Custom comparator function to compare ISO date strings
   const dateComparator = (a, b) => {
     const dateA = new Date(a);
     const dateB = new Date(b);
     return dateA - dateB;
   };
 
+  const YearData = {
+    
+  }
   
+
   
   // console.log(groupedData);
   
@@ -142,14 +155,7 @@ export default function AnnualView() {
     //       };
     //     }
     //   }
-    let notes = ''
-    for (let i=0 ; i < publicHolidaysOfMonth?.length; i++){
-      if(date.includes(publicHolidaysOfMonth[i].date)){
-        notes = (publicHolidaysOfMonth[i].holiday_name)
-      }
-    }
-    // console.log('notes:',notes)
-      
+          
       if (groupedData) {
         if (groupedData[date]) {
         // Sort the start and stop arrays separately
@@ -178,11 +184,12 @@ export default function AnnualView() {
           notes:notes,
         };
       } else {
-        return { date: date, start: "", stop: "", notes: notes };
+        return { date: date, start: "", stop: "" };
       }
     }
     return;
   });
+  console.log(CLOCK_DATA)
   // console.log('CLOCK_DATA=',CLOCK_DATA?.filter(data=>data.start).length)
   // console.log('CLOCK_DATA=',CLOCK_DATA)
 
@@ -227,8 +234,8 @@ const handleExportToExcel = () => {
   // const titleSheet = XLSX.utils.aoa_to_sheet(title); // create worksheet from title
   
   // XLSX.utils.book_append_sheet(workbook, titleSheet, 'Title'); // append title sheet
-  XLSX.utils.book_append_sheet(workbook, sheet, `${moment(currentMonth).format("MMM_yyyy")}`); // append data sheet
-  XLSX.writeFile(workbook, `${userData.username}_${moment(currentMonth).format("MMM_yyyy")}.xlsx`);
+  XLSX.utils.book_append_sheet(workbook, sheet, `${moment(currentYear).format("yyyy")}`); // append data sheet
+  XLSX.writeFile(workbook, `${userData.username}_${moment(currentYear).format("yyyy")}.xlsx`);
 };
 
   if (isLoading) {
@@ -249,95 +256,26 @@ const handleExportToExcel = () => {
     <div className="flex flex-col lg:flex-row item-center  bg-stone-100  h-[98%]">
       {/* ================// REPORT SECTIION //================ */}
 
-      <section className="items-center justify-center  bg-white  m-4 lg:w-3/5 shadow-md rounded-xl py-4 flex-col h-[full] ">
-        <div className=" flex justify-center items-center   ">
+      <section className="items-center justify-center  bg-white  m-4 lg:w-full shadow-md rounded-xl py-4 flex-col h-[85%] ">
+        <div className=" flex justify-center items-center mb-3">
           <MdKeyboardArrowLeft
-            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
-            onClick={nextMonth}
+            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            onClick={nextYear}
           />
-          <h2 className="w-60 text-center text-xl">
-            {moment(currentMonth).format("yyyy MMMM")}
+          <h2 className=" w-60 text-center text-2xl">
+            {currentYear}
           </h2>
           <MdKeyboardArrowRight
-            className="w-6 h-6 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
-            onClick={prevMonth}
+            className="w-8 h-8 text-zinc-400 hover:cursor-pointer hover:text-zinc-800"
+            onClick={prevYear}
           />
         </div>
-
         <AnnualTable
           data={CLOCK_DATA}
           currentMonth={currentMonth}
           publicHolidaysOfMonth={publicHolidaysOfMonth}
         />
-      </section>
-
-      {/* ================// SUMMARY SECTIION //================ */}
-
-      <section className="calendar m-4 flex flex-col items-center md:w-2/5 gap-3">
-        {/*  USER INFO  */}
-        <div className="boder-2 bg-white h-1/4 w-full rounded-xl shadow-md">
-          <UserInfo />
-        </div>
-        {/* SUMARY OF THIS MONTH  */}
-        <div className="boder-2 bg-white h-3/4 w-full rounded-xl shadow-md p-5">
-          <h2 className="felx text-center text font-bold ">SUMMARY</h2>
-
-          <div className="grid grid-cols-2 mt-3">
-            <p className="uppercase">Working day</p>
-            <p>
-              {CLOCK_DATA.filter((data) => data.start).length} /{" "}
-              {WORKDAYS.length} days
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2">
-            <p className="uppercase">Worked Time</p>
-            <p>
-              {millisecToHr(TOTAL_WORKED_TIME)} hr{" "}
-              {millisecTomin(TOTAL_WORKED_TIME)} min
-            </p>
-          </div>
-
-          {TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME > 0 ? (
-            <div className="grid grid-cols-2 text-teal-500">
-              <p className="uppercase">OVER TIME</p>
-              <div className="flex">
-                <p>
-                  {millisecToHr(
-                    TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME
-                  )}
-                  hr
-                </p>
-                <p>
-                  {millisecTomin(
-                    TOTAL_WORKED_TIME - WORKDAYS.length * DEFAULT_WORKINK_TIME
-                  )}
-                  min
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 text-red-500">
-              <p className="uppercase">under TIME</p>
-              <div className="flex">
-                <p>
-                  {millisecToHr(
-                    WORKDAYS.length * DEFAULT_WORKINK_TIME - TOTAL_WORKED_TIME
-                  )}
-                  hr
-                </p>
-                <p>
-                  {millisecTomin(
-                    WORKDAYS.length * DEFAULT_WORKINK_TIME - TOTAL_WORKED_TIME
-                  )}
-                  min
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-        {/*  EXPORT EXCEL / PDF */}
-        <div>
+        <div className='flex justify-end '>
           <button
             onClick={handleExportToExcel}
             className="py-5 px-10 rounded-full  text-white text-md font-bold 
