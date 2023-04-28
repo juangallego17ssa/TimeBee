@@ -86,7 +86,7 @@ function Header({ children }) {
   const logOut = () => {
     localStorage.removeItem("access");
     console.log('Access Token removed successfully')
-    navigate("/login"); 
+    navigate("/home"); 
   };
 
   const dispatch = useDispatch();
