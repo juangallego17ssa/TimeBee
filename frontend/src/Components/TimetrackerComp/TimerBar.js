@@ -186,9 +186,9 @@ function TimerBar({ task }) {
             </div>
           </div>
         </div>
-        <div className="flex relative w-[20%]">
+        {/* <div className="flex relative w-[20%]">
           <p className="text-sm text-zinc-400">{duration}</p>
-        </div>
+        </div> */}
         <div className="relative flex items-center w-[70%] justify-end">
           {task?.stop ? (
             <div className="mx-1">
